@@ -21,14 +21,17 @@ class SiteUser(AbstractBaseUser):
         max_length=255,
         unique=True
     )
-    # username = None
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []  # email and password automatically required
+    REQUIRED_FIELDS = ['display_name']  # email and password automatically required
 
     # objects = SiteUserManager()
 
-    bio = models.TextField(blank=True, null=True) 
+    bio = models.TextField(blank=True, null=True)
+    display_name = models.CharField(
+        max_length=255,
+        unique=True
+    )
     first_name = models.CharField(
         blank=True,
         null=True,
@@ -70,8 +73,8 @@ class SiteUser(AbstractBaseUser):
     def get_short_name(self):
         return self.first_name
 
-    def get_location(self):
-        return self.location
+    def display_name(self):
+        return self.display_name
 
     def has_perm(self, perm, obj=None):
         #  does user have permissions?
