@@ -4,7 +4,11 @@
     <h2>Jobs</h2>
     <ul>
         {% for job in job_list %}
-            <li>{{ job.headline }}</li>
+            <li>
+                <a href="{{ job.get_absolute_url }}">
+                    {{ job.headline }}
+                </a>
+            </li>
         {% endfor %}
     </ul>
 {% endblock %}

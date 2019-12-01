@@ -18,4 +18,3 @@ class JobDetailView(DetailView):
     model = Job
     context_object_name = 'job_detail'
 
-

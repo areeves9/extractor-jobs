@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.urlresolvers import reverse
+
 from django.db.models.signals import pre_save
 
 from django.utils.text import slugify
@@ -89,6 +91,14 @@ class Job(models.Model):
         null=True,
         max_length=255,
     )
+
+
+def __str__(self):
+    return self.heading
+
+
+def get_absolute_url(self):
+    return reverse("jobs:job-detail", kwargs={"slug": self.slug})
 
 # if instance doesn't have slug
 # pass instance to create_slug
