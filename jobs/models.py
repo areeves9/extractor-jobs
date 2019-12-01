@@ -19,7 +19,9 @@ class Job(models.Model):
         ('TECHNICIAN', 'Technician'),
         ('CHEMIST', 'Chemist'),
     )
+    description = models.TextField()
     expiry = models.DateField()
+    post_date = models.DateField(auto_now_add=True)
     job_category = models.CharField(
         blank=True,
         null=True,
@@ -33,6 +35,11 @@ class Job(models.Model):
         choices=EDUCATION_CHOICES,
     )
     experience = models.CharField(
+        blank=True,
+        null=True,
+        max_length=255,
+    )
+    headline = models.CharField(
         blank=True,
         null=True,
         max_length=255,
