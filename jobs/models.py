@@ -1,4 +1,7 @@
 from django.db import models
+from django.db.models.signals import pre_save
+
+from django.utils.text import slugify
 
 # Create your models here.
 
@@ -25,6 +28,7 @@ class Job(models.Model):
         ('1099', 'Contract'),
     )
     description = models.TextField()
+    slug = models.SlugField(unique=True)
     expiry = models.DateField()
     post_date = models.DateField(auto_now_add=True)
     job_category = models.CharField(
@@ -85,3 +89,31 @@ class Job(models.Model):
         null=True,
         max_length=255,
     )
+
+# if instance doesn't have slug
+# pass instance to create_slug
+# slug is created from instance.headline
+# then check db if job already has the slug
+# if there is a job with same slug, then
+# create new_slug by adding instance.id  
+# and pass with instance to create
+# slug.  Then return slug.
+
+def create_slug(instance, new_slug=None):
+    slug = slugify(instance.headline)
+    if new_slug is not None:
+        slug = new_slug
+    qs = Job.objects.filter(slug=slug).order_by('-id')
+    exists = qs.exists()
+    if exists:
+        new_slug = "%s-%s" % (slug, qs.first().id)
+        return create_slug(instance, new_slug=new_slug)
+    return slug
+
+
+def pre_save_job_reciever(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = create_slug(instance)
+
+
+pre_save.connect(pre_save_job_reciever, sender=Job)
