@@ -99,6 +99,7 @@ class Job(models.Model):
 # and pass with instance to create
 # slug.  Then return slug.
 
+
 def create_slug(instance, new_slug=None):
     slug = slugify(instance.headline)
     if new_slug is not None:
