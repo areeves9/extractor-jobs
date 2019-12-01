@@ -1,9 +1,12 @@
-from django.shortcuts import render
+from django.views.generic import ListView 
 from jobs.models import Job
 
 
-# Create your views here.
+class JobList(ListView):
+    """
+    Get all Job instances from the database.
+    """
+    model = Job
 
 
-def revjobiews(request):
-    pass
+
