@@ -7,7 +7,11 @@ from django.core.validators import RegexValidator
 
 
 # Create your models here.
-alphanumeric_underscores = RegexValidator(r'^[a-zA-Z0-9-_]*$', 'Only alphanumeric and underscores')
+# display names only have alphanumeric and underscores
+alphanumeric_underscores = RegexValidator(
+    r'^[a-zA-Z0-9-_]*$',
+    'Only alphanumeric and underscores'
+)
 
 
 class SiteUserManager(BaseUserManager):
@@ -58,7 +62,6 @@ class SiteUser(AbstractBaseUser):
 
     objects = SiteUserManager()
 
-    bio = models.TextField(blank=True, null=True)
     date_joined = models.DateField(auto_now_add=True)
     display_name = models.CharField(
         max_length=255,
