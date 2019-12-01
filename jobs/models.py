@@ -93,7 +93,7 @@ class Job(models.Model):
     )
 
     def __str__(self):
-        return self.heading
+        return self.headline
 
     def get_absolute_url(self):
         return reverse("jobs:job-detail", kwargs={"slug": self.slug})

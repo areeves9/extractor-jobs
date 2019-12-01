@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
+<h3>Job Detail</h3>
 <a href="{{ job.link }}">
     <h3>{{ job.headline }}</h3>
 </a>
+<p>{{ job.description }}</p>
+<p>Date Posted: {{ job.post_date }}</p>
 {% endblock %}
