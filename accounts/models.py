@@ -163,10 +163,8 @@ class CandidateProfile(models.Model):
     """
     EDUCATION_CHOICES = (
         ('HS', 'High School/GRE'),
-        ('BA', 'Bachelor of Art'),
-        ('BS', 'Bachelor of Science'),
-        ('MA', 'Master of Art'),
-        ('MS', 'Master of Science'),
+        ('BA/BS', 'Bachelor of Art and Science'),
+        ('MA/MS', 'Master of Art and Science'),
         ('PHD', 'Doctor of Philosophy')
     )
     SPECIALITY_CHOICES = (
