@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
@@ -129,3 +130,63 @@ class SiteUser(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+
+class CandidateProfile(models.Model):
+    """
+    Extends the SiteUser model by adding additional fields.
+    There is a CandidateProfile and EmployerProfile. The
+    CandidateProfile will contain fields specific to extraction.
+    """
+    EDUCATION_CHOICES = (
+        ('HS', 'High School/GRE'),
+        ('BA', 'Bachelor of Art'),
+        ('BS', 'Bachelor of Science'),
+        ('MA', 'Master of Art'),
+        ('MS', 'Master of Science'),
+        ('PHD', 'Doctor of Philosophy')
+    )
+    SPECIALITY_CHOICES = (
+        ('SYNTHESIS', 'Cannabinoid Synthesis'),
+        ('EXTRACTION', 'Cannabinoid/Terpene Extraction'),
+        ('POST-PROCESS' 'Winterization/Solvent Recovery'),
+        ('DISTILLATION', 'Cannabinoid Distillation'),
+        ('ANALYTICS', 'Detection and Quantitiation'),
+        ('ISOLATIONS', 'Flash Chromatography/Crystallization'),
+    )
+    TITLE_CHOICES = (
+        ('TECHNICIAN', 'Technician'),
+        ('CHEMIST', 'Chemist'),
+    )
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    education = models.CharField(
+        blank=True,
+        null=True,
+        max_length=255,
+        choices=EDUCATION_CHOICES,
+    )
+    field_of_study = models.CharField(
+        blank=True,
+        null=True,
+        max_length=255,
+    )
+    headline = models.CharField(
+        blank=True,
+        null=True,
+        max_length=255,
+    )
+    speciality = models.CharField(
+        blank=True,
+        null=True,
+        max_length=255,
+        choices=SPECIALITY_CHOICES,
+    )
+    title = models.CharField(
+        blank=True,
+        null=True,
+        max_length=255,
+        choices=TITLE_CHOICES,
+    )
