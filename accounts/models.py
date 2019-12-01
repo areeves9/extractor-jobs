@@ -9,10 +9,7 @@ from django.core.validators import RegexValidator
 
 # Create your models here.
 # display names only have alphanumeric and underscores
-alphanumeric_underscores = RegexValidator(
-    r'^[a-zA-Z0-9-_]*$',
-    'Only alphanumeric and underscores'
-)
+alphanumeric_underscores = RegexValidator(r'^[a-zA-Z0-9_]+$', 'Only alphanumeric and underscores')
 
 
 def upload_location(instance, filename):
@@ -34,7 +31,7 @@ class SiteUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, display_name, password):
+    def create_superuser(self, email, password, display_name):
         """
         Creates and saves a superuser with the given email and password.
         """
@@ -62,6 +59,14 @@ class SiteUser(AbstractBaseUser):
         unique=True
     )
 
+    username = models.CharField(
+        blank=False,
+        null=True,
+        max_length=255,
+        unique=True,
+        validators=[alphanumeric_underscores]
+    )
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['display_name']  # email and password automatically required
 
@@ -69,11 +74,6 @@ class SiteUser(AbstractBaseUser):
 
     bio = models.TextField(blank=True, null=True)
     date_joined = models.DateField(auto_now_add=True)
-    display_name = models.CharField(
-        max_length=255,
-        unique=True,
-        validators=[alphanumeric_underscores]
-    )
     first_name = models.CharField(
         blank=True,
         null=True,
@@ -162,7 +162,7 @@ class CandidateProfile(models.Model):
     SPECIALITY_CHOICES = (
         ('SYNTHESIS', 'Cannabinoid Synthesis'),
         ('EXTRACTION', 'Cannabinoid/Terpene Extraction'),
-        ('POST-PROCESS' 'Winterization/Solvent Recovery'),
+        ('POSTPROCESS', 'Winterization/Solvent Recovery'),
         ('DISTILLATION', 'Cannabinoid Distillation'),
         ('ANALYTICS', 'Detection and Quantitiation'),
         ('ISOLATIONS', 'Flash Chromatography/Crystallization'),
@@ -181,6 +181,12 @@ class CandidateProfile(models.Model):
         max_length=255,
         choices=EDUCATION_CHOICES,
     )
+    speciality = models.CharField(
+        blank=True,
+        null=True,
+        max_length=255,
+        choices=SPECIALITY_CHOICES,
+    )
     field_of_study = models.CharField(
         blank=True,
         null=True,
@@ -190,12 +196,6 @@ class CandidateProfile(models.Model):
         blank=True,
         null=True,
         max_length=255,
-    )
-    speciality = models.CharField(
-        blank=True,
-        null=True,
-        max_length=255,
-        choices=SPECIALITY_CHOICES,
     )
     title = models.CharField(
         blank=True,
