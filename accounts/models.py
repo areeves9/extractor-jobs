@@ -3,9 +3,39 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 from phonenumber_field.modelfields import PhoneNumberField
+from django.core.validators import RegexValidator
 
 
 # Create your models here.
+alphanumeric_underscores = RegexValidator(r'^[a-zA-Z0-9-_]*$', 'Only alphanumeric and underscores')
+
+
+class SiteUserManager(BaseUserManager):
+    def create_user(self, email, password=None):
+        """
+        Creates and saves a User with the given email and password.
+        """
+        if not email:
+            raise ValueError('Users must have an email address')
+        user = self.model(
+            email=self.normalize_email(email),
+        )
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password):
+        """
+        Creates and saves a superuser with the given email and password.
+        """
+        user = self.create_user(
+            email,
+            password=password,
+        )
+        user.is_admin = True
+        user.is_staff = True
+        user.save(using=self._db)
+        return user
 
 
 class SiteUser(AbstractBaseUser):
@@ -28,6 +58,7 @@ class SiteUser(AbstractBaseUser):
     # objects = SiteUserManager()
 
     bio = models.TextField(blank=True, null=True)
+    date_joined = models.DateField(auto_now_add=True)
     display_name = models.CharField(
         max_length=255,
         unique=True
@@ -43,7 +74,6 @@ class SiteUser(AbstractBaseUser):
         max_length=255,
     )
     # when the user joined the site
-    join_date = models.DateField(auto_now_add=True)
     location_city = models.CharField(
         blank=True,
         null=True,
@@ -62,7 +92,9 @@ class SiteUser(AbstractBaseUser):
     # password field is builtin
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=False)
+
+    is_candidate = models.BooleanField(default=True)
+    is_employeer = models.BooleanField(default=False)
 
     def __str__(self):
         return self.email
@@ -77,8 +109,17 @@ class SiteUser(AbstractBaseUser):
         return self.display_name
 
     def has_perm(self, perm, obj=None):
-        #  does user have permissions?
+        "Does the user have a specific permission?"
+        # Simplest possible answer: Yes, always
         return True
 
     def has_module_perms(self, app_label):
+        "Does the user have permissions to view the app `app_label`?"
+        # Simplest possible answer: Yes, always
         return True
+
+    @property
+    def is_staff(self):
+        "Is the user a member of staff?"
+        # Simplest possible answer: All admins are staff
+        return self.is_admin
