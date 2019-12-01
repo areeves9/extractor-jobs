@@ -114,7 +114,7 @@ class SiteUser(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
 
     is_candidate = models.BooleanField(default=True)
-    is_employeer = models.BooleanField(default=False)
+    is_employer = models.BooleanField(default=False)
 
     def __str__(self):
         return self.email
