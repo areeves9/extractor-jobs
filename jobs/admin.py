@@ -5,9 +5,9 @@ from jobs.models import Job
 
 
 class JobModelAdmin(admin.ModelAdmin):
-    list_display = ["headline", "post_date"]
-    list_filter = ["post_date"]
-    search_fields = []
+    list_display = ("headline", "city", "state", "post_date", "job_type", "salary",)
+    list_filter = ("post_date",)
+    search_fields = ["state"]
 
     class Meta:
         model = Job

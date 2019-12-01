@@ -19,6 +19,11 @@ class Job(models.Model):
         ('TECHNICIAN', 'Technician'),
         ('CHEMIST', 'Chemist'),
     )
+    JOB_TYPE_CHOICES = (
+        ('FT', 'Full-Time'),
+        ('PT', 'Part-Time'),
+        ('1099', 'Contract'),
+    )
     description = models.TextField()
     expiry = models.DateField()
     post_date = models.DateField(auto_now_add=True)
@@ -27,6 +32,12 @@ class Job(models.Model):
         null=True,
         max_length=255,
         choices=JOB_CATEGORY_CHOICES,
+    )
+    job_type = models.CharField(
+        blank=True,
+        null=True,
+        max_length=255,
+        choices=JOB_TYPE_CHOICES,
     )
     education = models.CharField(
         blank=True,
