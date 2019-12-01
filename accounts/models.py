@@ -17,7 +17,7 @@ def upload_location(instance, filename):
 
 
 class SiteUserManager(BaseUserManager):
-    def create_user(self, email, display_name, password=None):
+    def create_user(self, email, username, password=None):
         """
         Creates and saves a User with the given email and password.
         """
@@ -25,20 +25,20 @@ class SiteUserManager(BaseUserManager):
             raise ValueError('Users must have an email address')
         user = self.model(
             email=self.normalize_email(email),
-            display_name=display_name,
+            username=username,
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password, display_name):
+    def create_superuser(self, email, username, password):
         """
         Creates and saves a superuser with the given email and password.
         """
         user = self.create_user(
             email,
             password=password,
-            display_name=display_name,
+            username=username,
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -68,7 +68,7 @@ class SiteUser(AbstractBaseUser):
     )
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['display_name']  # email and password automatically required
+    REQUIRED_FIELDS = ['username']  # email and password automatically required
 
     objects = SiteUserManager()
 
@@ -125,8 +125,8 @@ class SiteUser(AbstractBaseUser):
     def get_short_name(self):
         return self.first_name
 
-    def display_name(self):
-        return self.display_name
+    def get_username(self):
+        return self.username
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
