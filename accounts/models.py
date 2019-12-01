@@ -11,7 +11,7 @@ alphanumeric_underscores = RegexValidator(r'^[a-zA-Z0-9-_]*$', 'Only alphanumeri
 
 
 class SiteUserManager(BaseUserManager):
-    def create_user(self, email, password=None):
+    def create_user(self, email, display_name, password=None):
         """
         Creates and saves a User with the given email and password.
         """
@@ -19,18 +19,20 @@ class SiteUserManager(BaseUserManager):
             raise ValueError('Users must have an email address')
         user = self.model(
             email=self.normalize_email(email),
+            display_name=display_name,
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password):
+    def create_superuser(self, email, display_name, password):
         """
         Creates and saves a superuser with the given email and password.
         """
         user = self.create_user(
             email,
             password=password,
+            display_name=display_name,
         )
         user.is_admin = True
         user.is_staff = True
@@ -55,13 +57,14 @@ class SiteUser(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['display_name']  # email and password automatically required
 
-    # objects = SiteUserManager()
+    objects = SiteUserManager()
 
     bio = models.TextField(blank=True, null=True)
     date_joined = models.DateField(auto_now_add=True)
     display_name = models.CharField(
         max_length=255,
-        unique=True
+        unique=True,
+        validators=[alphanumeric_underscores]
     )
     first_name = models.CharField(
         blank=True,
