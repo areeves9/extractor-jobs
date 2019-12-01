@@ -92,13 +92,11 @@ class Job(models.Model):
         max_length=255,
     )
 
+    def __str__(self):
+        return self.heading
 
-def __str__(self):
-    return self.heading
-
-
-def get_absolute_url(self):
-    return reverse("jobs:job-detail", kwargs={"slug": self.slug})
+    def get_absolute_url(self):
+        return reverse("jobs:job-detail", kwargs={"slug": self.slug})
 
 # if instance doesn't have slug
 # pass instance to create_slug
