@@ -17,7 +17,7 @@ def upload_location(instance, filename):
 
 
 class SiteUserManager(BaseUserManager):
-    def create_user(self, email, display_name, password=None):
+    def create_user(self, email, display_name, account_type, password=None):
         """
         Creates and saves a User with the given email and password.
         """
@@ -26,18 +26,20 @@ class SiteUserManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(email),
             display_name=display_name,
+            account_type=account_type,
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, display_name, password):
+    def create_superuser(self, email, display_name, account_type, password):
         """
         Creates and saves a superuser with the given email and password.
         """
         user = self.create_user(
             email,
             display_name=display_name,
+            account_type=account_type,
             password=password,
         )
         user.is_admin = True
@@ -72,7 +74,7 @@ class SiteUser(AbstractBaseUser):
     )
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['display_name']  # email and password automatically required
+    REQUIRED_FIELDS = ['display_name', 'account_type']  # email and password automatically required
 
     objects = SiteUserManager()
 
@@ -172,7 +174,7 @@ class CandidateProfile(models.Model):
         ('EXTRACTION', 'Cannabinoid/Terpene Extraction'),
         ('POSTPROCESS', 'Winterization/Solvent Recovery'),
         ('DISTILLATION', 'Cannabinoid Distillation'),
-        ('ANALYTICS', 'Detection and Quantitiation'),
+        ('ANALYTICS', 'Cannabinoid Analytics'),
         ('ISOLATIONS', 'Flash Chromatography/Crystallization'),
     )
     TITLE_CHOICES = (

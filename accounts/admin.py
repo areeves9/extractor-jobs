@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 
 from accounts.forms import UserAdminCreationForm, UserAdminChangeForm
-from accounts.models import SiteUser
+from accounts.models import SiteUser, CandidateProfile
 
 
 class SiteUserAdmin(BaseUserAdmin):
@@ -29,7 +29,7 @@ class SiteUserAdmin(BaseUserAdmin):
         ('account_type'),
     )
     fieldsets = (
-        (None, {'fields': ('email', 'display_name', 'password')}),
+        (None, {'fields': ('password',)}),
         ('User Information', {'fields': (
             'first_name',
             'last_name',
@@ -51,6 +51,7 @@ class SiteUserAdmin(BaseUserAdmin):
             'fields': (
                 'email',
                 'display_name',
+                'account_type',
                 'password1',
                 'password2',
             ),
@@ -59,8 +60,15 @@ class SiteUserAdmin(BaseUserAdmin):
     search_fields = ('email', 'display_name')
     ordering = ('email',)
     filter_horizontal = ()
-# Register your models here.
-# comment
+
+
+class CandidateProfileModelAdmin(admin.ModelAdmin):
+    list_display = ("user", "education", "speciality", "field_of_study", "headline", "title")
+    list_display_link = ("user",)
+
+    class Meta:
+        model = CandidateProfile
 
 
 admin.site.register(SiteUser, SiteUserAdmin)
+admin.site.register(CandidateProfile, CandidateProfileModelAdmin)
