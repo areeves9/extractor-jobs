@@ -1,8 +1,25 @@
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
 from jobs.models import Job
 
-from django.shortcuts import render, get_object_or_404
+
+class JobCreate(CreateView):
+    model = Job
+    fields = [
+        'description',
+        'expiry',
+        'job_category',
+        'job_type',
+        'education',
+        'experience',
+        'headline',
+        'city',
+        'state',
+        'salary',
+        'benefits',
+        'link'
+    ]
 
 
 class JobList(ListView):
