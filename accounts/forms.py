@@ -14,8 +14,7 @@ class RegisterForm(forms.ModelForm):
 
         def clean_email(self):
             email = self.cleaned_data.get('email')
-            display_name = self.cleaned_data.get('display_name')
-            qs1 = User.objects.filter(email=email)
+            qs1 = SiteUser.objects.filter(email=email)
             if qs1.exists:
                 raise forms.ValidationError("email is taken")
             return email
@@ -37,7 +36,7 @@ class UserAdminCreationForm(forms.ModelForm):
 
     class Meta:
         model = SiteUser
-        fields = ('email', 'display_name', 'first_name', 'last_name')
+        fields = ('email', 'display_name', 'first_name', 'last_name',)
 
     def clean_password2(self):
         # Check that the two password entries match

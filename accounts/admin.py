@@ -43,10 +43,19 @@ class SiteUserAdmin(BaseUserAdmin):
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
+    # These are the form fields when Add User button is clicked in admin.
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'display_name', 'password1', 'password2'),
+            'fields': (
+                'email',
+                'display_name',
+                'first_name',
+                'last_name',
+                'location_state',
+                'password1',
+                'password2',
+            ),
         }),
     )
     search_fields = ('email', 'display_name')

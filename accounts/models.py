@@ -113,7 +113,7 @@ class SiteUser(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
-    is_candidate = models.BooleanField(default=True)
+    is_candidate = models.BooleanField(default=False)
     is_employer = models.BooleanField(default=False)
 
     def __str__(self):
