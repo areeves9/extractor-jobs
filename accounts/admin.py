@@ -17,6 +17,7 @@ class SiteUserAdmin(BaseUserAdmin):
     #  that point to specific fields of auth.User.
     list_display = (
         'email',
+        'account_type',
         'display_name',
         'first_name',
         'last_name',
@@ -25,19 +26,19 @@ class SiteUserAdmin(BaseUserAdmin):
     )
     list_filter = (
         ('location_state'),
+        ('account_type'),
     )
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('email', 'display_name', 'password')}),
         ('User Information', {'fields': (
             'first_name',
             'last_name',
+            'image',
             'bio',
             'location_state',
             'location_city',
             'phone_number',
-            'is_active',
-            'is_candidate',
-            'is_employer',)}),
+            'account_type',)}),
         ('Permissions', {'fields': (
             'is_admin',)}),
     )
@@ -50,9 +51,6 @@ class SiteUserAdmin(BaseUserAdmin):
             'fields': (
                 'email',
                 'display_name',
-                'first_name',
-                'last_name',
-                'location_state',
                 'password1',
                 'password2',
             ),

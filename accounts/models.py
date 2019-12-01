@@ -13,7 +13,7 @@ alphanumeric_underscores = RegexValidator(r'^[a-zA-Z0-9_]+$', 'Only alphanumeric
 
 
 def upload_location(instance, filename):
-    return "%s/%s" % (instance.user.display_name, filename)
+    return "%s/%s" % (instance.display_name, filename)
 
 
 class SiteUserManager(BaseUserManager):
@@ -52,6 +52,10 @@ class SiteUser(AbstractBaseUser):
     class is subclassed. Employeers have the ability
     to create, edit, delete job posts.
     """
+    ACCOUNT_TYPE_CHOICES = (
+        ('CANDIDATE', 'Candidate'),
+        ('EMPLOYER', 'Employer'),
+    )
     US_STATES_CHOICES = (('AL', 'Alabama'), ('AK', 'Alaska'), ('AZ', 'Arizona'), ('AR', 'Arkansas'), ('CA', 'California'), ('CO', 'Colorado'), ('CT', 'Connecticut'), ('DE', 'Delaware'), ('DC', 'District of Columbia'), ('FL', 'Florida'), ('GA', 'Georgia'), ('HI', 'Hawaii'), ('ID', 'Idaho'), ('IL', 'Illinois'), ('IN', 'Indiana'), ('IA', 'Iowa'), ('KS', 'Kansas'), ('KY', 'Kentucky'), ('LA', 'Louisiana'), ('ME', 'Maine'), ('MD', 'Maryland'), ('MA', 'Massachusetts'), ('MI', 'Michigan'), ('MN', 'Minnesota'), ('MS', 'Mississippi'), ('MO', 'Missouri'), ('MT', 'Montana'), ('NE', 'Nebraska'), ('NV', 'Nevada'), ('NH', 'New Hampshire'), ('NJ', 'New Jersey'), ('NM', 'New Mexico'), ('NY', 'New York'), ('NC', 'North Carolina'), ('ND', 'North Dakota'), ('OH', 'Ohio'), ('OK', 'Oklahoma'), ('OR', 'Oregon'), ('PA', 'Pennsylvania'), ('RI', 'Rhode Island'), ('SC', 'South Carolina'), ('SD', 'South Dakota'), ('TN', 'Tennessee'), ('TX', 'Texas'), ('UT', 'Utah'), ('VT', 'Vermont'), ('VA', 'Virginia'), ('WA', 'Washington'), ('WV', 'West Virginia'), ('WI', 'Wisconsin'), ('WY', 'Wyoming'))
     email = models.EmailField(
         verbose_name='email address',
@@ -113,8 +117,12 @@ class SiteUser(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
-    is_candidate = models.BooleanField(default=False)
-    is_employer = models.BooleanField(default=False)
+    account_type = models.CharField(
+        max_length=255,
+        blank=False,
+        null=False,
+        choices=ACCOUNT_TYPE_CHOICES,
+    )
 
     def __str__(self):
         return self.email
