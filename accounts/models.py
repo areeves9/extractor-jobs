@@ -178,6 +178,14 @@ class CandidateProfile(models.Model):
         null=True,
         max_length=255,
     )
+    image = models.ImageField(
+        null=True,
+        blank=True,
+        width_field="width_field",
+        height_field="height_field",
+    )
+    height_field = models.IntegerField(default=0)
+    width_field = models.IntegerField(default=0)
     speciality = models.CharField(
         blank=True,
         null=True,
