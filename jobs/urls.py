@@ -3,5 +3,5 @@ from jobs.views import JobList
 
 
 urlpatterns = [
-    url(r'^$', JobList.as_view()),
+    url(r'^$', JobList.as_view(), name='job-list'),
 ]

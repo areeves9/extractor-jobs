@@ -7,6 +7,6 @@ class JobList(ListView):
     Get all Job instances from the database.
     """
     model = Job
-
+    context_object_name = 'job_list'
 
 
