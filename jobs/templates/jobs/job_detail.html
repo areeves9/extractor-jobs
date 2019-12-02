@@ -2,9 +2,13 @@
 
 {% block content %}
 <h3>Job Detail</h3>
+{% if job.link %}
 <a href="{{ job.link }}">
     <h3>{{ job.headline }}</h3>
 </a>
+{% else %}
+<h3>{{ job.headline }}</h3>
+{% endif %}
 <p>{{ job.description }}</p>
 <p>Date Posted: {{ job.post_date }}</p>
 
