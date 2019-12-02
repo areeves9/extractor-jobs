@@ -1,6 +1,7 @@
+from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from jobs.models import Job
 
 
@@ -20,6 +21,29 @@ class JobCreate(CreateView):
         'benefits',
         'link'
     ]
+
+
+class JobUpdate(UpdateView):
+    model = Job
+    fields = [
+        'description',
+        'expiry',
+        'job_category',
+        'job_type',
+        'education',
+        'experience',
+        'headline',
+        'city',
+        'state',
+        'salary',
+        'benefits',
+        'link'
+    ]
+
+
+class JobDelete(DeleteView):
+    model = Job
+    success_url = reverse_lazy('jobs:job-list')
 
 
 class JobList(ListView):
