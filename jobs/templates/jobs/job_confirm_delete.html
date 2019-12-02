@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h3>Confirm delete</h3>
-<p>Confirm to delete {{ job.headline }} </p>
+
+<form action="." method="POST">{% csrf_token %}
+    <h3>Confirm delete {{ job.headline }}</h3>
+    <p><input type="submit" value="Yes"/><a href="../">Cancel</a></p>
+</form>
 {% endblock %}

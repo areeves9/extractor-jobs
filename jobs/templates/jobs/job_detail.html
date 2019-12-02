@@ -7,4 +7,6 @@
 </a>
 <p>{{ job.description }}</p>
 <p>Date Posted: {{ job.post_date }}</p>
+
+<a href="{% url 'jobs:job-delete' job.slug %}">DELETE</a>
 {% endblock %}
