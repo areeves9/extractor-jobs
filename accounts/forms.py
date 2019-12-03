@@ -1,7 +1,15 @@
 from django import forms
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.forms import UserCreationForm
 
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from accounts.models import SiteUser
+
+
+class UserRegisterForm(UserCreationForm):
+
+    class Meta:
+        model = SiteUser
+        fields = ('email', 'display_name', 'account_type',)
 
 
 class RegisterForm(forms.ModelForm):
@@ -10,7 +18,7 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = SiteUser
-        fields = ('email', 'display_name')
+        fields = ('email', 'display_name',)
 
         def clean_email(self):
             email = self.cleaned_data.get('email')
