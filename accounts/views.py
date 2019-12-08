@@ -1,7 +1,9 @@
 from django.urls import reverse_lazy
 
+from accounts.models import SiteUser
+
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from accounts.forms import UserRegisterForm
 
 # Create your views here.
@@ -21,3 +23,22 @@ class UserDetailView(DetailView):
     '''
     def get_object(self):
         return self.request.user
+
+
+class UserUpdateView(UpdateView):
+    """
+    Updates Employee instance.
+    """
+    model = SiteUser
+    fields = (
+        'first_name',
+        'last_name',
+        'display_name',
+        'bio',
+        'location_city',
+        'location_state',
+        'image',
+        'phone_number',
+
+    )
+    success_url = reverse_lazy('accounts:profile')
