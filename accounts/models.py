@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+
 from django.conf import settings
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
@@ -125,6 +127,9 @@ class SiteUser(AbstractBaseUser):
         null=False,
         choices=ACCOUNT_TYPE_CHOICES,
     )
+
+    def get_absolute_url(self):
+        return reverse("accounts:profile_update", kwargs={"pk": self.pk})
 
     def __str__(self):
         return self.email

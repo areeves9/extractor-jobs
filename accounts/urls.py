@@ -5,5 +5,6 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url(r'^register/$', RegistrationView.as_view(), name='register'),
-    url(r'^login/$', auth_views.login, {'template_name': 'registration/login.html'}, name="login"),
+    url(r'^login/$', auth_views.LoginView.as_view(), name="login"),
+    url(r'^logout/$', auth_views.LogoutView.as_view(), name="logout"),
 ]

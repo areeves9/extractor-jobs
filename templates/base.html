@@ -9,7 +9,7 @@
 <body>
 <header>
     <nav>
-        <h3>Job Site - Logged in as: {{ request.user.display_name }}</h3>
+        <h3>Job Site - Logged in as: {{ request.user }}</h3>
         {% if request.user.is_admin %}
         <p>(admin)</p>
         {% endif %}

@@ -13,6 +13,9 @@ class UserRegisterForm(UserCreationForm):
 
 
 class RegisterForm(forms.ModelForm):
+    """
+    For Django Admin user creation.
+    """
     password = forms.CharField(widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
 
