@@ -1,4 +1,6 @@
 from django.urls import reverse_lazy
+
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from accounts.forms import UserRegisterForm
 
@@ -9,3 +11,13 @@ class RegistrationView(CreateView):
     form_class = UserRegisterForm
     success_url = reverse_lazy('login')
     template_name = 'accounts/registration_form.html'
+
+
+class UserDetailView(DetailView):
+    '''
+    Get detail of employee for profile. Return the
+    request.user object for the current logged in
+    user.
+    '''
+    def get_object(self):
+        return self.request.user
