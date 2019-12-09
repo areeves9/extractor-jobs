@@ -129,7 +129,7 @@ class SiteUser(AbstractBaseUser):
     )
 
     def get_absolute_url(self):
-        return reverse("accounts:profile_update", kwargs={"pk": self.pk})
+        return reverse("accounts:profile_detail", kwargs={"pk": self.pk})
 
     def __str__(self):
         return self.email

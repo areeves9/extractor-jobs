@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Users</h2>
+{% for user in users %}
+<div class="row">
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title"><a href="{{ user.get_absolute_url }}">{{ user }}</a></h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ user.username }}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">{{ user.email }}</h6>
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}
