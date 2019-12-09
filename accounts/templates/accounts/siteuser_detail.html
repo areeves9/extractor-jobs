@@ -1,17 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row">
-    <div class="col-sm">
-        <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+<div class="col">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+            <p>{{ user.email }}</p>
+            <p>{{ user.phone }}</p>
+            <p>{{ user.bio }}</p>
+            {% if request.user == user %}
+            <a href="{% url 'accounts:profile_update' user.pk %}">EDIT</a>
+            {% endif %}
+        </div>
     </div>
-    <div class="col-sm">
-        <p>{{ user.email }}</p>
-        <p>{{ user.phone }}</p>
-        <p>{{ user.bio }}</p>
-    </div>
-    {% if request.user == user %}
-    <a href="{% url 'accounts:profile_update' user.pk %}">EDIT</a>
-    {% endif %}
 </div>
+
 {% endblock %}

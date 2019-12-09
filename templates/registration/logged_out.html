@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 
+{% load crispy_forms_tags %} 
+
 {% block content %}
-<p>You are now logged out.</p>
+<div class="col-md">
+    <div class="row justify-content-center">
+        <p>You are logged out. <a href="{% url 'accounts:login' %}">Login</a> again.</p>
+    </div>
+</div>
+
 {% endblock %}
