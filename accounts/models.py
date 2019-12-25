@@ -168,8 +168,8 @@ class CandidateProfile(models.Model):
     """
     EDUCATION_CHOICES = (
         ('HS', 'High School/GRE'),
-        ('BA/BS', 'Bachelor of Art and Science'),
-        ('MA/MS', 'Master of Art and Science'),
+        ('BA/BS', 'Bachelor of Art/Science'),
+        ('MA/MS', 'Master of Art/Science'),
         ('PHD', 'Doctor of Philosophy')
     )
     SPECIALITY_CHOICES = (
@@ -216,3 +216,25 @@ class CandidateProfile(models.Model):
         max_length=255,
         choices=TITLE_CHOICES,
     )
+
+    class EmployerProfile(models.Model):
+        """
+        Extends the SiteUser model by adding additional fields.
+        There is a CandidateProfile and EmployerProfile. The
+        CandidateProfile will contain fields specific to extraction.
+        """
+        business_name = models.CharField(
+            blank=False,
+            null=False,
+            max_length=255,
+        )
+        business_url = models.URLField()
+        regulatory_id = models.CharField(
+            blank=False,
+            null=False,
+            max_length=255,
+        )
+        user = models.OneToOneField(
+            settings.AUTH_USER_MODEL,
+            on_delete=models.CASCADE
+        )

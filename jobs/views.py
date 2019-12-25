@@ -43,7 +43,7 @@ class JobUpdate(UpdateView):
 
 class JobDelete(DeleteView):
     model = Job
-    success_url = reverse_lazy('jobs:job-list')
+    success_url = reverse_lazy('jobs:job_list')
 
 
 class JobList(ListView):

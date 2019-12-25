@@ -1,17 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h3>Job Detail</h3>
-{% if job.link %}
-<a href="{{ job.link }}">
-    <h3>{{ job.headline }}</h3>
-</a>
-{% else %}
-<h3>{{ job.headline }}</h3>
-{% endif %}
-<p>{{ job.description }}</p>
-<p>Date Posted: {{ job.post_date }}</p>
+<div class="row">
+        <div class="col-md-4">
+            <h3>{{ job.headline }}</h3>
+        </div>
+    
+        <a href="{% url 'jobs:job_update' job.slug %}">EDIT</a>
+        <a href="{% url 'jobs:job_delete' job.slug %}">DELETE</a>
+    </div>
 
-<a href="{% url 'jobs:job-update' job.slug %}">EDIT</a>
-<a href="{% url 'jobs:job-delete' job.slug %}">DELETE</a>
+
 {% endblock %}
+

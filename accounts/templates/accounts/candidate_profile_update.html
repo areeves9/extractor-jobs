@@ -9,7 +9,8 @@
       <div class="col-md-4">
         <form class="form" action="" enctype="multipart/form-data" method="post">
         {% csrf_token %}
-        {{ form|crispy }}
+        {{ user_form|crispy }}
+        {{ candidate_profile_form|crispy }}
           <button class="btn btn-success" type="submit">Update</button>
         </form>
     </div>

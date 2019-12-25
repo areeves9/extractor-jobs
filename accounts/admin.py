@@ -23,14 +23,18 @@ class SiteUserAdmin(BaseUserAdmin):
         'last_name',
         'date_joined',
         'location_state',
+        'is_admin',
+        'is_active',
     )
     list_filter = (
         ('location_state'),
         ('account_type'),
+        ('is_active'),
     )
     fieldsets = (
         (None, {'fields': ('password',)}),
         ('User Information', {'fields': (
+            'is_active',
             'first_name',
             'last_name',
             'image',

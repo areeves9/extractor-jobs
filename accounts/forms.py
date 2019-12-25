@@ -2,7 +2,30 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from accounts.models import SiteUser
+from accounts.models import SiteUser, CandidateProfile
+
+
+class SiteUserForm(forms.ModelForm):
+    class Meta:
+        model = SiteUser
+        fields = '__all__'
+        exclude = (
+            'account_type',
+            'email',
+            'height_field',
+            'width_field',
+            'password',
+            'last_login',
+            'is_admin',
+            'is_active',
+        )
+
+
+class CandidateProfileForm(forms.ModelForm):
+    class Meta:
+        model = CandidateProfile
+        fields = '__all__'
+        exclude = 'user',
 
 
 class UserRegisterForm(UserCreationForm):

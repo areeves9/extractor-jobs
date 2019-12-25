@@ -1,37 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Headline (Click for Detail)</th>
-        <th scope="col">Job Category</th>
-        <th scope="col">City</th>
-        <th scope="col">State</th>
-        <th scope="col">Salary</th>
-        <th scope="col">Benefits</th>
-        <th scope="col">Date Posted</th>
-        <th scope="col">Link to Job</th>
-
-      </tr>
-    </thead>
-    <tbody>
-        {% for job in job_list %}
-      <tr>
-        <td scope="row"><a href="{{ job.get_absolute_url }}">{{ job.headline }}</a></td>
-        <td scope="row">{{ job.job_category }}</td>     
-        <td scope="row">{{ job.city }}</td>
-        <td scope="row">{{ job.state }}</td>
-        <td scope="row">{{ job.salary }}</td>
-        <td scope="row">{{ job.benefits }}</td>
-        <td scope="row">{{ job.post_date }}</td>
-        <td scope="row"><a href="{{ job.link }}">{{ job.link|truncatechars:9 }}</a></td>
-
-      </tr>
-      {% endfor %}
-
-    </tbody>
-  </table>
+<div class="row">
+  {% if request.user.is_admin %}
+  <a href="{% url 'jobs:job_create' %}">Add</a>
+  {% endif %}
+  <div class="col">
+      <table class="table table-responsive">
+        <thead>
+          <tr>
+            <th scope="col">Headline (Click for Detail)</th>
+            <th scope="col">Job Category</th>
+            <th scope="col">City</th>
+            <th scope="col">State</th>
+            <th scope="col">Salary</th>
+            <th scope="col">Benefits</th>
+            <th scope="col">Date Posted</th>
+            <th scope="col">Link to Job</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for job in job_list %}
+          <tr>
+            <td scope="row"><a href="{{ job.get_absolute_url }}">{{ job.headline }}</a></td>
+            <td scope="row">{{ job.job_category }}</td>     
+            <td scope="row">{{ job.city }}</td>
+            <td scope="row">{{ job.state }}</td>
+            <td scope="row">{{ job.salary }}</td>
+            <td scope="row">{{ job.benefits }}</td>
+            <td scope="row">{{ job.post_date }}</td>
+            <td scope="row"><a href="{{ job.link }}" target="_blank">{{ job.link|truncatechars:9 }}</a></td>
+            <td><a href="{% url 'jobs:job_delete' job.slug %}">DELETE</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </div>
+</div>
 
 {% endblock %}

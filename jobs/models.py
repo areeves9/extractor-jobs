@@ -29,9 +29,13 @@ class Job(models.Model):
         ('PT', 'Part-Time'),
         ('1099', 'Contract'),
     )
-    description = models.TextField()
+    description = models.TextField(
+         help_text="Describe the position and the working conditions."
+    )
     slug = models.SlugField(unique=True)
-    expiry = models.DateField()
+    expiry = models.DateField(
+        help_text="Please use the following format: <em>YYYY-MM-DD</em>."
+    )
     post_date = models.DateField(auto_now_add=True)
     job_category = models.CharField(
         blank=True,
@@ -60,6 +64,7 @@ class Job(models.Model):
         blank=True,
         null=True,
         max_length=255,
+        help_text="A concise high-level overview of the job."
     )
     skills = models.CharField(
         blank=True,
@@ -92,11 +97,14 @@ class Job(models.Model):
         max_length=255,
     )
 
+    class Meta:
+        ordering = ['-post_date']
+
     def __str__(self):
         return self.headline
 
     def get_absolute_url(self):
-        return reverse("jobs:job-detail", kwargs={"slug": self.slug})
+        return reverse("jobs:job_detail", kwargs={"slug": self.slug})
 
 # if instance doesn't have slug
 # pass instance to create_slug
@@ -123,6 +131,7 @@ def create_slug(instance, new_slug=None):
 def pre_save_job_reciever(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = create_slug(instance)
+
 
 
 pre_save.connect(pre_save_job_reciever, sender=Job)

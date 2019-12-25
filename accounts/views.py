@@ -1,11 +1,14 @@
 from django.urls import reverse_lazy
+from django.shortcuts import render, redirect
 
 from accounts.models import SiteUser
+from accounts.forms import CandidateProfileForm, UserRegisterForm, SiteUserForm
 
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.list import ListView
-from accounts.forms import UserRegisterForm
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 
@@ -61,5 +64,26 @@ class UserListView(ListView):
     """
     List of SiteUser objects, with fk back to batch.
     """
-    model = SiteUser
+    queryset = SiteUser.objects.filter(is_active=True, account_type='CANDIDATE')
     context_object_name = 'users'
+
+
+@login_required
+def candidate_profile_update(request):
+    print(request.user)
+    user_form = SiteUserForm(request.POST or None, instance=request.user)
+    candidate_profile_form = CandidateProfileForm(request.POST or None, instance=request.user.candidateprofile)
+    if user_form.is_valid() and candidate_profile_form.is_valid():
+        user = user_form.save(commit=False)
+        profile = candidate_profile_form.save(commit=False)
+        user.save()
+        profile.save()
+        return redirect("accounts:profile")
+    else:
+        user_form = SiteUserForm(instance=request.user)
+        profile_form = CandidateProfileForm(instance=request.user.candidateprofile)
+    context = {
+        "user_form": user_form,
+        "candidate_profile_form": candidate_profile_form,
+    }
+    return render(request, "accounts/candidate_profile_update.html", context)

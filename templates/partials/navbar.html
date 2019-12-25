@@ -9,6 +9,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'jobs:job_list' %}">Listings</a>
             </li>
+            {% if request.user.is_admin %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'jobs:job_create' %}">Post</a>
+            </li>
+            {% endif %}
         </ul>
         <ul class="nav navbar-nav ml-auto">
             {% if request.user.is_authenticated %}
