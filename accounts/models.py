@@ -88,6 +88,7 @@ class SiteUser(AbstractBaseUser):
         max_length=255
     )
     image = models.ImageField(
+        default='/static/KilnQ.png',
         upload_to=upload_location,
         null=True,
         blank=True,
