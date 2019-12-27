@@ -81,7 +81,7 @@ def candidate_profile_update(request):
         return redirect("accounts:profile")
     else:
         user_form = SiteUserForm(instance=request.user)
-        profile_form = CandidateProfileForm(instance=request.user.candidateprofile)
+        candidate_profile_form = CandidateProfileForm(instance=request.user.candidateprofile)
     context = {
         "user_form": user_form,
         "candidate_profile_form": candidate_profile_form,
