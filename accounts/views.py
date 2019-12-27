@@ -70,15 +70,15 @@ class UserListView(ListView):
 
 @login_required
 def candidate_profile_update(request):
-    print(request.user)
-    user_form = SiteUserForm(request.POST or None, instance=request.user)
-    candidate_profile_form = CandidateProfileForm(request.POST or None, instance=request.user.candidateprofile)
-    if user_form.is_valid() and candidate_profile_form.is_valid():
-        user = user_form.save(commit=False)
-        profile = candidate_profile_form.save(commit=False)
-        user.save()
-        profile.save()
-        return redirect("accounts:profile")
+    if request.method == "POST":
+        user_form = SiteUserForm(request.POST or None, request.FILES, instance=request.user)
+        candidate_profile_form = CandidateProfileForm(request.POST or None, instance=request.user.candidateprofile)
+        if user_form.is_valid() and candidate_profile_form.is_valid():
+            user = user_form.save(commit=False)
+            profile = candidate_profile_form.save(commit=False)
+            user.save()
+            profile.save()
+            return redirect("accounts:profile")
     else:
         user_form = SiteUserForm(instance=request.user)
         candidate_profile_form = CandidateProfileForm(instance=request.user.candidateprofile)

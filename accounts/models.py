@@ -1,12 +1,14 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.urls import reverse
-
 from django.conf import settings
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
-from phonenumber_field.modelfields import PhoneNumberField
 from django.core.validators import RegexValidator
+
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 # Create your models here.
@@ -158,6 +160,17 @@ class SiteUser(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+
+@receiver(post_save, sender=SiteUser)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        CandidateProfile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=SiteUser)
+def save_user_profile(sender, instance, **kwargs):
+    instance.candidateprofile.save()
 
 
 class CandidateProfile(models.Model):
