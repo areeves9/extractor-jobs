@@ -3,34 +3,23 @@
 {% block content %}
 
 <div class="media">
+    {% if user.image %}
     <img src="{{ user.image.url }}" class="align-self-start mr-3" alt="...">
+    {% else %}
+    <img src="https://via.placeholder.com/150" />
+    {% endif %}
     <div class="media-body">
         <h1 class="text-center font-italic">"{{ user.candidateprofile.headline }}"</h1>
-
         <h3 class="mt-0">@{{ user.display_name }}</h3>
         <h5 class="mt-0">{{ user.first_name }} {{ user.last_name }}</h5>
         <p>Email: {{ user.email }}</p>
         <p>Phone: {{ user.phone }}</p>
-    </div>
-</div>
-
-
-
-
-<div class="col">
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <h3>{{ user.first_name }} {{ user.last_name }} (@{{ user.display_name }})</h3>
-            {% if user.image %}
-            <img src="{{ user.image.url }}"/>
-            {% endif %}
-            <p>About Me: {{ user.bio }}</p>
-            <p>Education: {{ user.candidateprofile.education }}</p>
-            <p>Speciality: {{ user.candidateprofile.speciality }}</p>
-            {% if request.user == user %}
-            <a href="{% url 'accounts:profile_update' %}">EDIT</a>
-            {% endif %}
-        </div>
+        <p>About Me: {{ user.bio }}</p>
+        <p>Education: {{ user.candidateprofile.education }}</p>
+        <p>Speciality: {{ user.candidateprofile.speciality }}</p>
+        {% if request.user == user %}
+        <a href="{% url 'accounts:profile_update' %}">EDIT</a>
+        {% endif %}
     </div>
 </div>
 
