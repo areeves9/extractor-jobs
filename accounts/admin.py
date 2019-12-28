@@ -35,12 +35,14 @@ class SiteUserAdmin(BaseUserAdmin):
             'is_active',
             'first_name',
             'last_name',
+            'display_name',
             'image',
             'bio',
             'location_state',
             'location_city',
             'phone_number',
-            'account_type',)}),
+            'slug',
+            'is_business',)}),
         ('Permissions', {'fields': (
             'is_admin',)}),
     )

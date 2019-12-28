@@ -16,15 +16,13 @@ class Job(models.Model):
     """
     EDUCATION_CHOICES = (
         ('HS', 'High School/GRE'),
-        ('BA/BS', 'Bachelor of Art and Science'),
-        ('MA/MS', 'Master of Art and Science'),
-        ('PHD', 'Doctor of Philosophy')
+        ('AS', 'Associate\'s'),
+        ('BA/BS', 'Bachelor\'s'),
+        ('MA/MS', 'Master\'s'),
+        ('PHD', 'Doctorate')
     )
-    JOB_CATEGORY_CHOICES = (
-        ('TECHNICIAN', 'Technician'),
-        ('CHEMIST', 'Chemist'),
-    )
-    JOB_TYPE_CHOICES = (
+
+    EMPLOYMENT_TYPE_CHOICES = (
         ('FT', 'Full-Time'),
         ('PT', 'Part-Time'),
         ('1099', 'Contract'),
@@ -32,22 +30,14 @@ class Job(models.Model):
     description = models.TextField(
          help_text="Describe the position and the working conditions."
     )
-    slug = models.SlugField(unique=True)
-    expiry = models.DateField(
+    expiration_date = models.DateField(
         help_text="Please use the following format: <em>YYYY-MM-DD</em>."
     )
-    post_date = models.DateField(auto_now_add=True)
-    job_category = models.CharField(
+    employment_type = models.CharField(
         blank=True,
         null=True,
         max_length=255,
-        choices=JOB_CATEGORY_CHOICES,
-    )
-    job_type = models.CharField(
-        blank=True,
-        null=True,
-        max_length=255,
-        choices=JOB_TYPE_CHOICES,
+        choices=EMPLOYMENT_TYPE_CHOICES,
     )
     education = models.CharField(
         blank=True,
@@ -55,22 +45,14 @@ class Job(models.Model):
         max_length=255,
         choices=EDUCATION_CHOICES,
     )
-    experience = models.CharField(
-        blank=True,
-        null=True,
-        max_length=255,
-    )
     headline = models.CharField(
         blank=True,
         null=True,
         max_length=255,
         help_text="A concise high-level overview of the job."
     )
-    skills = models.CharField(
-        blank=True,
-        null=True,
-        max_length=255,
-    )
+    post_date = models.DateField(auto_now_add=True)
+    slug = models.SlugField(unique=True)
     city = models.CharField(
         blank=True,
         null=True,

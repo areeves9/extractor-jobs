@@ -20,7 +20,7 @@ def upload_location(instance, filename):
 
 
 class SiteUserManager(BaseUserManager):
-    def create_user(self, email, display_name, account_type, password=None):
+    def create_user(self, email, display_name, password=None):
         """
         Creates and saves a User with the given email and password.
         """
@@ -29,20 +29,18 @@ class SiteUserManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(email),
             display_name=display_name,
-            account_type=account_type,
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, display_name, account_type, password):
+    def create_superuser(self, email, display_name, password):
         """
         Creates and saves a superuser with the given email and password.
         """
         user = self.create_user(
             email,
             display_name=display_name,
-            account_type=account_type,
             password=password,
         )
         user.is_admin = True
@@ -136,14 +134,15 @@ class SiteUser(AbstractBaseUser):
         """
         Overirde the model save method to set slug field to username
         """
-        self.slug = slugify(self.display_name)
+        if not self.slug:
+            self.slug = slugify(self.display_name)
         super(SiteUser, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.email
 
     def get_absolute_url(self):
-        return reverse("accounts:profile_detail", kwargs={"pk": self.pk})
+        return reverse("accounts:profile_detail", kwargs={"slug": self.slug})
 
     def get_full_name(self):
         return F"{self.first_name} {self.last_name}"

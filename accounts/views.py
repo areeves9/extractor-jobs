@@ -65,5 +65,5 @@ class UserListView(ListView):
     """
     List of SiteUser objects, with fk back to batch.
     """
-    queryset = SiteUser.objects.filter(is_active=True)
+    queryset = SiteUser.objects.filter(is_active=True, is_business=False)
     context_object_name = 'users'

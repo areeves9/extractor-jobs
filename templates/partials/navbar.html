@@ -9,7 +9,10 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'jobs:job_list' %}">Listings</a>
             </li>
-            {% if request.user.is_admin %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'accounts:user_list' %}">For Hire</a>
+            </li>
+            {% if request.user.is_business %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'jobs:job_create' %}">Post</a>
             </li>
