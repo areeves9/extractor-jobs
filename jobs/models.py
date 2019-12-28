@@ -3,11 +3,10 @@ from django.core.urlresolvers import reverse
 
 from django.db.models.signals import pre_save
 
+from cities_light.models import City, Country, Region
 from django.utils.text import slugify
 
 # Create your models here.
-
-
 class Job(models.Model):
     """
     A job with information found externally. Can be
@@ -61,16 +60,14 @@ class Job(models.Model):
     post_date = models.DateField(auto_now_add=True)
     slug = models.SlugField(unique=True)
     city = models.ForeignKey(
-        'cities_light.City',
+        City,
         verbose_name='city',
     )
-    country = models.ForeignKey(
-        'cities_light.Country',
-        verbose_name='country',
-
+    country = models.CharField(
+        max_length=255,
     )
     state = models.ForeignKey(
-        'cities_light.Region',
+        Region,
         verbose_name='region',
     )
     salary = models.DecimalField(
