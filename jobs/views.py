@@ -16,6 +16,7 @@ class JobCreate(CreateView):
         'city',
         'state',
         'salary',
+        'salary_frequency',
         'benefits',
         'link',
         'job_title',
@@ -33,6 +34,7 @@ class JobUpdate(UpdateView):
         'city',
         'state',
         'salary',
+        'salary_frequency',
         'benefits',
         'link'
         'job_title',
