@@ -1,4 +1,7 @@
 from django import forms
+from dal import autocomplete
+from cities_light.models import City, Region, Country
+
 from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
@@ -6,6 +9,18 @@ from accounts.models import SiteUser
 
 
 class UserRegisterForm(UserCreationForm):
+    city = forms.ModelChoiceField(
+        queryset=City.objects.all(),
+        widget=autocomplete.ModelSelect2(url='jobs:city-autocomplete')
+    )
+    state = forms.ModelChoiceField(
+        queryset=Region.objects.all(),
+        widget=autocomplete.ModelSelect2(url='jobs:region-autocomplete')
+    )
+    country = forms.ModelChoiceField(
+        queryset=Country.objects.all(),
+        widget=autocomplete.ModelSelect2(url='jobs:country-autocomplete')
+    )
 
     class Meta:
         model = SiteUser

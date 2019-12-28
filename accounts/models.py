@@ -2,6 +2,9 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
+from cities_light.models import City, Country, Region
+
+
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
@@ -62,7 +65,6 @@ class SiteUser(AbstractBaseUser):
         ('MA/MS', 'Master\'s'),
         ('PHD', 'Doctorate'),
     )
-    US_STATES_CHOICES = (('AL', 'Alabama'), ('AK', 'Alaska'), ('AZ', 'Arizona'), ('AR', 'Arkansas'), ('CA', 'California'), ('CO', 'Colorado'), ('CT', 'Connecticut'), ('DE', 'Delaware'), ('DC', 'District of Columbia'), ('FL', 'Florida'), ('GA', 'Georgia'), ('HI', 'Hawaii'), ('ID', 'Idaho'), ('IL', 'Illinois'), ('IN', 'Indiana'), ('IA', 'Iowa'), ('KS', 'Kansas'), ('KY', 'Kentucky'), ('LA', 'Louisiana'), ('ME', 'Maine'), ('MD', 'Maryland'), ('MA', 'Massachusetts'), ('MI', 'Michigan'), ('MN', 'Minnesota'), ('MS', 'Mississippi'), ('MO', 'Missouri'), ('MT', 'Montana'), ('NE', 'Nebraska'), ('NV', 'Nevada'), ('NH', 'New Hampshire'), ('NJ', 'New Jersey'), ('NM', 'New Mexico'), ('NY', 'New York'), ('NC', 'North Carolina'), ('ND', 'North Dakota'), ('OH', 'Ohio'), ('OK', 'Oklahoma'), ('OR', 'Oregon'), ('PA', 'Pennsylvania'), ('RI', 'Rhode Island'), ('SC', 'South Carolina'), ('SD', 'South Dakota'), ('TN', 'Tennessee'), ('TX', 'Texas'), ('UT', 'Utah'), ('VT', 'Vermont'), ('VA', 'Virginia'), ('WA', 'Washington'), ('WV', 'West Virginia'), ('WI', 'Wisconsin'), ('WY', 'Wyoming'))
     bio = models.TextField(blank=True, null=True)
     date_joined = models.DateField(auto_now_add=True)
     display_name = models.CharField(
@@ -109,18 +111,18 @@ class SiteUser(AbstractBaseUser):
     )
     height_field = models.IntegerField(default=0)
     width_field = models.IntegerField(default=0)
-    location_city = models.CharField(
-        blank=True,
-        null=True,
-        max_length=255,
-        unique=False,
+    city = models.ForeignKey(
+        City,
+        verbose_name='city',
     )
-    location_state = models.CharField(
-        blank=True,
-        null=True,
-        choices=US_STATES_CHOICES,
-        max_length=255,
-        unique=False,
+    country = models.ForeignKey(
+        Country,
+        verbose_name='country',
+
+    )
+    state = models.ForeignKey(
+        Region,
+        verbose_name='region',
     )
     phone_number = PhoneNumberField(blank=True)
 

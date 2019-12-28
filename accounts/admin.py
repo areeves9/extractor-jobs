@@ -21,12 +21,12 @@ class SiteUserAdmin(BaseUserAdmin):
         'first_name',
         'last_name',
         'date_joined',
-        'location_state',
+        'state',
         'is_admin',
         'is_active',
     )
     list_filter = (
-        ('location_state'),
+        ('state'),
         ('is_active'),
     )
     fieldsets = (
@@ -38,8 +38,9 @@ class SiteUserAdmin(BaseUserAdmin):
             'display_name',
             'image',
             'bio',
-            'location_state',
-            'location_city',
+            'state',
+            'city',
+            'country',
             'phone_number',
             'slug',
             'is_business',)}),

@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from jobs.autocomplete import CityAutocomplete, RegionAutocomplete, CountryAutocomplete
+from utils.autocomplete import CityAutocomplete, RegionAutocomplete, CountryAutocomplete
 
 from jobs.views import JobList, JobDetailView, JobCreate, JobUpdate, JobDelete
 
