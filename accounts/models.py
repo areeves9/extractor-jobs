@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
-from django.conf import settings
+from django.utils.text import slugify
+
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
@@ -63,6 +64,15 @@ class SiteUser(AbstractBaseUser):
         ('PHD', 'Doctor of Philosophy')
     )
     US_STATES_CHOICES = (('AL', 'Alabama'), ('AK', 'Alaska'), ('AZ', 'Arizona'), ('AR', 'Arkansas'), ('CA', 'California'), ('CO', 'Colorado'), ('CT', 'Connecticut'), ('DE', 'Delaware'), ('DC', 'District of Columbia'), ('FL', 'Florida'), ('GA', 'Georgia'), ('HI', 'Hawaii'), ('ID', 'Idaho'), ('IL', 'Illinois'), ('IN', 'Indiana'), ('IA', 'Iowa'), ('KS', 'Kansas'), ('KY', 'Kentucky'), ('LA', 'Louisiana'), ('ME', 'Maine'), ('MD', 'Maryland'), ('MA', 'Massachusetts'), ('MI', 'Michigan'), ('MN', 'Minnesota'), ('MS', 'Mississippi'), ('MO', 'Missouri'), ('MT', 'Montana'), ('NE', 'Nebraska'), ('NV', 'Nevada'), ('NH', 'New Hampshire'), ('NJ', 'New Jersey'), ('NM', 'New Mexico'), ('NY', 'New York'), ('NC', 'North Carolina'), ('ND', 'North Dakota'), ('OH', 'Ohio'), ('OK', 'Oklahoma'), ('OR', 'Oregon'), ('PA', 'Pennsylvania'), ('RI', 'Rhode Island'), ('SC', 'South Carolina'), ('SD', 'South Dakota'), ('TN', 'Tennessee'), ('TX', 'Texas'), ('UT', 'Utah'), ('VT', 'Vermont'), ('VA', 'Virginia'), ('WA', 'Washington'), ('WV', 'West Virginia'), ('WI', 'Wisconsin'), ('WY', 'Wyoming'))
+    bio = models.TextField(blank=True, null=True)
+    date_joined = models.DateField(auto_now_add=True)
+    display_name = models.CharField(
+        blank=False,
+        null=True,
+        max_length=255,
+        unique=True,
+        validators=[alphanumeric_underscores]
+    )
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,
@@ -74,22 +84,13 @@ class SiteUser(AbstractBaseUser):
         max_length=255,
         choices=EDUCATION_CHOICES,
     )
-    display_name = models.CharField(
-        blank=False,
-        null=True,
-        max_length=255,
-        unique=True,
-        validators=[alphanumeric_underscores]
-    )
+    headline = models.CharField(max_length=255, blank=True, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['display_name']  # email and password automatically required
 
     objects = SiteUserManager()
 
-    bio = models.TextField(blank=True, null=True)
-    headline = models.CharField(max_length=255, blank=True, null=True)
-    date_joined = models.DateField(auto_now_add=True)
     first_name = models.CharField(
         blank=True,
         null=True,
@@ -124,17 +125,25 @@ class SiteUser(AbstractBaseUser):
     )
     phone_number = PhoneNumberField(blank=True)
 
-    # password field is builtin
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_business = models.BooleanField(default=False)
 
-    def get_absolute_url(self):
-        return reverse("accounts:profile_detail", kwargs={"pk": self.pk})
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        """
+        Overirde the model save method to set slug field to username
+        """
+        self.slug = slugify(self.display_name)
+        super(SiteUser, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.email
+
+    def get_absolute_url(self):
+        return reverse("accounts:profile_detail", kwargs={"pk": self.pk})
 
     def get_full_name(self):
         return F"{self.first_name} {self.last_name}"

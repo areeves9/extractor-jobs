@@ -9,16 +9,15 @@
     <img src="https://via.placeholder.com/150" />
     {% endif %}
     <div class="media-body">
-        <h1 class="text-center font-italic">"{{ user.candidateprofile.headline }}"</h1>
+        <h1 class="text-center font-italic">"{{ user.headline }}"</h1>
         <h3 class="mt-0">@{{ user.display_name }}</h3>
         <h5 class="mt-0">{{ user.first_name }} {{ user.last_name }}</h5>
         <p>Email: {{ user.email }}</p>
         <p>Phone: {{ user.phone }}</p>
         <p>About Me: {{ user.bio }}</p>
-        <p>Education: {{ user.candidateprofile.education }}</p>
-        <p>Speciality: {{ user.candidateprofile.speciality }}</p>
+        <p>Education: {{ user.education }}</p>
         {% if request.user == user %}
-        <a href="{% url 'accounts:profile_update' user.pk %}">EDIT</a>
+        <a href="{% url 'accounts:profile_update' user.slug %}">EDIT</a>
         {% endif %}
     </div>
 </div>
