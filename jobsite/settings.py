@@ -143,3 +143,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media_production")
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# https://www.geonames.org/countries/
+CITIES_LIGHT_INCLUDE_COUNTRIES = ['CA', 'US']
