@@ -88,6 +88,7 @@ class SiteUser(AbstractBaseUser):
     objects = SiteUserManager()
 
     bio = models.TextField(blank=True, null=True)
+    headline = models.CharField(max_length=255, blank=True, null=True)
     date_joined = models.DateField(auto_now_add=True)
     first_name = models.CharField(
         blank=True,

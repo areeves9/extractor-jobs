@@ -46,8 +46,18 @@ class UserUpdateView(UpdateView):
     Updates Employee instance.
     """
     model = SiteUser
-    fields = ('__all__')
-    exclude = ('date_joined', 'last_login', 'password',)
+    fields = (
+        'education',
+        'display_name',
+        'bio',
+        'headline',
+        'first_name',
+        'last_name', 
+        'image',
+        'location_city',
+        'location_state',
+        'phone_number',
+    )
     success_url = reverse_lazy('accounts:profile')
 
 
