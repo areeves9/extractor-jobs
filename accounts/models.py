@@ -1,6 +1,4 @@
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.urls import reverse
 from django.conf import settings
 from django.contrib.auth.models import (
@@ -58,9 +56,11 @@ class SiteUser(AbstractBaseUser):
     class is subclassed. Employeers have the ability
     to create, edit, delete job posts.
     """
-    ACCOUNT_TYPE_CHOICES = (
-        ('CANDIDATE', 'Candidate'),
-        ('EMPLOYER', 'Employer'),
+    EDUCATION_CHOICES = (
+        ('HS', 'High School/GRE'),
+        ('BA/BS', 'Bachelor of Art/Science'),
+        ('MA/MS', 'Master of Art/Science'),
+        ('PHD', 'Doctor of Philosophy')
     )
     US_STATES_CHOICES = (('AL', 'Alabama'), ('AK', 'Alaska'), ('AZ', 'Arizona'), ('AR', 'Arkansas'), ('CA', 'California'), ('CO', 'Colorado'), ('CT', 'Connecticut'), ('DE', 'Delaware'), ('DC', 'District of Columbia'), ('FL', 'Florida'), ('GA', 'Georgia'), ('HI', 'Hawaii'), ('ID', 'Idaho'), ('IL', 'Illinois'), ('IN', 'Indiana'), ('IA', 'Iowa'), ('KS', 'Kansas'), ('KY', 'Kentucky'), ('LA', 'Louisiana'), ('ME', 'Maine'), ('MD', 'Maryland'), ('MA', 'Massachusetts'), ('MI', 'Michigan'), ('MN', 'Minnesota'), ('MS', 'Mississippi'), ('MO', 'Missouri'), ('MT', 'Montana'), ('NE', 'Nebraska'), ('NV', 'Nevada'), ('NH', 'New Hampshire'), ('NJ', 'New Jersey'), ('NM', 'New Mexico'), ('NY', 'New York'), ('NC', 'North Carolina'), ('ND', 'North Dakota'), ('OH', 'Ohio'), ('OK', 'Oklahoma'), ('OR', 'Oregon'), ('PA', 'Pennsylvania'), ('RI', 'Rhode Island'), ('SC', 'South Carolina'), ('SD', 'South Dakota'), ('TN', 'Tennessee'), ('TX', 'Texas'), ('UT', 'Utah'), ('VT', 'Vermont'), ('VA', 'Virginia'), ('WA', 'Washington'), ('WV', 'West Virginia'), ('WI', 'Wisconsin'), ('WY', 'Wyoming'))
     email = models.EmailField(
@@ -68,7 +68,12 @@ class SiteUser(AbstractBaseUser):
         max_length=255,
         unique=True
     )
-
+    education = models.CharField(
+        blank=True,
+        null=True,
+        max_length=255,
+        choices=EDUCATION_CHOICES,
+    )
     display_name = models.CharField(
         blank=False,
         null=True,
@@ -78,7 +83,7 @@ class SiteUser(AbstractBaseUser):
     )
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['display_name', 'account_type']  # email and password automatically required
+    REQUIRED_FIELDS = ['display_name']  # email and password automatically required
 
     objects = SiteUserManager()
 
@@ -89,6 +94,11 @@ class SiteUser(AbstractBaseUser):
         null=True,
         max_length=255
     )
+    last_name = models.CharField(
+        blank=True,
+        null=True,
+        max_length=255,
+    )
     image = models.ImageField(
         upload_to=upload_location,
         null=True,
@@ -98,12 +108,6 @@ class SiteUser(AbstractBaseUser):
     )
     height_field = models.IntegerField(default=0)
     width_field = models.IntegerField(default=0)
-    last_name = models.CharField(
-        blank=True,
-        null=True,
-        max_length=255,
-    )
-    # when the user joined the site
     location_city = models.CharField(
         blank=True,
         null=True,
@@ -121,14 +125,9 @@ class SiteUser(AbstractBaseUser):
 
     # password field is builtin
     is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
-
-    account_type = models.CharField(
-        max_length=255,
-        blank=False,
-        null=False,
-        choices=ACCOUNT_TYPE_CHOICES,
-    )
+    is_business = models.BooleanField(default=False)
 
     def get_absolute_url(self):
         return reverse("accounts:profile_detail", kwargs={"pk": self.pk})
@@ -160,94 +159,3 @@ class SiteUser(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
-
-
-@receiver(post_save, sender=SiteUser)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        CandidateProfile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=SiteUser)
-def save_user_profile(sender, instance, **kwargs):
-    instance.candidateprofile.save()
-
-
-class CandidateProfile(models.Model):
-    """
-    Extends the SiteUser model by adding additional fields.
-    There is a CandidateProfile and EmployerProfile. The
-    CandidateProfile will contain fields specific to extraction.
-    """
-    EDUCATION_CHOICES = (
-        ('HS', 'High School/GRE'),
-        ('BA/BS', 'Bachelor of Art/Science'),
-        ('MA/MS', 'Master of Art/Science'),
-        ('PHD', 'Doctor of Philosophy')
-    )
-    SPECIALITY_CHOICES = (
-        ('SYNTHESIS', 'Cannabinoid Synthesis'),
-        ('EXTRACTION', 'Cannabinoid/Terpene Extraction'),
-        ('POSTPROCESS', 'Winterization/Solvent Recovery'),
-        ('DISTILLATION', 'Cannabinoid Distillation'),
-        ('ANALYTICS', 'Cannabinoid Analytics'),
-        ('ISOLATIONS', 'Flash Chromatography/Crystallization'),
-    )
-    TITLE_CHOICES = (
-        ('TECHNICIAN', 'Technician'),
-        ('CHEMIST', 'Chemist'),
-    )
-    user = models.OneToOneField(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
-    education = models.CharField(
-        blank=True,
-        null=True,
-        max_length=255,
-        choices=EDUCATION_CHOICES,
-    )
-    speciality = models.CharField(
-        blank=True,
-        null=True,
-        max_length=255,
-        choices=SPECIALITY_CHOICES,
-    )
-    field_of_study = models.CharField(
-        blank=True,
-        null=True,
-        max_length=255,
-    )
-    headline = models.CharField(
-        blank=True,
-        null=True,
-        max_length=255,
-    )
-    title = models.CharField(
-        blank=True,
-        null=True,
-        max_length=255,
-        choices=TITLE_CHOICES,
-    )
-
-    class EmployerProfile(models.Model):
-        """
-        Extends the SiteUser model by adding additional fields.
-        There is a CandidateProfile and EmployerProfile. The
-        CandidateProfile will contain fields specific to extraction.
-        """
-        business_name = models.CharField(
-            blank=False,
-            null=False,
-            max_length=255,
-        )
-        business_url = models.URLField()
-        regulatory_id = models.CharField(
-            blank=False,
-            null=False,
-            max_length=255,
-        )
-        user = models.OneToOneField(
-            settings.AUTH_USER_MODEL,
-            on_delete=models.CASCADE
-        )
