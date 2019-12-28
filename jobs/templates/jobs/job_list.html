@@ -10,7 +10,6 @@
         <thead>
           <tr>
             <th scope="col">Headline (Click for Detail)</th>
-            <th scope="col">Job Category</th>
             <th scope="col">City</th>
             <th scope="col">State</th>
             <th scope="col">Salary</th>
@@ -25,7 +24,7 @@
             <td scope="row"><a href="{{ job.get_absolute_url }}">{{ job.headline }}</a></td>
             <td scope="row">{{ job.city }}</td>
             <td scope="row">{{ job.state }}</td>
-            <td scope="row">{{ job.salary }}</td>
+            <td scope="row">{{ job.salary }}/{{ job.salary_frequency }}</td>
             <td scope="row">{{ job.benefits }}</td>
             <td scope="row">{{ job.post_date }}</td>
             <td scope="row"><a href="{{ job.link }}" target="_blank">{{ job.link|truncatechars:9 }}</a></td>
