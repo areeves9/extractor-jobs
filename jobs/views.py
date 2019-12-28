@@ -9,17 +9,16 @@ class JobCreate(CreateView):
     model = Job
     fields = [
         'description',
-        'expiry',
-        'job_category',
-        'job_type',
+        'expiration_date',
+        'employment_type',
         'education',
-        'experience',
         'headline',
         'city',
         'state',
         'salary',
         'benefits',
-        'link'
+        'link',
+        'job_title',
     ]
 
 
@@ -27,17 +26,16 @@ class JobUpdate(UpdateView):
     model = Job
     fields = [
         'description',
-        'expiry',
-        'job_category',
-        'job_type',
+        'expiration_date',
+        'employment_type',
         'education',
-        'experience',
         'headline',
         'city',
         'state',
         'salary',
         'benefits',
         'link'
+        'job_title',
     ]
 
 

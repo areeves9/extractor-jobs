@@ -14,6 +14,7 @@ class Job(models.Model):
     created by an Admin or a SiteUser with Emoployer
     account type.
     """
+    US_STATES_CHOICES = (('AL', 'Alabama'), ('AK', 'Alaska'), ('AZ', 'Arizona'), ('AR', 'Arkansas'), ('CA', 'California'), ('CO', 'Colorado'), ('CT', 'Connecticut'), ('DE', 'Delaware'), ('DC', 'District of Columbia'), ('FL', 'Florida'), ('GA', 'Georgia'), ('HI', 'Hawaii'), ('ID', 'Idaho'), ('IL', 'Illinois'), ('IN', 'Indiana'), ('IA', 'Iowa'), ('KS', 'Kansas'), ('KY', 'Kentucky'), ('LA', 'Louisiana'), ('ME', 'Maine'), ('MD', 'Maryland'), ('MA', 'Massachusetts'), ('MI', 'Michigan'), ('MN', 'Minnesota'), ('MS', 'Mississippi'), ('MO', 'Missouri'), ('MT', 'Montana'), ('NE', 'Nebraska'), ('NV', 'Nevada'), ('NH', 'New Hampshire'), ('NJ', 'New Jersey'), ('NM', 'New Mexico'), ('NY', 'New York'), ('NC', 'North Carolina'), ('ND', 'North Dakota'), ('OH', 'Ohio'), ('OK', 'Oklahoma'), ('OR', 'Oregon'), ('PA', 'Pennsylvania'), ('RI', 'Rhode Island'), ('SC', 'South Carolina'), ('SD', 'South Dakota'), ('TN', 'Tennessee'), ('TX', 'Texas'), ('UT', 'Utah'), ('VT', 'Vermont'), ('VA', 'Virginia'), ('WA', 'Washington'), ('WV', 'West Virginia'), ('WI', 'Wisconsin'), ('WY', 'Wyoming'))
     EDUCATION_CHOICES = (
         ('HS', 'High School/GRE'),
         ('AS', 'Associate\'s'),
@@ -26,6 +27,13 @@ class Job(models.Model):
         ('FT', 'Full-Time'),
         ('PT', 'Part-Time'),
         ('1099', 'Contract'),
+    )
+    SALARY_FREQUENCY_CHOICES = (
+        ('HR', 'Per-Hour'),
+        ('DAY', 'Daily'),
+        ('WEEK', 'Weekly'),
+        ('MONTH', 'Monthly'),
+        ('YEAR', 'Yearly'),
     )
     description = models.TextField(
          help_text="Describe the position and the working conditions."
@@ -61,12 +69,17 @@ class Job(models.Model):
     state = models.CharField(
         blank=True,
         null=True,
+        choices=US_STATES_CHOICES,
         max_length=255,
+        unique=False,
     )
-    salary = models.CharField(
-        blank=True,
-        null=True,
-        max_length=255,
+    salary = models.DecimalField(
+        max_digits=15,
+        decimal_places=2
+    )
+    salary_frequency = models.CharField(
+        max_length=225,
+        choices=SALARY_FREQUENCY_CHOICES,
     )
     benefits = models.CharField(
         blank=True,
@@ -74,6 +87,11 @@ class Job(models.Model):
         max_length=255,
     )
     link = models.URLField(
+        blank=True,
+        null=True,
+        max_length=255,
+    )
+    job_title = models.CharField(
         blank=True,
         null=True,
         max_length=255,

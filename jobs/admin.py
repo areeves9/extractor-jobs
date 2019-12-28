@@ -5,7 +5,7 @@ from jobs.models import Job
 
 
 class JobModelAdmin(admin.ModelAdmin):
-    list_display = ("headline", "slug", "city", "state", "post_date", "employment_type", "salary", "link")
+    list_display = ("job_title", "headline", "slug", "city", "state", "post_date", "employment_type", "salary", "link")
     list_filter = ("post_date", "state")
     search_fields = ["state"]
 

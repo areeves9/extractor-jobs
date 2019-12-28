@@ -23,7 +23,6 @@
             {% for job in job_list %}
           <tr>
             <td scope="row"><a href="{{ job.get_absolute_url }}">{{ job.headline }}</a></td>
-            <td scope="row">{{ job.job_category }}</td>     
             <td scope="row">{{ job.city }}</td>
             <td scope="row">{{ job.state }}</td>
             <td scope="row">{{ job.salary }}</td>
