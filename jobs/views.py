@@ -1,5 +1,5 @@
 from dal import autocomplete
-from cities_light.models import Country
+from cities_light.models import City
 
 from django.urls import reverse_lazy
 from django.views.generic import ListView
@@ -9,13 +9,13 @@ from jobs.models import Job
 from jobs.forms import JobForm
 
 
-class CountryAutocomplete(autocomplete.Select2QuerySetView):
+class CityAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         # Don't forget to filter out results depending on the visitor !
         if not self.request.user.is_authenticated():
-            return Country.objects.none()
+            return City.objects.none()
 
-        qs = Country.objects.all()
+        qs = City.objects.all()
 
         if self.q:
             qs = qs.filter(name__istartswith=self.q)

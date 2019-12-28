@@ -7,6 +7,8 @@ from cities_light.models import City, Country, Region
 from django.utils.text import slugify
 
 # Create your models here.
+
+
 class Job(models.Model):
     """
     A job with information found externally. Can be
@@ -63,8 +65,10 @@ class Job(models.Model):
         City,
         verbose_name='city',
     )
-    country = models.CharField(
-        max_length=255,
+    country = models.ForeignKey(
+        Country,
+        verbose_name='country',
+
     )
     state = models.ForeignKey(
         Region,
