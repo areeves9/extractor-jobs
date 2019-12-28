@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 
 from accounts.forms import UserAdminCreationForm, UserAdminChangeForm
-from accounts.models import SiteUser, CandidateProfile
+from accounts.models import SiteUser
 
 
 class SiteUserAdmin(BaseUserAdmin):
@@ -17,7 +17,6 @@ class SiteUserAdmin(BaseUserAdmin):
     #  that point to specific fields of auth.User.
     list_display = (
         'email',
-        'account_type',
         'display_name',
         'first_name',
         'last_name',
@@ -28,7 +27,6 @@ class SiteUserAdmin(BaseUserAdmin):
     )
     list_filter = (
         ('location_state'),
-        ('account_type'),
         ('is_active'),
     )
     fieldsets = (
@@ -55,7 +53,6 @@ class SiteUserAdmin(BaseUserAdmin):
             'fields': (
                 'email',
                 'display_name',
-                'account_type',
                 'password1',
                 'password2',
             ),
@@ -66,13 +63,4 @@ class SiteUserAdmin(BaseUserAdmin):
     filter_horizontal = ()
 
 
-class CandidateProfileModelAdmin(admin.ModelAdmin):
-    list_display = ("user", "education", "speciality", "field_of_study", "headline", "title")
-    list_display_link = ("user",)
-
-    class Meta:
-        model = CandidateProfile
-
-
 admin.site.register(SiteUser, SiteUserAdmin)
-admin.site.register(CandidateProfile, CandidateProfileModelAdmin)

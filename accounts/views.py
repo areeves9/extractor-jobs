@@ -2,7 +2,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 
 from accounts.models import SiteUser
-from accounts.forms import CandidateProfileForm, UserRegisterForm, SiteUserForm
+from accounts.forms import UserRegisterForm
 
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
@@ -46,17 +46,8 @@ class UserUpdateView(UpdateView):
     Updates Employee instance.
     """
     model = SiteUser
-    fields = (
-        'first_name',
-        'last_name',
-        'display_name',
-        'bio',
-        'location_city',
-        'location_state',
-        'image',
-        'phone_number',
-
-    )
+    fields = ('__all__')
+    exclude = ('date_joined', 'last_login', 'password',)
     success_url = reverse_lazy('accounts:profile')
 
 
@@ -64,26 +55,5 @@ class UserListView(ListView):
     """
     List of SiteUser objects, with fk back to batch.
     """
-    queryset = SiteUser.objects.filter(is_active=True, account_type='CANDIDATE')
+    queryset = SiteUser.objects.filter(is_active=True)
     context_object_name = 'users'
-
-
-@login_required
-def candidate_profile_update(request):
-    if request.method == "POST":
-        user_form = SiteUserForm(request.POST or None, request.FILES, instance=request.user)
-        candidate_profile_form = CandidateProfileForm(request.POST or None, instance=request.user.candidateprofile)
-        if user_form.is_valid() and candidate_profile_form.is_valid():
-            user = user_form.save(commit=False)
-            profile = candidate_profile_form.save(commit=False)
-            user.save()
-            profile.save()
-            return redirect("accounts:profile")
-    else:
-        user_form = SiteUserForm(instance=request.user)
-        candidate_profile_form = CandidateProfileForm(instance=request.user.candidateprofile)
-    context = {
-        "user_form": user_form,
-        "candidate_profile_form": candidate_profile_form,
-    }
-    return render(request, "accounts/candidate_profile_update.html", context)

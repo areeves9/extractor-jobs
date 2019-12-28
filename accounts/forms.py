@@ -2,37 +2,14 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from accounts.models import SiteUser, CandidateProfile
-
-
-class SiteUserForm(forms.ModelForm):
-    class Meta:
-        model = SiteUser
-        fields = '__all__'
-        exclude = (
-            'account_type',
-            'email',
-            'height_field',
-            'width_field',
-            'password',
-            'last_login',
-            'is_admin',
-            'is_active',
-        )
-
-
-class CandidateProfileForm(forms.ModelForm):
-    class Meta:
-        model = CandidateProfile
-        fields = '__all__'
-        exclude = 'user',
+from accounts.models import SiteUser
 
 
 class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = SiteUser
-        fields = ('email', 'display_name', 'account_type',)
+        fields = ('email', 'display_name',)
 
 
 class RegisterForm(forms.ModelForm):
@@ -70,7 +47,7 @@ class UserAdminCreationForm(forms.ModelForm):
 
     class Meta:
         model = SiteUser
-        fields = ('email', 'display_name', 'account_type', 'password1', 'password2',)
+        fields = ('email', 'display_name', 'password1', 'password2',)
 
     def clean_password2(self):
         # Check that the two password entries match
