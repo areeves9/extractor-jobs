@@ -9,6 +9,13 @@ from accounts.models import SiteUser
 
 
 class UserRegisterForm(UserCreationForm):
+
+    class Meta:
+        model = SiteUser
+        fields = ('email', 'display_name',)
+
+
+class UserUpdateForm(forms.ModelForm):
     city = forms.ModelChoiceField(
         queryset=City.objects.all(),
         widget=autocomplete.ModelSelect2(url='jobs:city-autocomplete')
@@ -24,7 +31,14 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = SiteUser
-        fields = ('email', 'display_name',)
+        exclude = (
+            'email',
+            'password',
+            'is_admin',
+            'is_staff',
+            'is_business',
+            'is_active',
+        )
 
 
 class RegisterForm(forms.ModelForm):

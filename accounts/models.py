@@ -4,7 +4,6 @@ from django.utils.text import slugify
 
 from cities_light.models import City, Country, Region
 
-
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )

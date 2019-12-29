@@ -11,7 +11,7 @@
     <div class="media-body">
         <h1 class="text-center font-italic">"{{ user.headline }}"</h1>
         <h5 class="mt-0">{{ user.first_name }} {{ user.last_name }}</h5>
-        <h5 class="mt-0">{{ user.location_city }}, {{ user.location_state }}</h5>
+        <h5 class="mt-0">{{ user.city.name }}, {{ user.state.name }}, {{ user.country.code2 }}</h5>
         <p>Email: {{ user.email }}</p>
         <p>Phone: {{ user.phone }}</p>
         <p>About Me: {{ user.bio }}</p>

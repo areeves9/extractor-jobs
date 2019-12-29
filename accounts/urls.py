@@ -1,12 +1,28 @@
-from accounts import views
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
+
+from utils.autocomplete import CityAutocomplete, RegionAutocomplete, CountryAutocomplete
 
 from accounts.views import RegistrationView, UserDetailView, UserUpdateView, UserListView, UserProfileView
 from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
+    url(
+        r'^city-autocomplete/$',
+        CityAutocomplete.as_view(),
+        name='city-autocomplete',
+    ),
+    url(
+        r'^region-autocomplete/$',
+        RegionAutocomplete.as_view(),
+        name='region-autocomplete',
+    ),
+    url(
+        r'^country-autocomplete/$',
+        CountryAutocomplete.as_view(),
+        name='country-autocomplete',
+    ),
     url(r'^register/$', RegistrationView.as_view(), name='register'),
     url(r'^profile/$', login_required(UserProfileView.as_view()), name='profile'),
     url(r'^profile/(?P<slug>[-\w]+)/$', login_required(UserDetailView.as_view()), name='profile_detail'),

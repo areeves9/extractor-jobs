@@ -1,14 +1,11 @@
 from django.urls import reverse_lazy
-from django.shortcuts import render, redirect
-
-from accounts.models import SiteUser
-from accounts.forms import UserRegisterForm
 
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.list import ListView
-from django.contrib.auth.decorators import login_required
 
+from accounts.models import SiteUser
+from accounts.forms import UserRegisterForm, UserUpdateForm
 
 # Create your views here.
 
@@ -46,18 +43,7 @@ class UserUpdateView(UpdateView):
     Updates Employee instance.
     """
     model = SiteUser
-    fields = (
-        'education',
-        'display_name',
-        'bio',
-        'headline',
-        'first_name',
-        'last_name', 
-        'image',
-        'location_city',
-        'location_state',
-        'phone_number',
-    )
+    form_class = UserUpdateForm
     success_url = reverse_lazy('accounts:profile')
 
 

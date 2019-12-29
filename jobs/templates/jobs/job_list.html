@@ -28,7 +28,7 @@
             <td scope="row">{{ job.city.name }}</td>
             <td scope="row">{{ job.state.name }}</td>
             <td scope="row">{{ job.country.name }}</td>
-            <td scope="row">{{ job.salary }}/{{ job.salary_frequency }}</td>
+            <td scope="row"><button class="btn btn-success">{{ job.salary }}/{{ job.salary_frequency }}</button></td>
             <td scope="row">{{ job.benefits }}</td>
             <td scope="row">{{ job.post_date }}</td>
             <td scope="row"><a href="{{ job.link }}" target="_blank">{{ job.link|truncatechars:9 }}</a></td>
