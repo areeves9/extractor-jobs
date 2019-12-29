@@ -6,7 +6,6 @@ from utils.autocomplete import CityAutocomplete, RegionAutocomplete, CountryAuto
 from accounts.views import RegistrationView, UserDetailView, UserUpdateView, UserListView, UserProfileView
 from django.contrib.auth import views as auth_views
 
-
 urlpatterns = [
     url(
         r'^city-autocomplete/$',
