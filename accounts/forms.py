@@ -34,10 +34,13 @@ class UserUpdateForm(forms.ModelForm):
         exclude = (
             'email',
             'password',
+            'height_field',
+            'width_field',
             'is_admin',
             'is_staff',
             'is_business',
             'is_active',
+            'slug',
         )
 
 
