@@ -1,35 +1,39 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/css/siteuser_detail.css' %}">
+{% endblock %}
+
 {% block content %}
 
 <div class="row">
-    <h2>Users</h2>
     <div class="col-md">
         <ul class="list-unstyled">
             {% for user in users %}
-            <li class="media">
+            <li style="background-color: #343a40; margin-bottom: 1rem;" class="media">
                 {% if user.image %}
                 <a href="{{ user.get_absolute_url }}">
-                    <img class="mr-3" style="width:64px;height:64px;" src="{{ user.image.url }}" alt="Generic placeholder image">
+                    <img style="height:124px;width:124px;" src="{{ user.image.url }}" class="mr-3" alt="..." />
                 </a>
                 {% else %}
-                <a href="{{ user.get_absolute_url }}">
-                    <img class="mr-3" style="width:64px;height:64px;" src="https://placeimg.com/640/480/any" alt="Generic placeholder image">
+                <a href="{{ user.get_absolute_url }}"></a>
+                    <img src="https://via.placeholder.com/150" />
                 </a>
                 {% endif %}
                 <div class="media-body">
-                    <h5 class="mt-0 mb-1"><a href="{{ user.get_absolute_url }}">{{ user }}</a></h5>
-                    <h5 class="mt-0 mb-1">{{ user.location_city }}, {{ user.location_state }}</h5>
-                    <h5 class="mt-0 mb-1">{{ user.candidateprofile.headline }}</h5>
-                    <h5 class="mt-0 mb-1">{{ user.candidateprofile.speciality }}</h5>
+                    <h5 class="mt-0 mb-1">{{ user.first_name }} {{ user.last_name }}</h5>
+                    <h6 class="mt-0">{{ user.city.name }}, {{ user.state.name }}, {{ user.country.code2 }}</h6>
                 </div>
             </li>
             {% endfor %}
         </ul>
     </div>
-
-    
-
 </div>
+
+
+<!-- <div style="background-color: #343a40;" class="media"> -->
+  
 
 {% endblock %}

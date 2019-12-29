@@ -1,23 +1,25 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/css/siteuser_detail.css' %}">
+{% endblock %}
+
 {% block content %}
 
-<div class="media">
+<div style="width: 80%;" class="card">
     {% if user.image %}
-    <img src="{{ user.image.url }}" class="align-self-start mr-3" alt="...">
+    <!-- <img class="card-img-top" src="{{ user.image.url }}" alt="Card image cap"> -->
     {% else %}
     <img src="https://via.placeholder.com/150" />
     {% endif %}
-    <div class="media-body">
-        <h1 class="text-center font-italic">"{{ user.headline }}"</h1>
-        <h5 class="mt-0">{{ user.first_name }} {{ user.last_name }}</h5>
-        <h5 class="mt-0">{{ user.city.name }}, {{ user.state.name }}, {{ user.country.code2 }}</h5>
-        <p>Email: {{ user.email }}</p>
-        <p>Phone: {{ user.phone }}</p>
-        <p>About Me: {{ user.bio }}</p>
-        <p>Education: {{ user.education }}</p>
+    <div class="card-body">
+        <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+        <h5 class="card-title">{{ user.city.name }}, {{ user.state.name }}, {{ user.country.code2 }}</h5>
+        <!-- <p class="card-text">{{ user.bio }}</p> -->
         {% if request.user == user %}
-        <a href="{% url 'accounts:profile_update' user.slug %}">EDIT</a>
+        <a class="btn btn-warning" href="{% url 'accounts:profile_update' user.slug %}">EDIT</a>
         {% endif %}
     </div>
 </div>

@@ -113,15 +113,21 @@ class SiteUser(AbstractBaseUser):
     city = models.ForeignKey(
         City,
         verbose_name='city',
+        blank=True,
+        null=True,
     )
     country = models.ForeignKey(
         Country,
         verbose_name='country',
+        blank=True,
+        null=True,
 
     )
     state = models.ForeignKey(
         Region,
         verbose_name='region',
+        blank=True,
+        null=True,
     )
     phone_number = PhoneNumberField(blank=True)
 

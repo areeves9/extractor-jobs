@@ -10,7 +10,8 @@
         <thead>
           <tr>
             <th scope="col">Headline</th>
-            <th scope="col">Posted By</th>
+            <th scope="col">Business</th>
+            <th scope="col">FT/PT/1099</th>
             <th scope="col">City</th>
             <th scope="col">State</th>
             <th scope="col">Country</th>
@@ -23,8 +24,9 @@
         <tbody>
             {% for job in job_list %}
           <tr>
-            <td scope="row"><a style="color:orange;" href="{{ job.get_absolute_url }}"><b>{{ job.headline }}</</a></td>
+            <td scope="row"><a style="color:orange;" href="{{ job.get_absolute_url }}"><b>{{ job.headline }}</a></td>
             <td scope="row"></td>
+            <td scope="row">{{ job.employment_type }}</td>
             <td scope="row">{{ job.city.name }}</td>
             <td scope="row">{{ job.state.name }}</td>
             <td scope="row">{{ job.country.name }}</td>
@@ -32,8 +34,10 @@
             <td scope="row">{{ job.benefits }}</td>
             <td scope="row">{{ job.post_date }}</td>
             <td scope="row"><a style="color:white;" href="{{ job.link }}" target="_blank">{% fa5_icon 'external-link-alt fa-1x' 'fas' %}</a></td>
+            {% if request.user.is_admin %}
             <td><a href="{% url 'jobs:job_update' job.slug %}"><button style="color:black;" class="btn btn-warning">{% fa5_icon 'edit fa-1x' 'fas' %}</button></a></td>
             <td><a href="{% url 'jobs:job_delete' job.slug %}"><button class="btn btn-danger">{% fa5_icon 'times fa-1x' 'fas' %}</button></a></td>
+            {% endif %}
           </tr>
           {% endfor %}
         </tbody>
