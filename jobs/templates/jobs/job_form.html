@@ -6,7 +6,13 @@
 
 {% block content %}
 <div class="col">
-    <h3 class="text-center">Add Job</h3>
+    <h3 class="text-center">
+        {% if request.resolver_match.url_name == 'job_update' %}
+        Update Job
+        {% else %}
+        Add Job
+        {% endif %}
+    </h3>
     <div class="row justify-content-center">
         <div class="col-md-4">
             <form action="" method="post">
