@@ -1,0 +1,26 @@
+{% load fontawesome_5 %}
+
+
+<div class="row">
+    <div class="ml-3 mr-1 col-xs-3">
+        {% fa5_icon 'envelope fa-1x' 'far' %}
+    </div>
+    <div class="col-xs-9">
+        <p class="ml-3"><b>Email</b></p>
+        <a class="ml-3 mt-n5" href="mailto:{{ user.email }}">{{ user.email }}</a>
+    </div>     
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="ml-3 mr-1 col-xs-3">
+        {% fa5_icon 'mobile-alt fa-1x' 'fas' %}
+    </div>
+    <div class="col-xs-9">
+        <p class="ml-3"><b>Phone</b></p>
+        <p class="ml-3">{{ user.phone_number }}</p>
+    </div>     
+</div>
+
+<hr>

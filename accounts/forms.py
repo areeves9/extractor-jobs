@@ -34,6 +34,7 @@ class UserUpdateForm(forms.ModelForm):
         exclude = (
             'email',
             'password',
+            'last_login',
             'height_field',
             'width_field',
             'is_admin',
