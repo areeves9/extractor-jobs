@@ -64,3 +64,11 @@ class ExperienceView(CreateView):
     form_class = ExperienceForm
     success_url = reverse_lazy('accounts:profile')
     template_name = 'accounts/experience_form.html'
+
+
+class ExperienceUpdateView(UpdateView):
+    """
+    Updates Experience instance.
+    """
+    model = Experience
+    form_class = ExperienceForm

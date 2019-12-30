@@ -229,13 +229,13 @@ class Experience(models.Model):
     )
     start_month = models.CharField(
         choices=MONTH_CHOICES,
-        max_length=3,
+        max_length=20,
         blank=False,
         null=False,
     )
     end_month = models.CharField(
         choices=MONTH_CHOICES,
-        max_length=3,
+        max_length=20,
         blank=False,
         null=False,
     )
@@ -252,6 +252,9 @@ class Experience(models.Model):
     )
 
     is_employeer = models.BooleanField(default=False)
+
+    def get_absolute_url(self):
+        return reverse("accounts:experience_update", kwargs={"pk": self.pk})
 
     def __str__(self):
         return self.company

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
 {% load crispy_forms_tags %} 
 
 {% block content %}
@@ -19,6 +21,7 @@
 {% endblock %}
 
 {% block footer %}
+
 {{ form.media }}
 {% endblock %}
 
