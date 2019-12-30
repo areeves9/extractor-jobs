@@ -10,6 +10,8 @@
 
 {% block content %}
 
+{% include "accounts/partials/siteuser_modal.html" %}
+
 <div class="row">
     <div class="col-md">
         {% if user.image %}
@@ -45,10 +47,19 @@
 
 <hr>
 
+{% if request.user.pk == user.pk %}
+<a href="{% url 'accounts:experience_add' %}">Add Experience</a>
+{% endif %}
+
+
+
+
+ 
 {% include "accounts/partials/siteuser_contact.html" %}
+{% include "accounts/partials/siteuser_experience.html" %}
 
 
-{% include "accounts/partials/siteuser_modal.html" %}
+
 
 
 {% endblock %}

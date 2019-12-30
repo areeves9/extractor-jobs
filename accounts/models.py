@@ -229,13 +229,13 @@ class Experience(models.Model):
     )
     start_month = models.CharField(
         choices=MONTH_CHOICES,
-        max_length=20,
+        max_length=3,
         blank=False,
         null=False,
     )
     end_month = models.CharField(
         choices=MONTH_CHOICES,
-        max_length=20,
+        max_length=3,
         blank=False,
         null=False,
     )

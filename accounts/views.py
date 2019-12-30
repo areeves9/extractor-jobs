@@ -4,8 +4,8 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.list import ListView
 
-from accounts.models import SiteUser
-from accounts.forms import UserRegisterForm, UserUpdateForm
+from accounts.models import SiteUser, Experience
+from accounts.forms import UserRegisterForm, UserUpdateForm, ExperienceForm
 
 # Create your views here.
 
@@ -53,3 +53,14 @@ class UserListView(ListView):
     """
     queryset = SiteUser.objects.filter(is_active=True, is_business=False)
     context_object_name = 'users'
+
+
+class ExperienceView(CreateView):
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(ExperienceView, self).form_valid(form)
+
+    model = Experience
+    form_class = ExperienceForm
+    success_url = reverse_lazy('accounts:profile')
+    template_name = 'accounts/experience_form.html'

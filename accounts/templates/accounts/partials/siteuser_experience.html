@@ -1,0 +1,27 @@
+{% load fontawesome_5 %}
+
+<h5>Experience</h5>
+<div class="row">
+    <div class="col-md">
+        {% if user.experience_set %}
+        <ul class="list-unstyled">
+            {% for e in user.experience_set.all %}
+            <li class="media">
+                <img class="mr-3" src="https://via.placeholder.com/64" />
+              <div class="media-body">
+                <h5 class="mt-0 mb-1">{{ e.company }}</h5>
+                <h6 class="mt-0 mb-1">{{ e.title }}</h6>
+                <h6>{{ e.start_month}} {{e.start_year }} to {{ e.end_month }} {{ e.end_year }}</h6>
+                <p>{{ e.location }}</p>
+                <p class="mt-n3">{{ e.description }}</p>
+              </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>     
+</div>
+
+<hr>
+
+

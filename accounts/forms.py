@@ -5,7 +5,7 @@ from cities_light.models import City, Region, Country
 from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from accounts.models import SiteUser
+from accounts.models import SiteUser, Experience
 
 
 class UserRegisterForm(UserCreationForm):
@@ -42,6 +42,21 @@ class UserUpdateForm(forms.ModelForm):
             'is_business',
             'is_active',
             'slug',
+        )
+
+
+class ExperienceForm(forms.ModelForm):
+    location = forms.ModelChoiceField(
+        queryset=City.objects.all(),
+        widget=autocomplete.ModelSelect2(url='jobs:city-autocomplete')
+    )
+
+    class Meta:
+        model = Experience
+        exclude = (
+            'date_created',
+            'date_updated',
+            'user',
         )
 
 

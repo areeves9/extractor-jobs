@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from utils.autocomplete import CityAutocomplete, RegionAutocomplete, CountryAutocomplete
 
-from accounts.views import RegistrationView, UserDetailView, UserUpdateView, UserListView, UserProfileView
+from accounts.views import RegistrationView, UserDetailView, UserUpdateView, UserListView, UserProfileView, ExperienceView
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -29,4 +29,5 @@ urlpatterns = [
     url(r'^user/list/$', login_required(UserListView.as_view()), name='user_list'),
     url(r'^login/$', auth_views.LoginView.as_view(), name="login"),
     url(r'^logout/$', auth_views.LogoutView.as_view(), name="logout"),
+    url(r'^experience/add/$', login_required(ExperienceView.as_view()), name="experience_add"),
 ]

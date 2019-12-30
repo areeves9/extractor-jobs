@@ -4,7 +4,16 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 
 from accounts.forms import UserAdminCreationForm, UserAdminChangeForm
-from accounts.models import SiteUser
+from accounts.models import SiteUser, Experience
+
+
+class ExperienceAdmin(admin.ModelAdmin):
+    list_display = ["user",]
+    list_display_links = ["user"]
+    search_fields = ["user"]
+
+    class Meta:
+        model = Experience
 
 
 class SiteUserAdmin(BaseUserAdmin):
@@ -67,3 +76,4 @@ class SiteUserAdmin(BaseUserAdmin):
 
 
 admin.site.register(SiteUser, SiteUserAdmin)
+admin.site.register(Experience, ExperienceAdmin)
