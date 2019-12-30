@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
@@ -65,7 +66,8 @@ class SiteUser(AbstractBaseUser):
         ('PHD', 'Doctorate'),
     )
     bio = models.TextField(blank=True, null=True)
-    date_joined = models.DateField(auto_now_add=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
     display_name = models.CharField(
         blank=False,
         null=True,
@@ -176,3 +178,75 @@ class SiteUser(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+
+class Experience(models.Model):
+    """
+    Foreign key relationship to SiteUser. Describes
+    previous work experiences associated with SiteUser
+    instance.
+    """
+    MONTH_CHOICES = (
+        ('Janurary', 'Janurary'),
+        ('Feburary', 'Feburary'),
+        ('March', 'March'),
+        ('April', 'April'),
+        ('May', 'May'),
+        ('June', 'June'),
+        ('July', 'July'),
+        ('August', 'August'),
+        ('September', 'September'),
+        ('October', 'October'),
+        ('November', 'November'),
+        ('December', 'December'),
+    )
+
+    def get_year_choices():
+        YEAR_CHOICES = []   
+
+        for r in range(1980, (datetime.datetime.now().year+1)):
+            YEAR_CHOICES.append((r,r))
+        return YEAR_CHOICES
+
+    company = models.CharField(
+        max_length=255,
+        blank=False,
+        null=False,
+    )
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+    description = models.TextField(blank=True, null=True)
+    location = models.CharField(max_length=255, blank=True, null=True)
+    title = models.CharField(
+        max_length=255,
+        blank=False,
+        null=False,
+    )
+    start_month = models.CharField(
+        choices=MONTH_CHOICES,
+        max_length=20,
+        blank=False,
+        null=False,
+    )
+    end_month = models.CharField(
+        choices=MONTH_CHOICES,
+        max_length=20,
+        blank=False,
+        null=False,
+    )
+    start_year = models.IntegerField(
+        choices=get_year_choices(),
+    )
+    end_year = models.IntegerField(
+        choices=get_year_choices(),
+    )
+    user = models.ForeignKey(
+        SiteUser,
+        verbose_name='user',
+        on_delete=models.PROTECT
+    )
+
+    is_employeer = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.company
