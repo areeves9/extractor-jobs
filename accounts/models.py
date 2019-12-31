@@ -178,9 +178,13 @@ class Skill(models.Model):
     """
     user = models.OneToOneField(
         SiteUser,
+        related_name='skill',
         on_delete=models.CASCADE,
     )
     tags = TaggableManager()
+
+    def __str__(self):
+        return str(self.tags)
 
 
 class Experience(models.Model):

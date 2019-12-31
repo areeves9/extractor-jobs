@@ -33,7 +33,7 @@
         {% endif %}
 
         <h4>{{ user.first_name }} {{ user.last_name }}</h4>
-        <h6>{{ user.city.name }}, {{ user.state.name }}, {{ user.country.code2 }}</h6>
+        <h6>{{ user.location }}</h6>
     </div>
 </div>
 
@@ -49,6 +49,8 @@
  
 {% include "accounts/partials/siteuser_contact.html" %}
 {% include "accounts/partials/siteuser_experience.html" %}
+{% include "accounts/partials/siteuser_skills.html" %}
+
 
 
 

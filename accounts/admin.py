@@ -4,11 +4,20 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 
 from accounts.forms import UserAdminCreationForm, UserAdminChangeForm
-from accounts.models import SiteUser, Experience
+from accounts.models import SiteUser, Experience, Skill
+
+
+class SkillAdmin(admin.ModelAdmin):
+    list_display = ["user"]
+    list_display_links = ["user"]
+    search_fields = ["user"]
+
+    class Meta:
+        model = Skill
 
 
 class ExperienceAdmin(admin.ModelAdmin):
-    list_display = ["user",]
+    list_display = ["user"]
     list_display_links = ["user"]
     search_fields = ["user"]
 
@@ -73,5 +82,6 @@ class SiteUserAdmin(BaseUserAdmin):
     filter_horizontal = ()
 
 
+admin.site.register(Skill, SkillAdmin)
 admin.site.register(SiteUser, SiteUserAdmin)
 admin.site.register(Experience, ExperienceAdmin)

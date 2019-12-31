@@ -16,17 +16,9 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserUpdateForm(forms.ModelForm):
-    city = forms.ModelChoiceField(
+    location = forms.ModelChoiceField(
         queryset=City.objects.all(),
         widget=autocomplete.ModelSelect2(url='jobs:city-autocomplete')
-    )
-    state = forms.ModelChoiceField(
-        queryset=Region.objects.all(),
-        widget=autocomplete.ModelSelect2(url='jobs:region-autocomplete')
-    )
-    country = forms.ModelChoiceField(
-        queryset=Country.objects.all(),
-        widget=autocomplete.ModelSelect2(url='jobs:country-autocomplete')
     )
 
     class Meta:
