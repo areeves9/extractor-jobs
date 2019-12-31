@@ -117,19 +117,21 @@ class SiteUser(AbstractBaseUser):
         verbose_name='city',
         blank=True,
         null=True,
+        on_delete=models.PROTECT,
     )
     country = models.ForeignKey(
         Country,
         verbose_name='country',
         blank=True,
         null=True,
-
+        on_delete=models.PROTECT,
     )
     state = models.ForeignKey(
         Region,
         verbose_name='region',
         blank=True,
         null=True,
+        on_delete=models.PROTECT,
     )
     phone_number = PhoneNumberField(blank=True)
 
@@ -221,6 +223,7 @@ class Experience(models.Model):
         verbose_name='city',
         blank=True,
         null=True,
+        on_delete=models.PROTECT,
     )
     title = models.CharField(
         max_length=255,

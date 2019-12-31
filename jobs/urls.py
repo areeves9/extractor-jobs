@@ -1,27 +1,27 @@
-from django.conf.urls import url
+from django.urls import include, re_path
 from utils.autocomplete import CityAutocomplete, RegionAutocomplete, CountryAutocomplete
 
 from jobs.views import JobList, JobDetailView, JobCreate, JobUpdate, JobDelete
 
 urlpatterns = [
-    url(
+    re_path(
         r'^city-autocomplete/$',
         CityAutocomplete.as_view(),
         name='city-autocomplete',
     ),
-    url(
+    re_path(
         r'^region-autocomplete/$',
         RegionAutocomplete.as_view(),
         name='region-autocomplete',
     ),
-    url(
+    re_path(
         r'^country-autocomplete/$',
         CountryAutocomplete.as_view(),
         name='country-autocomplete',
     ),
-    url(r'^$', JobList.as_view(), name='job_list'),
-    url(r'^create/$', JobCreate.as_view(), name='job_create'),
-    url(r'^(?P<slug>[-\w]+)/update/$', JobUpdate.as_view(), name='job_update'),
-    url(r'^(?P<slug>[-\w]+)/delete/$', JobDelete.as_view(), name='job_delete'),
-    url(r'^(?P<slug>[-\w]+)/$', JobDetailView.as_view(), name="job_detail"),
+    re_path(r'^$', JobList.as_view(), name='job_list'),
+    re_path(r'^create/$', JobCreate.as_view(), name='job_create'),
+    re_path(r'^(?P<slug>[-\w]+)/update/$', JobUpdate.as_view(), name='job_update'),
+    re_path(r'^(?P<slug>[-\w]+)/delete/$', JobDelete.as_view(), name='job_delete'),
+    re_path(r'^(?P<slug>[-\w]+)/$', JobDetailView.as_view(), name="job_detail"),
 ]

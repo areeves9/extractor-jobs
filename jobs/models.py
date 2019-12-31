@@ -1,5 +1,7 @@
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.urls import reverse
+
+# from django.core.urlresolvers import reverse
 
 from django.db.models.signals import pre_save
 
@@ -64,15 +66,17 @@ class Job(models.Model):
     city = models.ForeignKey(
         City,
         verbose_name='city',
+        on_delete=models.PROTECT,
     )
     country = models.ForeignKey(
         Country,
         verbose_name='country',
-
+        on_delete=models.PROTECT,
     )
     state = models.ForeignKey(
         Region,
         verbose_name='region',
+        on_delete=models.PROTECT,
     )
     salary = models.DecimalField(
         max_digits=15,

@@ -15,15 +15,17 @@ Including another URLconf
 """
 
 from django.conf import settings
-from django.conf.urls import include, url
+# from django.conf.urls import include, url
+from django.urls import include, re_path
+
 from django.conf.urls.static import static
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^accounts/', include('accounts.urls', namespace='accounts')),
-    url(r'^account/', include('django.contrib.auth.urls')),
-    url(r'^jobs/', include('jobs.urls', namespace='jobs')),
+    re_path('admin/', admin.site.urls),
+    re_path('accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
+    re_path('account/', include('django.contrib.auth.urls')),
+    re_path('jobs/', include(('jobs.urls', 'jobs'), namespace='jobs')),
 ]
 
 if settings.DEBUG is True:
