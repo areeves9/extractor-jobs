@@ -4,8 +4,8 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.list import ListView
 
-from accounts.models import SiteUser, Experience
-from accounts.forms import UserRegisterForm, UserUpdateForm, ExperienceForm
+from accounts.models import SiteUser, Experience, Skill
+from accounts.forms import UserRegisterForm, UserUpdateForm, ExperienceForm, SkillForm
 
 # Create your views here.
 
@@ -56,6 +56,9 @@ class UserListView(ListView):
 
 
 class ExperienceView(CreateView):
+    """
+    Create an Expereince instance.
+    """
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(ExperienceView, self).form_valid(form)
@@ -66,10 +69,39 @@ class ExperienceView(CreateView):
     template_name = 'accounts/experience_form.html'
 
 
+class ExperienceDetailView(DetailView):
+    '''
+    Get detail of employee for profile. Return the
+    request.user object for the current logged in
+    user.
+    '''
+    model = Experience
+    context_object_name = 'experience'
+
+
 class ExperienceUpdateView(UpdateView):
     """
     Updates Experience instance.
     """
     model = Experience
     form_class = ExperienceForm
+    success_url = reverse_lazy('accounts:profile')
+
+
+class SkillDetailView(DetailView):
+    '''
+    Get detail of employee for profile. Return the
+    request.user object for the current logged in
+    user.
+    '''
+    model = Skill
+    context_object_name = 'skill'
+
+
+class SkillUpdateView(UpdateView):
+    """
+    Update skill instance - add or remove tags.
+    """
+    model = Skill
+    form_class = SkillForm
     success_url = reverse_lazy('accounts:profile')

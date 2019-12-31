@@ -142,7 +142,7 @@ class SiteUser(AbstractBaseUser):
         return self.email
 
     def get_absolute_url(self):
-        return reverse("accounts:profile_detail", kwargs={"slug": self.slug})
+        return reverse("accounts:profile", kwargs={"slug": self.slug})
 
     def get_full_name(self):
         return F"{self.first_name} {self.last_name}"
@@ -182,6 +182,9 @@ class Skill(models.Model):
         on_delete=models.CASCADE,
     )
     tags = TaggableManager()
+
+    def get_absolute_url(self):
+        return reverse("accounts:skill_detail", kwargs={"pk": self.pk})
 
     def __str__(self):
         return str(self.tags)
@@ -262,7 +265,7 @@ class Experience(models.Model):
     is_employeer = models.BooleanField(default=False)
 
     def get_absolute_url(self):
-        return reverse("accounts:experience_update", kwargs={"pk": self.pk})
+        return reverse("accounts:experience_detail", kwargs={"pk": self.pk})
 
     def __str__(self):
         return self.company

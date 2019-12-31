@@ -14,7 +14,7 @@
         <div class="media-body">
           <a style="text-decoration: none; color: #343a40;" 
           class="float-right" 
-          href="{{ e.get_absolute_url }}">{% fa5_icon 'pen fa-1x' 'fas' %}</a>
+          href="{% url 'accounts:experience_update' e.pk %}">{% fa5_icon 'pen fa-1x' 'fas' %}</a>
 
           <h5 class="mt-0 mb-1">{{ e.company }}</h5>
           <h6 class="mt-0 mb-1">{{ e.title }}</h6>

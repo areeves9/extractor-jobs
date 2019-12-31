@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+    <h3>{{ skill.user.display_name }} Skills</h3>
+    <div class="col-md">
+        {% for tag in skill.tags.all %}
+        {{ tag }}
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

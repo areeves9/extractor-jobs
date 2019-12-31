@@ -1,11 +1,11 @@
 from django import forms
 from dal import autocomplete
-from cities_light.models import City, Region, Country
+from cities_light.models import City
 
 from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from accounts.models import SiteUser, Experience
+from accounts.models import SiteUser, Experience, Skill
 
 
 class UserRegisterForm(UserCreationForm):
@@ -48,6 +48,18 @@ class ExperienceForm(forms.ModelForm):
         exclude = (
             'date_created',
             'date_updated',
+            'user',
+        )
+
+
+class SkillForm(forms.ModelForm):
+    # location = forms.ModelChoiceField(
+    #     queryset=City.objects.all(),
+    #     widget=autocomplete.ModelSelect2(url='jobs:city-autocomplete')
+    # )
+    class Meta:
+        model = Skill
+        exclude = (
             'user',
         )
 
