@@ -11,6 +11,7 @@ from django.contrib.auth.models import (
 from django.core.validators import RegexValidator
 
 from phonenumber_field.modelfields import PhoneNumberField
+from taggit.managers import TaggableManager
 
 
 # Create your models here.
@@ -112,27 +113,14 @@ class SiteUser(AbstractBaseUser):
     )
     height_field = models.IntegerField(default=0)
     width_field = models.IntegerField(default=0)
-    city = models.ForeignKey(
+    location = models.ForeignKey(
         City,
-        verbose_name='city',
+        verbose_name='location',
         blank=True,
         null=True,
         on_delete=models.PROTECT,
     )
-    country = models.ForeignKey(
-        Country,
-        verbose_name='country',
-        blank=True,
-        null=True,
-        on_delete=models.PROTECT,
-    )
-    state = models.ForeignKey(
-        Region,
-        verbose_name='region',
-        blank=True,
-        null=True,
-        on_delete=models.PROTECT,
-    )
+    
     phone_number = PhoneNumberField(blank=True)
 
     is_active = models.BooleanField(default=True)
@@ -180,6 +168,19 @@ class SiteUser(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+
+class Skill(models.Model):
+    """
+    Each SiteUser instance has a 1-to-1 relationship with Skill,
+    with SKill having tags attribute. This way the user can 
+    add many skill tags with a single skill instance.
+    """
+    user = models.OneToOneField(
+        SiteUser,
+        on_delete=models.CASCADE,
+    )
+    tags = TaggableManager()
 
 
 class Experience(models.Model):

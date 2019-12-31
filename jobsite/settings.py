@@ -150,3 +150,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # https://www.geonames.org/countries/
 CITIES_LIGHT_INCLUDE_COUNTRIES = ['CA', 'US']
+
+# django-taggit
+TAGGIT_CASE_INSENSITIVE = True
