@@ -72,3 +72,4 @@ class ExperienceUpdateView(UpdateView):
     """
     model = Experience
     form_class = ExperienceForm
+    success_url = reverse_lazy('accounts:profile')

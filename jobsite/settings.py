@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'jobs',
     'crispy_forms',
     'fontawesome_5',
+    'taggit',
 ]
 
 MIDDLEWARE = [
