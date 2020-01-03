@@ -133,7 +133,7 @@
 
       // add a tag element
 
-      var $tag = $('<p style="border: 1px solid black;" class="tag btn btn-success ' + htmlEncode(tagClass) + (itemTitle !== null ? ('" title="' + itemTitle) : '') + '">' + htmlEncode(itemText) + '<span data-role="remove"></span></p>');
+      var $tag = $('<p style="border: 1px solid black;" class="tag btn btn-success ' + htmlEncode(tagClass) + (itemTitle !== null ? ('" title="' + itemTitle) : '') + '"><b>' + htmlEncode(itemText) + '<span data-role="remove"></span></b></p>');
       $tag.data('item', item);
       self.findInputWrapper().before($tag);
       $tag.after(' ');
