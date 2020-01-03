@@ -140,5 +140,4 @@ def pre_save_job_reciever(sender, instance, *args, **kwargs):
         instance.slug = create_slug(instance)
 
 
-
 pre_save.connect(pre_save_job_reciever, sender=Job)

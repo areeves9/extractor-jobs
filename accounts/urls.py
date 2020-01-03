@@ -2,8 +2,7 @@
 from django.urls import re_path
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
-from utils.autocomplete import (CityAutocomplete, RegionAutocomplete,
-    CountryAutocomplete)
+from utils.autocomplete import CityAutocomplete
 
 from accounts.views import (RegistrationView, UserDetailView, UserUpdateView,
     UserListView, UserProfileView, ExperienceView, ExperienceUpdateView,
@@ -14,16 +13,6 @@ urlpatterns = [
         r'^city-autocomplete/$',
         CityAutocomplete.as_view(),
         name='city-autocomplete',
-    ),
-    re_path(
-        r'^region-autocomplete/$',
-        RegionAutocomplete.as_view(),
-        name='region-autocomplete',
-    ),
-    re_path(
-        r'^country-autocomplete/$',
-        CountryAutocomplete.as_view(),
-        name='country-autocomplete',
     ),
     re_path(r'^register/$', RegistrationView.as_view(), name='register'),
     re_path(r'^profile/$', login_required(UserProfileView.as_view()), name='profile'),
