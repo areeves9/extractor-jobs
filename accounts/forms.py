@@ -2,6 +2,7 @@ from django import forms
 from dal import autocomplete
 from cities_light.models import City
 
+
 from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
@@ -63,10 +64,6 @@ class ExperienceForm(forms.ModelForm):
 
 
 class SkillForm(forms.ModelForm):
-    # location = forms.ModelChoiceField(
-    #     queryset=City.objects.all(),
-    #     widget=autocomplete.ModelSelect2(url='jobs:city-autocomplete')
-    # )
 
     class Meta:
         model = Skill
