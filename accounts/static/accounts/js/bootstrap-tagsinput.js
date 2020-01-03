@@ -25,7 +25,7 @@
     delimiterRegex: null,
     cancelConfirmKeysOnEmpty: true,
     onTagExists: function(item, $tag) {
-      $tag.hide().fadeIn();
+      $tag.hide().show();
     },
     trimValue: false,
     allowDuplicates: false
@@ -133,7 +133,7 @@
 
       // add a tag element
 
-      var $tag = $('<span style="border: 1px solid black;" class="tag btn btn-success ' + htmlEncode(tagClass) + (itemTitle !== null ? ('" title="' + itemTitle) : '') + '">' + htmlEncode(itemText) + '<span data-role="remove"></span></span>');
+      var $tag = $('<p style="border: 1px solid black;" class="tag btn btn-success ' + htmlEncode(tagClass) + (itemTitle !== null ? ('" title="' + itemTitle) : '') + '">' + htmlEncode(itemText) + '<span data-role="remove"></span></p>');
       $tag.data('item', item);
       self.findInputWrapper().before($tag);
       $tag.after(' ');

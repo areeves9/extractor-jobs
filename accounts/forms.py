@@ -67,11 +67,16 @@ class SkillForm(forms.ModelForm):
     #     queryset=City.objects.all(),
     #     widget=autocomplete.ModelSelect2(url='jobs:city-autocomplete')
     # )
+
     class Meta:
         model = Skill
         exclude = (
             'user',
         )
+        help_texts = {
+            'tags': None,
+        }
+        labels = {'tags': ''}
 
 
 class RegisterForm(forms.ModelForm):
