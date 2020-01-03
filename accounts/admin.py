@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 
@@ -8,7 +7,7 @@ from accounts.models import SiteUser, Experience, Skill
 
 
 class SkillAdmin(admin.ModelAdmin):
-    list_display = ["user"]
+    list_display = ["user", "id"]
     list_display_links = ["user"]
     search_fields = ["user"]
 
