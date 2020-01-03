@@ -3,7 +3,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
-from cities_light.models import City, Country, Region
+from cities_light.models import City
 
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
@@ -212,7 +212,7 @@ class Experience(models.Model):
     )
 
     def get_year_choices():
-        YEAR_CHOICES = []   
+        YEAR_CHOICES = []
 
         for r in range(1980, (datetime.datetime.now().year+1)):
             YEAR_CHOICES.append((r,r))

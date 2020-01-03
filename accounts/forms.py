@@ -45,6 +45,16 @@ class ExperienceForm(forms.ModelForm):
 
     class Meta:
         model = Experience
+        fields = (
+            'company',
+            'location',
+            'title',
+            'start_month',
+            'start_year',
+            'end_month',
+            'end_year',
+            'description',
+        )
         exclude = (
             'date_created',
             'date_updated',
