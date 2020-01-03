@@ -20,17 +20,16 @@
 
 {% endblock %}
 
-{% block javascript %}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"></script>
+{% block javascript %}  
   <script src="{% static 'accounts/js/bootstrap-tagsinput.js' %}"></script>
   <script>
-    $('<style>.bootstrap-tagsinput { width: 100%; }</style>').appendTo("#id_tags");
-    $("#id_tags").attr("data-role", "tagsinput");
-    $("#id_tags").addClass("typeahead");
 
-    // $("#id_tags").change(function () {
-    //   console.log($(this).val());
-    // });
+      $('<style>.bootstrap-tagsinput { width: 100%; }</style>').appendTo("#id_tags");
+      $("#id_tags").attr("data-role", "tagsinput");
+
+      var turds = document.querySelector('#div_id_tags').firstElementChild;
+
+      console.log(turds)
   </script>
 
   {% endblock %}
