@@ -181,7 +181,7 @@ class Skill(models.Model):
         related_name='skill',
         on_delete=models.CASCADE,
     )
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     def get_absolute_url(self):
         return reverse("accounts:skill_detail", kwargs={"pk": self.pk})
