@@ -18,6 +18,15 @@
 
 {% endblock %}
 
+{% block javascript %}
+<script>
+  console.log("hello world");
+  let selection = document.getElementsByClassName("select2-selection select2-selection--single modelselect2 form-control");
+  console.log(selection[0])
+
+</script>
+{% endblock %}
+
 {% block footer %}
 {{ form.media }}
 {% endblock %}
