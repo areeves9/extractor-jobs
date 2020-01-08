@@ -6,7 +6,7 @@ from jobs.models import Job
 
 
 class JobForm(forms.ModelForm):
-    city = forms.ModelChoiceField(
+    location = forms.ModelChoiceField(
         queryset=City.objects.all(),
         widget=autocomplete.ModelSelect2(url='jobs:city-autocomplete')
     )

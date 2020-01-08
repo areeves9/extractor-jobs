@@ -5,7 +5,7 @@ from django.urls import reverse
 
 from django.db.models.signals import pre_save
 
-from cities_light.models import City, Country, Region
+from cities_light.models import City
 from django.utils.text import slugify
 
 # Create your models here.
@@ -41,6 +41,8 @@ class Job(models.Model):
          help_text="Describe the position and the working conditions."
     )
     expiration_date = models.DateField(
+        blank=True,
+        null=True,
         help_text="Please use the following format: <em>YYYY-MM-DD</em>."
     )
     employment_type = models.CharField(
@@ -63,19 +65,9 @@ class Job(models.Model):
     )
     post_date = models.DateField(auto_now_add=True)
     slug = models.SlugField(unique=True)
-    city = models.ForeignKey(
+    location = models.ForeignKey(
         City,
-        verbose_name='city',
-        on_delete=models.PROTECT,
-    )
-    country = models.ForeignKey(
-        Country,
-        verbose_name='country',
-        on_delete=models.PROTECT,
-    )
-    state = models.ForeignKey(
-        Region,
-        verbose_name='region',
+        verbose_name='location',
         on_delete=models.PROTECT,
     )
     salary = models.DecimalField(
