@@ -3,6 +3,9 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 from cities_light.models import City
 
 from django.contrib.auth.models import (
@@ -14,9 +17,15 @@ from phonenumber_field.modelfields import PhoneNumberField
 from taggit.managers import TaggableManager
 
 
+
+
+
 # Create your models here.
 # display names only have alphanumeric and underscores
 alphanumeric_underscores = RegexValidator(r'^[a-zA-Z0-9_]+$', 'Only alphanumeric and underscores')
+
+# Create your models here.
+
 
 
 def upload_location(instance, filename):
@@ -120,7 +129,7 @@ class SiteUser(AbstractBaseUser):
         null=True,
         on_delete=models.PROTECT,
     )
-    
+
     phone_number = PhoneNumberField(blank=True)
 
     is_active = models.BooleanField(default=True)
@@ -142,7 +151,7 @@ class SiteUser(AbstractBaseUser):
         return self.email
 
     def get_absolute_url(self):
-        return reverse("accounts:profile", kwargs={"slug": self.slug})
+        return reverse("accounts:profile_detail", kwargs={"slug": self.slug})
 
     def get_full_name(self):
         return F"{self.first_name} {self.last_name}"
@@ -188,6 +197,17 @@ class Skill(models.Model):
 
     def __str__(self):
         return str(self.tags)
+
+
+@receiver(post_save, sender=SiteUser)
+def create_user_skill(sender, instance, created, **kwargs):
+    if created:
+        Skill.objects.create(user=instance)
+
+
+@receiver(post_save, sender=SiteUser)
+def save_user_profile(sender, instance, **kwargs):
+    instance.skill.save()
 
 
 class Experience(models.Model):
@@ -269,3 +289,4 @@ class Experience(models.Model):
 
     def __str__(self):
         return self.company
+

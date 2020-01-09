@@ -12,7 +12,7 @@
     <div class="col-md">
         <ul class="list-unstyled">
             {% for user in users %}
-            <li style="background-color: #343a40; margin-bottom: 1rem;" class="media">
+            <li style="margin-bottom: 1rem;" class="media">
                 {% if user.image %}
                 <a href="{{ user.get_absolute_url }}">
                     <img style="height:124px;width:124px;" src="{{ user.image.url }}" class="mr-3" alt="..." />
@@ -24,7 +24,7 @@
                 {% endif %}
                 <div class="media-body">
                     <h5 class="mt-0 mb-1">{{ user.first_name }} {{ user.last_name }}</h5>
-                    <h6 class="mt-0">{{ user.city.name }}, {{ user.state.name }}, {{ user.country.code2 }}</h6>
+                    <h6 class="mt-0">{{ user.location }}</h6>
                 </div>
             </li>
             {% endfor %}
