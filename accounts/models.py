@@ -1,4 +1,6 @@
 import datetime
+import os
+
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
@@ -6,6 +8,7 @@ from django.utils.text import slugify
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from PIL import Image, ExifTags
 from cities_light.models import City
 
 from django.contrib.auth.models import (
@@ -26,7 +29,26 @@ alphanumeric_underscores = RegexValidator(r'^[a-zA-Z0-9_]+$', 'Only alphanumeric
 
 # Create your models here.
 
+# https://medium.com/@giovanni_cortes/rotate-image-in-django-when-saved-in-a-model-8fd98aac8f2a
+# rotate saved image to imagefield with django signals post save
+def rotate_image(filepath):
+  try:
+    image = Image.open(filepath)
+    for orientation in ExifTags.TAGS.keys():
+      if ExifTags.TAGS[orientation] == 'Orientation':
+            break
+    exif = dict(image._getexif().items())
 
+    if exif[orientation] == 3:
+        image = image.rotate(180, expand=True)
+    elif exif[orientation] == 6:
+        image = image.rotate(270, expand=True)
+    elif exif[orientation] == 8:
+        image = image.rotate(90, expand=True)
+    image.save(filepath, overwrite=True)
+    image.close()
+  except (AttributeError, KeyError, IndexError):
+    pass
 
 def upload_location(instance, filename):
     return "%s/%s" % (instance.display_name, filename)
@@ -120,8 +142,8 @@ class SiteUser(AbstractBaseUser):
         width_field="width_field",
         height_field="height_field",
     )
-    height_field = models.IntegerField(default=0)
-    width_field = models.IntegerField(default=0)
+    height_field = models.IntegerField(default=0, null=True)
+    width_field = models.IntegerField(default=0, null=True)
     location = models.ForeignKey(
         City,
         verbose_name='location',
@@ -138,6 +160,8 @@ class SiteUser(AbstractBaseUser):
     is_business = models.BooleanField(default=False)
 
     slug = models.SlugField(unique=True)
+
+   
 
     def save(self, *args, **kwargs):
         """
@@ -178,6 +202,13 @@ class SiteUser(AbstractBaseUser):
         # Simplest possible answer: All admins are staff
         return self.is_admin
 
+@receiver(post_save, sender=SiteUser)
+def update_image(sender, instance, **kwargs):
+    if instance.image:
+        BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        fullpath = instance.image.url
+        print(fullpath)
+        rotate_image(fullpath)
 
 class Skill(models.Model):
     """
