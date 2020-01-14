@@ -23,21 +23,13 @@ from taggit.managers import TaggableManager
 from imagekit.models import ImageSpecField
 from imagekit.processors import Transpose
 
-
-
-
-
-
-# Create your models here.
 # display names only have alphanumeric and underscores
 alphanumeric_underscores = RegexValidator(r'^[a-zA-Z0-9_]+$', 'Only alphanumeric and underscores')
-
-# Create your models here.
 
 def upload_location(instance, filename):
     return "%s/%s" % (instance.display_name, filename)
 
-
+# Create your models here.
 class SiteUserManager(BaseUserManager):
     def create_user(self, email, display_name, password=None):
         """
@@ -145,8 +137,6 @@ class SiteUser(AbstractBaseUser):
 
     slug = models.SlugField(unique=True)
 
-   
-
     def save(self, *args, **kwargs):
         """
         Overirde the model save method to set slug field to username
@@ -186,32 +176,6 @@ class SiteUser(AbstractBaseUser):
         # Simplest possible answer: All admins are staff
         return self.is_admin
 
-@receiver(post_save, sender=SiteUser)
-def update_image(sender, instance, **kwargs):
-    if instance.image:
-        filepath = os.path.join(settings.MEDIA_ROOT, instance.image.name)
-        print(filepath)
-        # Open file with Pillow
-        image = Image.open(filepath)
-        #If no ExifTags, no rotating needed.
-        try:
-            # Grab orientation value.
-            image_exif = image._getexif()
-            image_orientation = image_exif[274]
-
-            # Rotate depending on orientation.
-            if image_orientation == 3:
-                rotated = image.rotate(180)
-            if image_orientation == 6:
-                rotated = image.rotate(-90)
-            if image_orientation == 8:
-                rotated = image.rotate(90)
-
-            # Save rotated image.
-            rotated.save(filepath)
-            
-        except:
-            pass
 
 class Skill(models.Model):
     """
@@ -232,7 +196,42 @@ class Skill(models.Model):
     def __str__(self):
         return str(self.tags)
 
+@receiver(post_save, sender=SiteUser)
+def update_image(sender, instance, **kwargs):
+    # does the image exist?
+    if instance.image:
+        # filepath to the image in media_production folder
+        filepath = os.path.join(settings.MEDIA_ROOT, instance.image.name)
+        # open image at path with Pillow
+        image = Image.open(filepath)
 
+        if hasattr(image, '_getexif'):
+            try:
+                # iterate through the EXIF tags
+                for orientation in ExifTags.TAGS.keys(): 
+                    if ExifTags.TAGS[orientation]=='Orientation': 
+                        break
+                # get image exif metadata        
+                e = image._getexif()
+                # check if e exists
+                if e is not None:
+                # get dictionary of exif key-value pairs
+                    exif=dict(e.items())
+    
+                    if exif[orientation] == 3: 
+                        image=image.rotate(180)
+                    elif exif[orientation] == 6: 
+                        image=image.rotate(270)
+                    elif exif[orientation] == 8: 
+                        image=image.rotate(90)
+
+                size = 1024, 1024
+                image.thumbnail(size)
+                image.save(filepath)
+                image.close()
+            except IOError as err:
+                print("I/O error: {0}".format(err))
+            
 @receiver(post_save, sender=SiteUser)
 def create_user_skill(sender, instance, created, **kwargs):
     if created:
