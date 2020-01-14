@@ -1,5 +1,8 @@
 import datetime
 import os
+from io import BytesIO
+
+from django.core.files import File
 
 from django.db import models
 from django.urls import reverse
@@ -19,6 +22,10 @@ from django.core.validators import RegexValidator
 from phonenumber_field.modelfields import PhoneNumberField
 from taggit.managers import TaggableManager
 
+from imagekit.models import ImageSpecField
+from imagekit.processors import Transpose
+
+
 
 
 
@@ -31,24 +38,26 @@ alphanumeric_underscores = RegexValidator(r'^[a-zA-Z0-9_]+$', 'Only alphanumeric
 
 # https://medium.com/@giovanni_cortes/rotate-image-in-django-when-saved-in-a-model-8fd98aac8f2a
 # rotate saved image to imagefield with django signals post save
-def rotate_image(filepath):
-  try:
-    image = Image.open(filepath)
-    for orientation in ExifTags.TAGS.keys():
-      if ExifTags.TAGS[orientation] == 'Orientation':
-            break
-    exif = dict(image._getexif().items())
+# def rotate_image(filepath):
+#   try:
+#     print(filepath)
+#     image = Image.open(filepath)
+#     print(image.name)
+#     for orientation in ExifTags.TAGS.keys():
+#       if ExifTags.TAGS[orientation] == 'Orientation':
+#             break
+#     exif = dict(image._getexif().items())
 
-    if exif[orientation] == 3:
-        image = image.rotate(180, expand=True)
-    elif exif[orientation] == 6:
-        image = image.rotate(270, expand=True)
-    elif exif[orientation] == 8:
-        image = image.rotate(90, expand=True)
-    image.save(filepath, overwrite=True)
-    image.close()
-  except (AttributeError, KeyError, IndexError):
-    pass
+#     if exif[orientation] == 3:
+#         image = image.rotate(180, expand=True)
+#     elif exif[orientation] == 6:
+#         image = image.rotate(270, expand=True)
+#     elif exif[orientation] == 8:
+#         image = image.rotate(90, expand=True)
+#     image.save(filepath, overwrite=True)
+#     image.close()
+#   except (AttributeError, KeyError, IndexError):
+    # pass
 
 def upload_location(instance, filename):
     return "%s/%s" % (instance.display_name, filename)
@@ -167,6 +176,25 @@ class SiteUser(AbstractBaseUser):
         """
         Overirde the model save method to set slug field to username
         """
+        if self.image:
+            pilImage = Image.open(BytesIO(self.image.read()))
+            for orientation in ExifTags.TAGS.keys():
+                if ExifTags.TAGS[orientation] == 'Orientation':
+                    break
+            exif = dict(pilImage._getexif().items())
+
+            if exif[orientation] == 3:
+                pilImage = pilImage.rotate(180, expand=True)
+            elif exif[orientation] == 6:
+                pilImage = pilImage.rotate(270, expand=True)
+            elif exif[orientation] == 8:
+                pilImage = pilImage.rotate(90, expand=True)
+
+            output = BytesIO()
+            pilImage.save(output, format='JPEG', quality=75)
+            output.seek(0)
+            self.image = File(output, self.image.name)
+
         if not self.slug:
             self.slug = slugify(self.display_name)
         super(SiteUser, self).save(*args, **kwargs)
@@ -202,13 +230,12 @@ class SiteUser(AbstractBaseUser):
         # Simplest possible answer: All admins are staff
         return self.is_admin
 
-@receiver(post_save, sender=SiteUser)
-def update_image(sender, instance, **kwargs):
-    if instance.image:
-        BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        fullpath = instance.image.url
-        print(fullpath)
-        rotate_image(fullpath)
+# @receiver(post_save, sender=SiteUser)
+# def update_image(sender, instance, **kwargs):
+#     if instance.image:
+#         BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+#         fullpath = BASE_DIR + instance.image.url
+#         rotate_image(fullpath)
 
 class Skill(models.Model):
     """
