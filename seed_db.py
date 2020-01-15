@@ -2,11 +2,7 @@ import csv
 import os
 
 from cities_light.models import City
-
 from jobs.models import Job # imports the model
-
-direc = os.path.dirname(os.path.abspath(__file__))
-
 
 def create_job_instance(row):
     job = Job(
@@ -25,19 +21,6 @@ def create_job_instance(row):
         job_title=row['job_title'],
     )
     job.save()
-
-
-# def seed_db():
-#     try:
-#         print("Seeding database...")
-#         with open('jobs_20201.csv') as csvfile:
-#             reader = csv.DictReader(csvfile)
-#             for row in reader:
-#                 print('Added job')
-#                 create_job_instance(row)
-#     except:
-#         pass
-
 
 with open('jobs_2020.csv') as csv_file:
     csv_reader = csv.DictReader(csv_file)
@@ -66,17 +49,6 @@ with open('jobs_2020.csv') as csv_file:
             row['location'] = city
             writer.writerow(row)
             create_job_instance(row)
-    
-
-            # for location in row['location']:
-            #     print(location)
-    
-                # writer.writerow(v='Los Angeles')
-        #  print(row['location'])
-            
-    # for row in csv_reader:
-    #     print(row['location'])
-
 
 
 
