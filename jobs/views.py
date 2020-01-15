@@ -28,6 +28,7 @@ class JobList(ListView):
     """
     model = Job
     context_object_name = 'job_list'
+    paginate_by = 10
 
 
 class JobDetailView(DetailView):
