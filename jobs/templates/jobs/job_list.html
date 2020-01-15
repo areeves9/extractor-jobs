@@ -4,39 +4,31 @@
 
 
 {% block content %}
-<div class="row">
-  <div class="col-md table-responsive">
-      <table class="table table-dark">
-        <thead>
-          <tr>
-            <th scope="col">Headline</th>
-            <th scope="col">Job Type</th>
-            <th scope="col">Location</th>
-            <th scope="col">Salary</th>
-            <th scope="col">Benefits</th>
-            <th scope="col">Date Posted</th>
-            <th scope="col">Link</th>
-          </tr>
-        </thead>
-        <tbody>
-            {% for job in job_list %}
-          <tr>
-            <td scope="row"><a style="color:orange;" href="{{ job.get_absolute_url }}"><b>{{ job.headline }}</a></td>
-            <td scope="row">{{ job.employment_type }}</td>
-            <td scope="row">{{ job.location }}</td>
-            <td scope="row"><button class="btn btn-success">{{ job.salary }}/{{ job.salary_frequency }}</button></td>
-            <td scope="row">{{ job.benefits }}</td>
-            <td scope="row">{{ job.post_date }}</td>
-            <td scope="row"><a style="color:white;" href="{{ job.link }}" target="_blank">{% fa5_icon 'external-link-alt fa-1x' 'fas' %}</a></td>
-            {% if request.user.is_admin %}
-            <td><a href="{% url 'jobs:job_update' job.slug %}"><button style="color:black;" class="btn btn-warning">{% fa5_icon 'edit fa-1x' 'fas' %}</button></a></td>
-            <td><a href="{% url 'jobs:job_delete' job.slug %}"><button class="btn btn-danger">{% fa5_icon 'times fa-1x' 'fas' %}</button></a></td>
-            {% endif %}
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+
+{% for job in job_list %}
+<div class="row mb-2">
+  <div class="col-md">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          <a style="text-decoration: none; color: black;" href="{{ job.get_absolute_url }}">{{ job.headline}}</a>
+          {% if request.user.is_admin %}
+          <a class="float-right ml-1" href="{% url 'jobs:job_delete' job.slug %}"><button class="btn btn-danger">{% fa5_icon 'times fa-1x' 'fas' %}</button></a>
+          <a class="float-right" href="{% url 'jobs:job_update' job.slug %}"><button style="color:black;" class="btn btn-warning">{% fa5_icon 'edit fa-1x' 'fas' %}</button></a>
+    
+          {% endif %}
+        </h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{ job.location }}</h6>
+        <p class="card-text">${{ job.salary }} per {{ job.salary_frequency|lower }}</p>
+        <p class="card-text">{{ job.description|truncatechars:240 }}</p>
+        <p class="card-text">Posted {{ job.post_date }}</p>
+      </div>
+    </div>
   </div>
 </div>
+
+
+{% endfor %}
+
 
 {% endblock %}

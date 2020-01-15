@@ -1,3 +1,4 @@
 *.pyc
+.csv
 /media_production
 /static_production
