@@ -128,7 +128,9 @@ class SiteUser(AbstractBaseUser):
         on_delete=models.PROTECT,
     )
 
-    phone_number = PhoneNumberField(blank=True)
+    phone_number = PhoneNumberField(
+        blank=True,
+        help_text='Format: +(country-code)(number) Ex. +12034578888')
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
