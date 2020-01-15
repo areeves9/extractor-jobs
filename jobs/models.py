@@ -64,7 +64,10 @@ class Job(models.Model):
         help_text="A concise high-level overview of the job."
     )
     post_date = models.DateField(auto_now_add=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(
+        max_length=255,
+        unique=True,
+        )
     location = models.ForeignKey(
         City,
         verbose_name='location',
