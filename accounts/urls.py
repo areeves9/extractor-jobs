@@ -4,9 +4,18 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from utils.autocomplete import CityAutocomplete
 
-from accounts.views import (RegistrationView, UserDetailView, UserUpdateView,
-    UserListView, UserProfileView, ExperienceView, ExperienceUpdateView,
-    SkillDetailView, SkillUpdateView, ExperienceDetailView)
+from accounts.views import (
+    RegistrationView,
+    UserDetailView,
+    UserUpdateView,
+    UserListView,
+    UserProfileView,
+    ExperienceView,
+    ExperienceUpdateView,
+    SkillDetailView,
+    SkillUpdateView,
+    ExperienceDetailView
+)
 
 urlpatterns = [
     re_path(

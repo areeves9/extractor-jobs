@@ -1,4 +1,5 @@
 import datetime
+from jobsite import settings
 from django.db import models
 from django.urls import reverse
 
@@ -103,7 +104,11 @@ class Job(models.Model):
         null=True,
         max_length=255,
     )
-
+    likes = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name='jobs_liked',
+        blank=True,
+    )
     class Meta:
         ordering = ['-post_date']
 

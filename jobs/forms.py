@@ -13,4 +13,4 @@ class JobForm(forms.ModelForm):
 
     class Meta:
         model = Job
-        exclude = ('slug',)
+        exclude = ('slug','likes',)

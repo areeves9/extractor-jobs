@@ -4,6 +4,8 @@ import os
 from cities_light.models import City
 from jobs.models import Job # imports the model
 
+direc = os.path.dirname(os.path.abspath(__file__))
+
 def create_job_instance(row):
     job = Job(
         description=row['description'], 
