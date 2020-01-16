@@ -17,7 +17,7 @@
         <h6 class="card-subtitle mb-2 text-muted">{{ job.location }}</h6>
         <p class="card-text">${{ job.salary }} per {{ job.salary_frequency|lower }}</p>
         <p class="card-text">{{ job.description|truncatechars:240 }}</p>
-        <p class="card-text">Posted {{ job.post_date }}</p>
+        <p class="card-text">{{ job.get_post_date_days }}</p>
         {% if request.user.is_admin %}
         <a class="float-right mr-1" href="{% url 'jobs:job_delete' job.slug %}"><button class="btn btn-danger">{% fa5_icon 'times fa-1x' 'fas' %}</button></a>
         <a class="float-right mr-1" href="{% url 'jobs:job_update' job.slug %}"><button style="color:black;" class="btn btn-warning">{% fa5_icon 'edit fa-1x' 'fas' %}</button></a>

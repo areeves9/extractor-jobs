@@ -1,6 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
+<header>
+    <div class="row mt-n2">
+        <div style="color: white;
+        height: 100%;
+        width: 100%;
+        background-size: cover; 
+        background-position: center; 
+        background-repeat: no-repeat; 
+        background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://source.unsplash.com/featured/?{{ job.location }}, nature');"
+        class="jumbotron jumbotron-fluid mr-0">
+            <div class="container-fluid">
+                <h1 class="display-4"><i>{{ job.location.name }}</i></h1>
+                <p class="mt-n2 lead"><b>{{ job.job_title }}</b></p>
+            </div>
+        </div>
+    </div>
+</header>
 <div class="row">
     <div class="col-md-4">
         <h5 class="">{{ job.headline }}</h5>
@@ -36,7 +53,7 @@
 <div class="row">
     <div class="col-md-4">
         <h5>Compensation</h5>
-        <p>{{ job.salary }} per {{ job.salary_frequency|lower }}</p>
+        <p><b>${{ job.salary|floatformat }} per {{ job.salary_frequency|lower }}</b></p>
 
         {% if job.benefits %}
         <p><b>Benefits: {{ job.benefits }}</b></p>
