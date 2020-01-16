@@ -112,6 +112,12 @@ class Job(models.Model):
     def get_absolute_url(self):
         return reverse("jobs:job_detail", kwargs={"slug": self.slug})
 
+    def get_post_date_days(self):
+        post_date = self.post_date
+        current_date = datetime.datetime.now().date()
+        delta = current_date - post_date
+        return delta.days
+
 # if instance doesn't have slug
 # pass instance to create_slug
 # slug is created from instance.headline
