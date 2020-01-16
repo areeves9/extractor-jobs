@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.urls import reverse
 
@@ -116,7 +117,10 @@ class Job(models.Model):
         post_date = self.post_date
         current_date = datetime.datetime.now().date()
         delta = current_date - post_date
-        return delta.days
+        if delta.days == 1:
+            return f'Posted {delta.days} day ago.'
+        else:
+            return f'Posted {delta.days} days ago.'
 
 # if instance doesn't have slug
 # pass instance to create_slug
