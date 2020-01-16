@@ -36,7 +36,7 @@
 <div class="row">
     <div class="col-md-4">
         <h5>Compensation</h5>
-        <p>{{ job.salary }} per {{ job.salary_frequency }}</p>
+        <p>{{ job.salary }} per {{ job.salary_frequency|lower }}</p>
 
         {% if job.benefits %}
         <p><b>Benefits: {{ job.benefits }}</b></p>

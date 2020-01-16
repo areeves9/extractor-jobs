@@ -32,11 +32,11 @@ class Job(models.Model):
         ('Contract', 'Contract'),
     )
     SALARY_FREQUENCY_CHOICES = (
-        ('Per-Hour', 'Per-Hour'),
-        ('Daily', 'Daily'),
-        ('Weekly', 'Weekly'),
-        ('Monthly', 'Monthly'),
-        ('Yearly', 'Yearly'),
+        ('HR', 'Per-Hour'),
+        ('DAY', 'Daily'),
+        ('WEEK', 'Weekly'),
+        ('MONTH', 'Monthly'),
+        ('YEAR', 'Yearly'),
     )
     description = models.TextField(
          help_text="Describe the position and the working conditions."
