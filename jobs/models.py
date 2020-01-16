@@ -27,16 +27,16 @@ class Job(models.Model):
     )
 
     EMPLOYMENT_TYPE_CHOICES = (
-        ('FT', 'Full-Time'),
-        ('PT', 'Part-Time'),
-        ('1099', 'Contract'),
+        ('Full-Time', 'Full-Time'),
+        ('Part-Time', 'Part-Time'),
+        ('Contract', 'Contract'),
     )
     SALARY_FREQUENCY_CHOICES = (
-        ('HR', 'Per-Hour'),
-        ('DAY', 'Daily'),
-        ('WEEK', 'Weekly'),
-        ('MONTH', 'Monthly'),
-        ('YEAR', 'Yearly'),
+        ('Per-Hour', 'Per-Hour'),
+        ('Daily', 'Daily'),
+        ('Weekly', 'Weekly'),
+        ('Monthly', 'Monthly'),
+        ('Yearly', 'Yearly'),
     )
     description = models.TextField(
          help_text="Describe the position and the working conditions."
