@@ -2,13 +2,55 @@
 
 {% block content %}
 <div class="row">
-        <div class="col-md-4">
-            <h3>{{ job.headline }}</h3>
-        </div>
-    
-        <a href="{% url 'jobs:job_update' job.slug %}">EDIT</a>
-        <a href="{% url 'jobs:job_delete' job.slug %}">DELETE</a>
+    <div class="col-md-4">
+        <h5 class="">{{ job.headline }}</h5>
+        <p class="text-muted mb-n1 mt-n2">{{ job.location.name }}, {{ job.location.region }}</p>
+        <p>Company Name</p>        
     </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h5>Details</h5>
+        <h6 class="mt-n1">Job Type</h6>
+        <p>{{ job.employment_type }}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h5>Description</h5>
+        <p>{{ job.description }}</p>
+
+        {% if job.job_title %}
+        <p><b>{{ job.job_title }}</b></p>
+        {% endif %}
+
+        {% if job.education %}
+        <p><b>{{ job.education }} Degree</b></p>
+        {% endif %}
+
+        {% if job.location %}
+        <p><b>{{ job.location }}</b></p>
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h5>Compensation</h5>
+        <p>{{ job.salary }} per {{ job.salary_frequency }}</p>
+
+        {% if job.benefits %}
+        <p><b>Benefits: {{ job.benefits }}</b></p>
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <p class="text-muted">Post date {{ job.post_date }}</p>
+    </div>
+</div>
+
+<a href="{% url 'jobs:job_update' job.slug %}">EDIT</a>
+<a href="{% url 'jobs:job_delete' job.slug %}">DELETE</a>
 
 
 {% endblock %}

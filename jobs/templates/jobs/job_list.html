@@ -2,34 +2,31 @@
 
 {% load fontawesome_5 %}
 
-
 {% block content %}
-
+<p class="text-muted">
+  Page {{ page_obj.number }} of {{ paginator.count }} jobs
+</p>
+<div class="row">
 {% for job in job_list %}
-<div class="row mb-2">
-  <div class="col-md">
+  <div class="col-md-4 mb-2">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">
           <a style="text-decoration: none; color: black;" href="{{ job.get_absolute_url }}">{{ job.headline}}</a>
-          {% if request.user.is_admin %}
-          <a class="float-right ml-1" href="{% url 'jobs:job_delete' job.slug %}"><button class="btn btn-danger">{% fa5_icon 'times fa-1x' 'fas' %}</button></a>
-          <a class="float-right" href="{% url 'jobs:job_update' job.slug %}"><button style="color:black;" class="btn btn-warning">{% fa5_icon 'edit fa-1x' 'fas' %}</button></a>
-    
-          {% endif %}
         </h5>
         <h6 class="card-subtitle mb-2 text-muted">{{ job.location }}</h6>
         <p class="card-text">${{ job.salary }} per {{ job.salary_frequency|lower }}</p>
         <p class="card-text">{{ job.description|truncatechars:240 }}</p>
         <p class="card-text">Posted {{ job.post_date }}</p>
+        {% if request.user.is_admin %}
+        <a class="float-right mr-1" href="{% url 'jobs:job_delete' job.slug %}"><button class="btn btn-danger">{% fa5_icon 'times fa-1x' 'fas' %}</button></a>
+        <a class="float-right mr-1" href="{% url 'jobs:job_update' job.slug %}"><button style="color:black;" class="btn btn-warning">{% fa5_icon 'edit fa-1x' 'fas' %}</button></a>
+        {% endif %}
       </div>
     </div>
   </div>
-</div>
-
-
 {% endfor %}
-
+</div>
 
 {% endblock %}
 
