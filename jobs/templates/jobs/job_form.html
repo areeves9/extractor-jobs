@@ -2,7 +2,11 @@
 
 {% load staticfiles %}
 
-{% load crispy_forms_tags %} 
+{% load crispy_forms_tags %}
+
+{% block head %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'jobs/css/job-form.css' %}" /> -->
+{% endblock %}
 
 {% block content %}
 <div class="col">

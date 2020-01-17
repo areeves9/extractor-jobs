@@ -1,0 +1,27 @@
+input[type=text] {
+  border: none !important;
+  border-bottom: 2px solid #495057 !important;
+  outline: none;
+  width: 90%;
+}
+
+input[type=url] {
+  border: none !important;
+  border-bottom: 2px solid #495057 !important;
+  outline: none;
+  width: 90%;
+}
+
+select {
+  border: none !important;
+  border-bottom: 2px solid #495057 !important;
+  outline: none;
+  width: 90%;
+}
+
+span[role=combobox] {
+  border: none !important;
+  border-bottom: 2px solid #495057 !important;
+  outline: none;
+  width: 90%;
+}
