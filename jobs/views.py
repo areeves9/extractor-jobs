@@ -1,11 +1,12 @@
+from django.contrib.messages.views import SuccessMessageMixin
+
 import json
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from django.urls import reverse_lazy
 
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
-from django.views import View
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import (
@@ -22,10 +23,11 @@ class JobCreate(CreateView):
     template_name = 'jobs/job_form.html'
 
 
-class JobUpdate(UpdateView):
+class JobUpdate(SuccessMessageMixin, UpdateView):
     model = Job
     form_class = JobForm
     template_name = 'jobs/job_form.html'
+    success_message = 'Job posting sucessfuly updated.'
 
 
 class JobDelete(DeleteView):
