@@ -49,6 +49,7 @@ class JobDetailView(DetailView):
     model = Job
     context_object_name = 'job'
 
+
 @login_required
 @require_POST
 def job_like(request):

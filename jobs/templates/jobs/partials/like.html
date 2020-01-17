@@ -1,0 +1,46 @@
+{% load fontawesome_5 %}
+
+<script type="text/javascript">
+    var csrftoken = Cookies.get('csrftoken');
+    const likeButton = document.getElementById('like-button');
+    const url = `{% url 'jobs:job_like' %}`;
+    let data = {
+        slug: null,
+        action: null,
+    };
+
+    likeButton.addEventListener("click", function(event){
+        event.preventDefault();        
+
+        data.slug = this.getAttribute('data-slug');
+        data.action = this.getAttribute('data-action');
+        console.log(data);
+
+        if (event.target.tagName.toLowerCase() == 'i') {
+            sendXhr('POST', url);
+        }
+   
+    });
+     
+    function toggleButton() {
+        let previous_action = data.action;
+        // set action data-attribute
+        likeButton.setAttribute("data-action", (previous_action == "like" ? "unlike" : "like"))
+        // toggle heart font awesome icon based on data-action
+        likeButton.innerHTML = (previous_action == "like" ? `{% fa5_icon 'heart fa-2x' 'fas' %} <br> Unsave Job` : `{% fa5_icon 'heart fa-2x' 'far' %} <br> Save Job`)
+    };
+
+    function sendXhr(method, url) {
+        let xhr = new XMLHttpRequest();
+            xhr.open(method, url);
+            //Send the proper header information along with the request
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState == 4 && xhr.status == 200) {toggleButton()}
+            };
+            xhr.send(JSON.stringify(data));
+        };
+
+</script>
