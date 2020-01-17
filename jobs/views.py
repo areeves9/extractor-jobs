@@ -18,9 +18,10 @@ from jobs.models import Job
 from jobs.forms import JobForm
 
 
-class JobCreate(CreateView):
+class JobCreate(SuccessMessageMixin, CreateView):
     form_class = JobForm
     template_name = 'jobs/job_form.html'
+    success_message = 'Job posting sucessfuly created.'
 
 
 class JobUpdate(SuccessMessageMixin, UpdateView):
