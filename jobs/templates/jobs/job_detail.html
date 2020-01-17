@@ -2,7 +2,6 @@
 
 {% load fontawesome_5 %}
 
-
 {% block content %}
 <header>
     <div class="row mt-n2">
@@ -66,25 +65,23 @@
 <div class="row">
     <div class="col-md-4">
         <p class="text-muted">{{ job.get_post_date_days }}</p>
-        <a id="like-button" 
-        href="" 
-        data-slug="{{ job.slug }}"
-        data-action="{% if request.user in job.likes.all %}un{% endif %}like"
-        style="text-decoration:none;"
-        class="mx-auto">
-        {% if request.user not in job.likes.all %}
-            {% fa5_icon 'heart fa-2x' 'far' %}
-        {% else %}
-            {% fa5_icon 'heart fa-2x' 'fas' %}
-        {% endif %}
-        </a>
+        <p id="like-button"  
+            data-slug="{{ job.slug }}"
+            data-action="{% if request.user in job.likes.all %}un{% endif %}like"
+            style="text-decoration:none; text-align: center; color: black;"
+            class="text-center">
+            {% if request.user not in job.likes.all %}
+                {% fa5_icon 'heart fa-2x' 'far' %} <br> Save Job
+            {% else %}
+                {% fa5_icon 'heart fa-2x' 'fas' %} <br> Unsave Job
+            {% endif %}
+        </p>
     </div>
 </div>
 
 <a href="{% url 'jobs:job_update' job.slug %}">EDIT</a>
 <a href="{% url 'jobs:job_delete' job.slug %}">DELETE</a>
 
-{{ job.likes.all }}
 
 
 {% endblock %}
@@ -95,33 +92,37 @@
     var csrftoken = Cookies.get('csrftoken');
     let likeButton = document.getElementById('like-button');
 
-    likeButton.addEventListener("click", function(e){
-        e.preventDefault();        
-        let slug = this.getAttribute('data-slug');
-        let action = this.getAttribute('data-action');
+    likeButton.addEventListener("click", function(event){
+        event.preventDefault();        
         let data = {
-            slug,
-            action,
+            slug: this.getAttribute('data-slug'),
+            action: this.getAttribute('data-action'),
         };
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', `{% url 'jobs:job_like' %}`);
+        if (event.target.tagName.toLowerCase() == 'i') {
+            toggleButton();
+        }
 
-        //Send the proper header information along with the request
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.setRequestHeader("X-CSRFToken", csrftoken);
-
-        xhr.onreadystatechange = function() {
-            if(xhr.readyState == 4 && xhr.status == 200) {
-                    let jsonResponse = JSON.parse(xhr.responseText);
-                    let previous_action = action;
-                    // set action data-attribute
-                    likeButton.setAttribute("data-action", (previous_action == "like" ? "unlike" : "like"))
-                    // toggle heart font awesome icon based on data-action
-                    likeButton.innerHTML = (previous_action == "like" ? `{% fa5_icon 'heart fa-2x' 'fas' %}` : `{% fa5_icon 'heart fa-2x' 'far' %}`)
-                }
-            
-        };
-        xhr.send(JSON.stringify(data));
+        function toggleButton() {
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', `{% url 'jobs:job_like' %}`);
+    
+            //Send the proper header information along with the request
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                        let jsonResponse = JSON.parse(xhr.responseText);
+                        let previous_action = data.action;
+                        // set action data-attribute
+                        likeButton.setAttribute("data-action", (previous_action == "like" ? "unlike" : "like"))
+                        // toggle heart font awesome icon based on data-action
+                         likeButton.innerHTML = (previous_action == "like" ? `{% fa5_icon 'heart fa-2x' 'fas' %} <br> Unsave Job` : `{% fa5_icon 'heart fa-2x' 'far' %} <br> Save Job`)
+                    }
+                
+            };
+            xhr.send(JSON.stringify(data));
+        }
     })
 </script>
 {% endblock %}
