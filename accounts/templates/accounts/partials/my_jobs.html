@@ -1,0 +1,30 @@
+{% load fontawesome_5 %}
+
+{% if request.user.pk == user.pk %}
+
+
+{% if user.jobs_liked.count > 0 %}
+
+<h5>My Jobs ({{ request.user.jobs_liked.count }}) </h5>
+
+<div class="row">
+    {% for job in user.jobs_liked.all %}
+    <div class="col-md-4 mb-2">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          <a style="text-decoration: none; color: black;" href="{{ job.get_absolute_url }}">{{ job.headline}}</a>
+        </h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{ job.location }}</h6>
+        <p class="card-text">${{ job.salary }} per {{ job.salary_frequency|lower }}</p>
+        <p class="card-text">{{ job.description|truncatechars:240 }}</p>
+        <p class="card-text">{{ job.get_post_date_days }}</p>
+        {% include "jobs/partials/edit-delete-buttons.html" %}
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+{% endif %}
+
+{% endif %}

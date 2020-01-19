@@ -198,6 +198,7 @@ class Skill(models.Model):
     def __str__(self):
         return str(self.tags)
 
+
 @receiver(post_save, sender=SiteUser)
 def update_image(sender, instance, **kwargs):
     # does the image exist?
@@ -217,15 +218,14 @@ def update_image(sender, instance, **kwargs):
                 e = image._getexif()
                 # check if e exists
                 if e is not None:
-                # get dictionary of exif key-value pairs
-                    exif=dict(e.items())
-    
-                    if exif[orientation] == 3: 
-                        image=image.rotate(180)
-                    elif exif[orientation] == 6: 
-                        image=image.rotate(270)
-                    elif exif[orientation] == 8: 
-                        image=image.rotate(90)
+                    # get dictionary of exif key-value pairs
+                    exif = dict(e.items())
+                    if int(exif[orientation]) == 3: 
+                        image = image.rotate(180)
+                    elif int(exif[orientation]) == 6: 
+                        image = image.rotate(270)
+                    elif int(exif[orientation]) == 8: 
+                        image = image.rotate(90)
 
                 size = 1024, 1024
                 image.thumbnail(size)

@@ -2,10 +2,20 @@
 
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark mb-2">
     <a class="navbar-brand" href="#">{% fa5_icon 'fort-awesome-alt fa-1x' 'fab' %} Masyaf</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <ul class="nav">
+        {% if request.get_full_path == '/jobs/' %}
+        <a class="btn btn-light btn-sm nav-link bg-dark text-light" 
+            href="{{ request.user.get_absolute_url }}">
+            {% fa5_icon 'heart fa-1x' 'fas' %} {{ request.user.jobs_liked.count }}
+        </a>
+        {% endif %}
+    </ul>
 
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>        
+    </button>
+    
+    
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
