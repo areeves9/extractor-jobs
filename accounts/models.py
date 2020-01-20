@@ -212,7 +212,7 @@ def update_image(sender, instance, **kwargs):
             try:
                 # iterate through the EXIF tags
                 for orientation in ExifTags.TAGS.keys(): 
-                    if ExifTags.TAGS[orientation]=='Orientation': 
+                    if ExifTags.TAGS[orientation] == 'Orientation': 
                         break
                 # get image exif metadata        
                 e = image._getexif()
@@ -220,11 +220,11 @@ def update_image(sender, instance, **kwargs):
                 if e is not None:
                     # get dictionary of exif key-value pairs
                     exif = dict(e.items())
-                    if int(exif[orientation]) == 3: 
+                    if (exif[orientation]) == 3: 
                         image = image.rotate(180)
-                    elif int(exif[orientation]) == 6: 
+                    elif (exif[orientation]) == 6: 
                         image = image.rotate(270)
-                    elif int(exif[orientation]) == 8: 
+                    elif (exif[orientation]) == 8: 
                         image = image.rotate(90)
 
                 size = 1024, 1024

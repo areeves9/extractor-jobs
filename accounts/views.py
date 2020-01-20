@@ -1,4 +1,6 @@
 from django.urls import reverse_lazy
+from django.core.paginator import Paginator
+
 
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
@@ -36,6 +38,19 @@ class UserDetailView(DetailView):
     '''
     model = SiteUser
     context_object_name = 'user'
+    paginate_by = 10
+
+
+class MyJobsView(ListView):
+    """
+    Show all job posts liked by the user with pagination.
+    """
+    template_name = 'accounts/my_jobs.html'
+    context_object_name = 'my_jobs'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return SiteUser.objects.filter(email=self.request.user).first().jobs_liked.all()
 
 
 class UserUpdateView(UpdateView):

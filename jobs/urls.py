@@ -22,8 +22,6 @@ urlpatterns = [
     ),
     re_path(r'^$', JobList.as_view(), name='job_list'),
     re_path(r'^like/$', views.job_like, name='job_like'),
-
-    # re_path(r'^like/$', login_required(require_POST(JobLike.as_view())), name='job_like'),
     re_path(r'^create/$', login_required(JobCreate.as_view()), name='job_create'),
     re_path(r'^(?P<slug>[-\w]+)/update/$', login_required(JobUpdate.as_view()), name='job_update'),
     re_path(r'^(?P<slug>[-\w]+)/delete/$', login_required(JobDelete.as_view()), name='job_delete'),

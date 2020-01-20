@@ -3,7 +3,7 @@ from django.urls import re_path
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from utils.autocomplete import CityAutocomplete
-
+from django.views.generic import TemplateView
 from accounts.views import (
     RegistrationView,
     UserDetailView,
@@ -14,7 +14,8 @@ from accounts.views import (
     ExperienceUpdateView,
     SkillDetailView,
     SkillUpdateView,
-    ExperienceDetailView
+    ExperienceDetailView,
+    MyJobsView
 )
 
 urlpatterns = [
@@ -24,6 +25,7 @@ urlpatterns = [
         name='city-autocomplete',
     ),
     re_path(r'^register/$', RegistrationView.as_view(), name='register'),
+    re_path(r'^my-jobs/$', login_required(MyJobsView.as_view()), name='my_jobs'),
     re_path(r'^profile/$', login_required(UserProfileView.as_view()), name='profile'),
     re_path(r'^profile/(?P<slug>[-\w]+)/$', login_required(UserDetailView.as_view()), name='profile_detail'),
     re_path(r'^profile/(?P<slug>[-\w]+)/update/$', login_required(UserUpdateView.as_view()), name='profile_update'),
