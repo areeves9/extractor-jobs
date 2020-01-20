@@ -4,15 +4,19 @@
     <a class="navbar-brand" href="{% url 'jobs:job_list' %}">Masyaf</a>
     <ul class="nav ml-auto">
         <li class="nav-item">    
-            <a class="btn btn-light btn-sm nav-link mb-1 text-dark" 
-            href="{% url 'accounts:profile' %}">
+            <a class="btn btn-light nav-link text-dark" 
+            href="#"
+            data-target="#accountModal"
+            data-toggle="modal"
+            role="button"
+            >
                 {% fa5_icon 'user-circle fa-2x' 'fas' %}
             </a>
         </li>
 
         {% if request.user.is_authenticated %}
         <li class="nav-item">
-            <a class="btn btn-light btn-sm nav-link text-dark"
+            <a class="btn btn-light nav-link text-dark"
             href="{% url 'accounts:my_jobs' %}">
                 {% fa5_icon 'heart fa-2x' 'fas' %}
             </a>
@@ -20,40 +24,29 @@
         {% endif %}
     </ul>
     
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="border-0 navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>        
     </button>
     
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="text-center nav-link" href="{% url 'jobs:job_list' %}">Listings</a>
             </li>
+            {% if request.user.is_authenticated %}
             <li class="nav-item">
                 <a class="text-center nav-link" href="{% url 'accounts:user_list' %}">For Hire</a>
             </li>
-        </ul>
-        <ul class="nav navbar-nav ml-auto">
-            {% if request.user.is_authenticated %}
-
-            {% if request.user.is_business %}
-            <li class="nav-item">
-                <a class="text-center nav-link" href="{% url 'jobs:job_create' %}">Post Job</a>
-            </li>
             {% endif %}
+        {% if request.user.is_authenticated %}
+        {% if request.user.is_business %}
+        <li class="nav-item">
+            <a class="text-center nav-link" href="{% url 'jobs:job_create' %}">Post Job</a>
+        </li>
+        {% endif %}
+        {% endif %}
+    </ul>
 
-    
-            <li class="nav-item">
-                <a class="text-center nav-link" href="{% url 'accounts:logout' %}">Logout</a>
-            </li>
-                {% else %}
-            <li class="nav-item">
-                <a class="text-center nav-link" href="{% url 'accounts:register' %}">Register</a>
-            </li>
-            <li class="nav-item">
-                <a class="text-center nav-link" href="{% url 'accounts:login' %}">Login</a>
-            </li>
-            {% endif %}
-        </ul>
     </div>
 </nav>
+
