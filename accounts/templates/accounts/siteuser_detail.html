@@ -26,6 +26,7 @@
                 {% fa5_icon 'pen fa-1.6x' 'fas' %}
         </a>
         <p style="background: blueviolet; padding: 0.5rem; color:white; border-radius: 50%;" 
+            id="share-button"
             class="mt-2 mr-2 float-right"
             data-toggle="modal" data-target="#exampleModal">
             {% fa5_icon 'share fa-1.6x' 'fas' %}
@@ -51,4 +52,27 @@
 {% endblock %}
 
 {% block footer %}
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+    const shareBtn = document.getElementById("share-button");
+    shareBtn.addEventListener('click', function() {
+        const copyUrl = document.querySelector("#donkeyAss");
+        document.querySelector("#donkeyAss").select();
+        // copyUrl.select();
+        document.execCommand("copy");
+
+        // const url = copyUrl.value;
+
+        // const copyToInput = document.createElement('input');
+        // copyToInput.setAttribute('id', 'copyToInput');
+        // copyToInput.value = url;
+        // copyToInput.select();
+
+        // const copyUrl = `<input type="text" value="asshole" />`;
+        // url.select();
+        // console.log(copyUrl.value   )
+    })
+</script>
 {% endblock %}
