@@ -10,7 +10,7 @@
 
 {% block content %}
 <div class="col">
-     <!-- {% if request.user } -->
+     {% if request.user == job.user %}
     <h3 class="text-center">
         {% if request.resolver_match.url_name == 'job_update' %}
         Update Job
@@ -29,6 +29,10 @@
             </form>
         </div>
     </div>
+    {% else %}
+    <h3 class="text-center">Access Denied</h3>
+    <p class="text-center">Request user does not have permission for this action.</p>
+    {% endif %}
 </div>
 
 {% endblock %}

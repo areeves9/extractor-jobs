@@ -61,11 +61,6 @@ class UserUpdateView(UpdateView):
     form_class = UserUpdateForm
     success_url = reverse_lazy('accounts:profile')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        print(context['siteuser'])
-        return context
-
 
 class UserListView(ListView):
     """

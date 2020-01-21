@@ -20,7 +20,6 @@
         <p class="card-text">${{ job.salary }} per {{ job.salary_frequency|lower }}</p>
         <p class="card-text">{{ job.description|truncatechars:240 }}</p>
         <p class="card-text">{{ job.get_post_date_days }}</p>
-        {% include "jobs/partials/edit-delete-buttons.html" %}
       </div>
     </div>
   </div>
