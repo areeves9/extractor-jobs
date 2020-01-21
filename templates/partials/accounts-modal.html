@@ -18,11 +18,11 @@
             {% if request.user.is_authenticated %}
 
             {% if request.user.image %}
-              <img style="max-width: 50%;" class="mx-auto d-block img-thumbnail rounded-circle" src="{{ request.user.image.url }}" />
+            <img style="width: 104px; height: 104px;" class="mx-auto d-block img-thumbnail rounded-circle" src="{{ request.user.image.url }}" />
             </a>
             {% else %}
             <a href="{{ request.user.get_absolute_url }}">
-              <img style="max-width: 50%;" class="mx-auto d-block img-thumbnail rounded-circle" src="https://placeholder.com/150" />
+              <img style="max-width: 50%;" class="mx-auto d-block img-thumbnail rounded-circle" src="https://via.placeholder.com/104" />
             </a>
             {% endif %}
             

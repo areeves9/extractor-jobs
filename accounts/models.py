@@ -219,14 +219,17 @@ def update_image(sender, instance, **kwargs):
                 # check if e exists
                 if e is not None:
                     # get dictionary of exif key-value pairs
-                    exif = dict(e.items())
-                    if (exif[orientation]) == 3: 
-                        image = image.rotate(180)
-                    elif (exif[orientation]) == 6: 
-                        image = image.rotate(270)
-                    elif (exif[orientation]) == 8: 
-                        image = image.rotate(90)
-
+                    try:
+                        exif = dict(e.items())
+                        if (exif[orientation]) == 3: 
+                            image = image.rotate(180)
+                        elif (exif[orientation]) == 6: 
+                            image = image.rotate(270)
+                        elif (exif[orientation]) == 8: 
+                            image = image.rotate(90)
+                    except:
+                        pass
+              
                 size = 1024, 1024
                 image.thumbnail(size)
                 image.save(filepath)

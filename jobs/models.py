@@ -3,7 +3,8 @@ from jobsite import settings
 from django.db import models
 from django.urls import reverse
 
-# from django.core.urlresolvers import reverse
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
 from django.db.models.signals import pre_save
 
@@ -109,6 +110,12 @@ class Job(models.Model):
         related_name='jobs_liked',
         blank=True,
     )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        default=1
+    )
+
     class Meta:
         ordering = ['-post_date']
 
@@ -126,6 +133,18 @@ class Job(models.Model):
             return f'Posted {delta.days} day ago.'
         else:
             return f'Posted {delta.days} days ago.'
+
+    def share_job(self, user):
+        try:
+            subject = self.headline
+            from_email = user
+            to = user
+            body = self.description
+            html_message = render_to_string('jobs/job_detail.html', {'job': self})
+
+            send_mail(subject, body, from_email, [to], html_message=html_message)
+        except:
+            print('Error')
 
 # if instance doesn't have slug
 # pass instance to create_slug

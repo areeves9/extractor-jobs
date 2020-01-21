@@ -24,6 +24,7 @@
 <div class="row">
     <div class="col-md-4">
         <h5 class="">{{ job.headline }}</h5>
+        <a href="{{ job.send_job }}"></a>
         {% include "jobs/partials/edit-delete-buttons.html" %}
         
         <p class="text-muted mb-n1 mt-n2">{{ job.location.name }}, {{ job.location.region }}</p>
