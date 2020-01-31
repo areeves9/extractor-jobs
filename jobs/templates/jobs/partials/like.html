@@ -17,7 +17,7 @@
         console.log(data);
 
         if (event.target.tagName.toLowerCase() == 'i') {
-            sendXhr('POST', url);
+            sendXhr('POST', url, data);
         }
    
     });
@@ -30,7 +30,7 @@
         likeButton.innerHTML = (previous_action == "like" ? `{% fa5_icon 'heart fa-2x' 'fas' %} <br> Unsave Job` : `{% fa5_icon 'heart fa-2x' 'far' %} <br> Save Job`)
     };
 
-    function sendXhr(method, url) {
+    function sendXhr(method, url, data) {
         let xhr = new XMLHttpRequest();
             xhr.open(method, url);
             //Send the proper header information along with the request

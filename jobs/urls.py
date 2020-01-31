@@ -1,6 +1,5 @@
 from django.urls import re_path
 from utils.autocomplete import CityAutocomplete
-from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 
 from jobs import views
@@ -8,11 +7,11 @@ from jobs import views
 
 from jobs.views import (
     JobList,
-    JobDetailView,
     JobCreate,
     JobUpdate,
     JobDelete,
-    # JobLike,
+    JobDetail,
+    JobShare
 )
 urlpatterns = [
     re_path(
@@ -23,8 +22,8 @@ urlpatterns = [
     re_path(r'^$', JobList.as_view(), name='job_list'),
     re_path(r'^like/$', views.job_like, name='job_like'),
     re_path(r'^create/$', login_required(JobCreate.as_view()), name='job_create'),
-    re_path(r'^(?P<slug>[-\w]+)/update/$', login_required(JobUpdate.as_view()), name='job_update'),
+    re_path(r'^(?P<slug>[-\w]+)/$', JobDetail.as_view(), name="job_detail"),
     re_path(r'^(?P<slug>[-\w]+)/delete/$', login_required(JobDelete.as_view()), name='job_delete'),
-    re_path(r'^(?P<slug>[-\w]+)/$', JobDetailView.as_view(), name="job_detail"),
-
+    re_path(r'^(?P<slug>[-\w]+)/update/$', login_required(JobUpdate.as_view()), name='job_update'),
+    re_path(r'^(?P<slug>[-\w]+)/share/$', login_required(JobShare.as_view()), name='job_share'),
 ]

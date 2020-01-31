@@ -1,0 +1,76 @@
+
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">    
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/select2_selection.css' %}" crossorigin="anonymous">
+    </head>
+    <body>
+        <header>
+            <div class="row mt-n2">
+                <div style="color: white;
+                height: 100%;
+                width: 100%;
+                background-size: cover; 
+                background-position: center; 
+                background-repeat: no-repeat; 
+                background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://source.unsplash.com/featured/?{{ job.location }}, nature');"
+                class="jumbotron jumbotron-fluid mr-0">
+                    <div class="container-fluid">
+                        <h1 class="display-4"><i>{{ job.location.name }}</i></h1>
+                        <p class="mt-n2 lead"><b>{{ job.job_title }}</b></p>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="row">
+            <div class="col-md-4">
+                <h5 class="">{{ job.headline }}</h5>        
+                <p class="text-muted mb-n1 mt-n2">{{ job.location.name }}, {{ job.location.region }}</p>
+                <p>Company Name</p>
+        
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Details</h5>
+                <h6 class="mt-n1">Job Type</h6>
+                <p>{{ job.employment_type }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Description</h5>
+                <p>{{ job.description }}</p>
+        
+                {% if job.job_title %}
+                <p><b>{{ job.job_title }}</b></p>
+                {% endif %}
+        
+                {% if job.education %}
+                <p><b>{{ job.education }} Degree</b></p>
+                {% endif %}
+        
+                {% if job.location %}
+                <p><b>{{ job.location }}</b></p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Compensation</h5>
+                <p><b>${{ job.salary|floatformat }} per {{ job.salary_frequency|lower }}</b></p>
+        
+                {% if job.benefits %}
+                <p><b>Benefits: {{ job.benefits }}</b></p>
+                {% endif %}
+            </div>
+        </div>
+    </body>
+    
+</html>

@@ -134,18 +134,6 @@ class Job(models.Model):
         else:
             return f'Posted {delta.days} days ago.'
 
-    def share_job(self, user):
-        try:
-            subject = self.headline
-            from_email = user
-            to = user
-            body = self.description
-            html_message = render_to_string('jobs/job_detail.html', {'job': self})
-
-            send_mail(subject, body, from_email, [to], html_message=html_message)
-        except:
-            print('Error')
-
 # if instance doesn't have slug
 # pass instance to create_slug
 # slug is created from instance.headline

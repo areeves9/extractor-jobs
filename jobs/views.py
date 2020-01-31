@@ -1,39 +1,66 @@
 from django.contrib.messages.views import SuccessMessageMixin
 
+from django.template.loader import render_to_string
+
 import json
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 
+from django.core.mail import EmailMultiAlternatives
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
+# from django.views.generic.detail import SingleObjectMixin
+from django.views.generic.edit import FormMixin
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import (
     CreateView,
     UpdateView,
-    DeleteView
+    DeleteView,
 )
 from jobs.models import Job
-from jobs.forms import JobForm
+from jobs.forms import JobForm, JobShareForm
 
 
-class JobCreate(SuccessMessageMixin, CreateView):
-    form_class = JobForm
-    template_name = 'jobs/job_form.html'
-    success_message = 'Job posting sucessfuly created.'
-
-
-class JobUpdate(SuccessMessageMixin, UpdateView):
+class JobDetail(DetailView):
+    """
+    Get detail for single job instance.
+    """
     model = Job
-    form_class = JobForm
-    template_name = 'jobs/job_form.html'
-    success_message = 'Job posting sucessfuly updated.'
+    context_object_name = 'job'
 
 
-class JobDelete(DeleteView):
+class JobShare(FormMixin, DetailView):
     model = Job
-    success_url = reverse_lazy('jobs:job_list')
+    form_class = JobShareForm
+    template_name = 'jobs/job_share_form.html'
+    context_object_name = 'job'
+    success_message = 'Job posting `sucessfuly` created.'
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        body = json.loads(request.body)
+        email_recipient = body['email_recipient']
+        
+        if email_recipient:
+            subject = self.object.headline
+            from_mail = request.user.email
+            job_url = request.build_absolute_uri(self.object.get_absolute_url())
+            html_message = render_to_string('jobs/job_email.html', context={'job': self.object})
+            text_content = 'Read "{}" at {}.'.format(self.object.headline, job_url)
+            msg = EmailMultiAlternatives(
+                subject, text_content, from_mail, [email_recipient]
+            )
+            msg.attach_alternative(html_message, "text/html")
+            msg.mixed_subtype = 'related'
+            try:
+                pass
+            except:
+                print("There was an error emailing the message")
+            return JsonResponse({'status': 'ok'})
+
+        return JsonResponse({'status': 'ok'})
 
 
 class JobList(ListView):
@@ -45,12 +72,36 @@ class JobList(ListView):
     paginate_by = 10
 
 
-class JobDetailView(DetailView):
+class JobCreate(SuccessMessageMixin, CreateView):
     """
-    Get detail for single job instance.
+    Create a job instance.
+    """
+    form_class = JobForm
+    template_name = 'jobs/job_form.html'
+    success_message = 'Job posting sucessfuly created.'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class JobUpdate(SuccessMessageMixin, UpdateView):
+    """
+    Update a job instance.
     """
     model = Job
-    context_object_name = 'job'
+    form_class = JobForm
+    template_name = 'jobs/job_form.html'
+    success_message = 'Job posting sucessfuly updated.'
+
+
+class JobDelete(SuccessMessageMixin, DeleteView):
+    """
+    Delete a job instance.
+    """
+    model = Job
+    success_url = reverse_lazy('jobs:job_list')
+    success_message = 'Job posting sucessfuly deleted.'
 
 
 @login_required
@@ -74,21 +125,3 @@ def job_like(request):
         except:
             pass
     return JsonResponse({'status': 'ok'})
-
-
-# class JobLike(View):
-#     def get(self, request, *args, **kwargs):
-#         slug = self.request.kwargs("slug")
-#         action = self.request.kwargs("action")
-#         print(action)
-#         if slug and action:
-#             try:
-#                 if action == 'like':
-#                     job.likes.add(request.user)
-#                 else:
-#                     job.likes.remove(request.user)
-#                 return HttpResponse('Hello, World!')
-#             except:
-#                 pass
-#         return HttpResponse('Hello, World!')
-

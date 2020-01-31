@@ -10,7 +10,7 @@
 
 {% block content %}
 <div class="col">
-     {% if request.user == job.user %}
+     {% if request.user == job.user or request.user.is_business %}
     <h3 class="text-center">
         {% if request.resolver_match.url_name == 'job_update' %}
         Update Job

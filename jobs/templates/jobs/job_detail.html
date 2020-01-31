@@ -22,9 +22,16 @@
     </div>
 </header>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md">
+        <a href=""
+            data-target="#emailModal"
+            data-toggle="modal"
+            role="button" 
+            style="padding: 0.5rem 0.5rem;" 
+            class="float-right rounded-circle btn btn-success">
+                {% fa5_icon 'envelope fa-2x' 'far' %}
+        </a>
         <h5 class="">{{ job.headline }}</h5>
-        <a href="{{ job.send_job }}"></a>
         {% include "jobs/partials/edit-delete-buttons.html" %}
         
         <p class="text-muted mb-n1 mt-n2">{{ job.location.name }}, {{ job.location.region }}</p>
@@ -81,5 +88,7 @@
 {% block javascript %}
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
 {% include "jobs/partials/like.html" %}
+{% include "jobs/partials/email_modal.html" %}
+
 {% endblock %}
 

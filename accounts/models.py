@@ -20,16 +20,19 @@ from django.core.validators import RegexValidator
 from phonenumber_field.modelfields import PhoneNumberField
 from taggit.managers import TaggableManager
 
-from imagekit.models import ImageSpecField
-from imagekit.processors import Transpose
+
 
 # display names only have alphanumeric and underscores
+
 alphanumeric_underscores = RegexValidator(r'^[a-zA-Z0-9_]+$', 'Only alphanumeric and underscores')
+
 
 def upload_location(instance, filename):
     return "%s/%s" % (instance.display_name, filename)
 
 # Create your models here.
+
+
 class SiteUserManager(BaseUserManager):
     def create_user(self, email, display_name, password=None):
         """

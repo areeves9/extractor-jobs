@@ -1,0 +1,95 @@
+
+{% load staticfiles %}
+{% load fontawesome_5 %}
+
+
+{% load crispy_forms_tags %}
+
+{% block head %}
+{% endblock %}
+
+<div class="col">
+    <h3 class="text-center">
+        Share Job #{{ job.pk }}
+    </h3>
+    <form id="emailForm" action="" method="">
+    <div class="form-group">
+        <label for="exampleInputEmail1">To</label>
+        <input name="email_recipient" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter recipient email" required>
+        <small id="emailHelp" class="form-text text-muted">Your information is never shared.</small>
+    </div>
+    <div class="form-group">
+        <label for="exampleTextArea1">Message</label>
+        <textarea type="text" namme="message" class="form-control" id="exampleTextArea1" placeholder="Type your message here" required></textarea>
+        <small id="emailHelp" class="form-text text-muted">Optional</small>
+    </div>
+        <button id="emailButton" type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </form>
+</div>
+
+{% block footer %}
+{{ form.media }}
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+    var csrftoken = Cookies.get('csrftoken');
+    
+    const emailForm = document.getElementById('emailForm');
+    const emailModal = document.getElementById('emailModal');
+
+    const job_url = `{% url 'jobs:job_share' job.slug %}`;
+    let data1 = {
+        message: null,
+        email_recipient: null,
+    };
+
+    emailForm.addEventListener("submit", function(event){
+        event.preventDefault();
+        const email_recipient = document.getElementById('exampleInputEmail1').value;
+        const message = document.getElementById('exampleTextArea1').value;
+        data1.message = message;
+        data1.email_recipient = email_recipient;
+        document.getElementById('exampleInputEmail1').value ='';
+        document.getElementById('exampleTextArea1').value = '';
+        sendXhr1('POST', job_url, data1);
+        return false;
+    });
+
+    function hideModal() {
+        $('#emailModal').modal('hide');
+    };
+
+    function sendXhr1(method, url, data) {
+        let xhr = new XMLHttpRequest();
+            xhr.open(method, url);
+            //Send the proper header information along with the request
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.status);
+                    data = JSON.parse(xhr.responseText);
+                    console.log(data)
+                    if (data.status == 'ok') {
+                        // emailModal.innerHTML = 'success';
+                    } else {
+                        // emailModal.innerHTML = 'server error';
+                    }
+                }
+            };
+            xhr.send(JSON.stringify(data));
+        };
+     
+   
+
+</script>
+{% endblock %}
+
+
+
+
+
+

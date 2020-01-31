@@ -19,7 +19,9 @@
         <h6 class="card-subtitle mb-2 text-muted">{{ job.location }}</h6>
         <p class="card-text">${{ job.salary }} per {{ job.salary_frequency|lower }}</p>
         <p class="card-text">{{ job.description|truncatechars:240 }}</p>
-        <p class="card-text">{{ job.get_post_date_days }}</p>
+        <p class="card-text">{{ job.get_post_date_days }}  <span class="text-secondary">by {{ job.user.display_name }}</span></p>
+       
+
       </div>
     </div>
   </div>
