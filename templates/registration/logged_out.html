@@ -3,10 +3,13 @@
 {% load crispy_forms_tags %} 
 
 {% block content %}
-<div class="col-md">
-    <div class="row justify-content-center">
-        <p>You are logged out. <a href="{% url 'accounts:login' %}">Login</a> again.</p>
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-md-4">
+            <div class="row justify-content-center">
+                <p>You are logged out. <a href="{% url 'accounts:login' %}">Login</a> again.</p>
+            </div>
+        </div>
     </div>
-</div>
 
 {% endblock %}
+
