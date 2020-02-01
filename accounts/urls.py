@@ -37,4 +37,6 @@ urlpatterns = [
     re_path(r'^experience/(?P<pk>\d+)/update/$', login_required(ExperienceUpdateView.as_view()), name="experience_update"),
     re_path(r'^login/$', auth_views.LoginView.as_view(), name="login"),
     re_path(r'^logout/$', auth_views.LogoutView.as_view(), name="logout"),
+    re_path(r'^password_reset/$', auth_views.PasswordResetView.as_view(), name="password_reset"),
+    # re_path(r'^password_reset/done/$', auth_views.PasswordResetView.as_view(), name='password_reset_done'),
 ]

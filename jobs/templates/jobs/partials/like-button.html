@@ -3,7 +3,7 @@
 <p id="like-button"  
     data-slug="{{ job.slug }}"
     data-action="{% if request.user in job.likes.all %}un{% endif %}like"
-    style="text-decoration:none; text-align: center; color: black;"
+    style="text-decoration:none; color: black;"
     class="text-center">
     {% if request.user not in job.likes.all %}
         {% fa5_icon 'heart fa-2x' 'far' %} <br> Save Job

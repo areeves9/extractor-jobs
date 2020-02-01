@@ -28,7 +28,7 @@ from utils.autocomplete import CityAutocomplete
 urlpatterns = [
     re_path('admin/', admin.site.urls),
     re_path('accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
-    re_path('account/', include(('django.contrib.auth.urls', 'django.contrib.auth'), namespace='account')),
+    re_path('account/', include('django.contrib.auth.urls')),
     re_path('jobs/', include(('jobs.urls', 'jobs'), namespace='jobs')),
 ]
 

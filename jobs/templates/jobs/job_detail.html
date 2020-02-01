@@ -3,9 +3,9 @@
 {% load static %}
 {% load fontawesome_5 %}
 
-{% block content %}
+{% block header %}
 <header>
-    <div class="row mt-n2">
+    <div class="row">
         <div style="color: white;
         height: 100%;
         width: 100%;
@@ -15,70 +15,98 @@
         background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://source.unsplash.com/featured/?{{ job.location }}, nature');"
         class="jumbotron jumbotron-fluid mr-0">
             <div class="container-fluid">
-                <h1 class="display-4"><i>{{ job.location.name }}</i></h1>
-                <p class="mt-n2 lead"><b>{{ job.job_title }}</b></p>
+                <h1 class="display-4 text-center"><i>{{ job.location.name }}</i></h1>
+                <p class="mt-n2 lead text-center"><b>{{ job.job_title }}</b></p>
             </div>
         </div>
     </div>
 </header>
-<div class="row">
-    <div class="col-md">
-        <a href=""
-            data-target="#emailModal"
-            data-toggle="modal"
-            role="button" 
-            style="padding: 0.5rem 0.5rem;" 
-            class="float-right rounded-circle btn btn-success">
-                {% fa5_icon 'envelope fa-2x' 'far' %}
-        </a>
-        <h5 class="">{{ job.headline }}</h5>
-        {% include "jobs/partials/edit-delete-buttons.html" %}
-        <p class="text-muted mb-n1 mt-n2">{{ job.location.name }}, {{ job.location.region }}</p>
-        <p>Company Name</p>
+ {% endblock %}
 
+{% block content %}
+
+
+<a href=""
+data-target="#emailModal"
+data-toggle="modal"
+role="button" 
+style="padding: 0.5rem 0.5rem;" 
+class="rounded-circle btn btn-success">
+    {% fa5_icon 'envelope fa-2x' 'far' %}
+</a>
+<a href="{{ job.link }}"
+role="button" 
+style="padding: 0.5rem 0.5rem;"
+target="_blank" 
+class="ml-2 rounded-circle btn btn-success">
+    {% fa5_icon 'link fa-2x' 'fas' %}
+</a>
+
+
+
+<div class="row">
+
+    <div class="col-md-4 mt-4">
+
+        <!-- {% include "jobs/partials/edit-delete-buttons.html" %} -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="">{{ job.headline }}</h5>
+                <p class="text-muted mb-n1 mt-n2">{{ job.location.name }}, {{ job.location.region }}</p>
+                <p>Company Name</p>
+            </div>
+        </div>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5>Details</h5>
+                <h6 class="mt-n1">Job Type</h6>
+                <p>{{ job.employment_type }}</p>
+            </div>
+        </div>
+        <div class="card mt-4">
+            <div class="card-body">
+                {% if job.job_title %}
+                <p><b>{{ job.job_title }}</b></p>
+                {% endif %}
+
+                {% if job.education %}
+                <p><b>{{ job.education }} Degree</b></p>
+                {% endif %}
+
+                {% if job.location %}
+                <p><b>{{ job.location }}</b></p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5>Compensation</h5>
+                <p><b>${{ job.salary|floatformat }} per {{ job.salary_frequency|lower }}</b></p>
+
+                {% if job.benefits %}
+                <p><b>Benefits: {{ job.benefits }}</b></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 mt-4">
+        <div class="card">
+            <div class="card-body">
+                <h5>Description</h5>
+                <p>{{ job.description }}</p>
+            </div>
+        </div>
 
     </div>
 </div>
-<div class="row">
-    <div class="col-md-4">
-        <h5>Details</h5>
-        <h6 class="mt-n1">Job Type</h6>
-        <p>{{ job.employment_type }}</p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <h5>Description</h5>
-        <p>{{ job.description }}</p>
+<p class="mt-2 text-muted">{{ job.get_post_date_days }}</p>
 
-        {% if job.job_title %}
-        <p><b>{{ job.job_title }}</b></p>
-        {% endif %}
-
-        {% if job.education %}
-        <p><b>{{ job.education }} Degree</b></p>
-        {% endif %}
-
-        {% if job.location %}
-        <p><b>{{ job.location }}</b></p>
-        {% endif %}
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <h5>Compensation</h5>
-        <p><b>${{ job.salary|floatformat }} per {{ job.salary_frequency|lower }}</b></p>
-
-        {% if job.benefits %}
-        <p><b>Benefits: {{ job.benefits }}</b></p>
-        {% endif %}
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <p class="text-muted">{{ job.get_post_date_days }}</p>
+<div class="row mt-4">
+    <div class="col-md-12">
         {% include "jobs/partials/like-button.html" %}
+
     </div>
+
 </div>
 {% endblock %}
 

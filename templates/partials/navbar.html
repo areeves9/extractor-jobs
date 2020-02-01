@@ -3,25 +3,31 @@
 <nav class="navbar navbar-expand-lg bg-light navbar-light mb-2">
     <a class="navbar-brand" href="{% url 'jobs:job_list' %}">Masyaf</a>
     <ul class="nav ml-auto">
-        <li class="nav-item">    
-            <a class="btn btn-light nav-link text-dark" 
+        <li class="nav-item dropdown">    
+            <a class="btn btn-light nav-link text-dark dropdown-toggle" 
             href="#"
-            data-target="#accountModal"
-            data-toggle="modal"
             role="button"
+            data-target="#accountModal"
+                data-toggle="modal"
             >
+            <!-- id="dropdownMenuLink" data-toggle="dropdown" -->
+
+         
                 {% fa5_icon 'user-circle fa-2x' 'fas' %}
             </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
         </li>
 
-        {% if request.user.is_authenticated %}
         <li class="nav-item">
             <a class="btn btn-light nav-link text-dark"
             href="{% url 'accounts:my_jobs' %}">
                 {% fa5_icon 'heart fa-2x' 'fas' %}
             </a>
         </li>
-        {% endif %}
     </ul>
     
     <button class="border-0 navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

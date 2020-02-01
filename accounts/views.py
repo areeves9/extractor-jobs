@@ -1,6 +1,8 @@
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator
 
+from django.contrib.messages.views import SuccessMessageMixin
+
 
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
@@ -12,10 +14,11 @@ from accounts.forms import UserRegisterForm, UserUpdateForm, ExperienceForm, Ski
 # Create your views here.
 
 
-class RegistrationView(CreateView):
+class RegistrationView(SuccessMessageMixin, CreateView):
     form_class = UserRegisterForm
     success_url = reverse_lazy('login')
     template_name = 'accounts/registration_form.html'
+    success_message = 'User sucessfuly registered.'
 
 
 class UserProfileView(DetailView):
@@ -53,13 +56,14 @@ class MyJobsView(ListView):
         return SiteUser.objects.filter(email=self.request.user).first().jobs_liked.all()
 
 
-class UserUpdateView(UpdateView):
+class UserUpdateView(SuccessMessageMixin, UpdateView):
     """
     Updates Employee instance.
     """
     model = SiteUser
     form_class = UserUpdateForm
     success_url = reverse_lazy('accounts:profile')
+    success_message = 'Account sucessfuly updated.'
 
 
 class UserListView(ListView):

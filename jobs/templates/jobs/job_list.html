@@ -4,14 +4,15 @@
 
 {% block content %}
 
-<h5>Jobs</h5>
-<p class="text-muted">
-  Page {{ page_obj.number }} of {{ paginator.count }} jobs
-</p>
-<div class="row">
-{% for job in job_list %}
-  <div class="col-md-8 mb-2">
-    <div class="card">
+
+<div class="h-100 row justify-content-center align-items-center">
+  <div class="col-md-8">
+    <h5 class="">Jobs</h5>
+    <p class="text-muted">
+      Page {{ page_obj.number }} of {{ paginator.count }} jobs
+    </p>
+  {% for job in job_list %}
+    <div class="card mb-2">
       <div class="card-body">
         <h5 class="card-title">
           <a style="text-decoration: none; color: black;" href="{{ job.get_absolute_url }}">{{ job.headline}}</a>
@@ -20,20 +21,14 @@
         <p class="card-text">${{ job.salary }} per {{ job.salary_frequency|lower }}</p>
         <p class="card-text">{{ job.description|truncatechars:240 }}</p>
         <p class="card-text">{{ job.get_post_date_days }}  <span class="text-secondary">by {{ job.user.display_name }}</span></p>
-       
-
       </div>
     </div>
+  {% endfor %}
+  {% include "partials/pagination.html" %}
   </div>
-{% endfor %}
 </div>
 
 {% endblock %}
 
 {% block javascript %}
-{% endblock %}
-
-{% block footer %}
-{% include "partials/pagination.html" %}
-
 {% endblock %}

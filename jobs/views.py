@@ -38,7 +38,6 @@ class JobShare(FormMixin, DetailView):
     form_class = JobShareForm
     template_name = 'jobs/job_share_form.html'
     context_object_name = 'job'
-    success_message = 'Job posting `sucessfuly` created.'
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
