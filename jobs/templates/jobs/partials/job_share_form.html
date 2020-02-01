@@ -35,11 +35,21 @@
 {% block javascript %}
 <script type="text/javascript">
     var csrftoken = Cookies.get('csrftoken');
-    
+    const emailButton = document.getElementById('emailButton');
     const emailForm = document.getElementById('emailForm');
     const emailModal = document.getElementById('emailModal');
+    const modalHeader = document.querySelector('.modal-header');
+    const success = `<div style="height: 100%; width: 100%;" 
+    class="mb-n1 mx-auto alert alert-success" role="alert">
+    Email sent!</div>`;
+
+    const danger = `<div class="alert alert-danger" 
+    style="height: 100%; width: 100%;"role="alert">
+    Server error: message not sent.</div>`
+
 
     const job_url = `{% url 'jobs:job_share' job.slug %}`;
+    
     let data1 = {
         message: null,
         email_recipient: null,
@@ -51,14 +61,19 @@
         const message = document.getElementById('exampleTextArea1').value;
         data1.message = message;
         data1.email_recipient = email_recipient;
-        document.getElementById('exampleInputEmail1').value ='';
-        document.getElementById('exampleTextArea1').value = '';
+        
         sendXhr1('POST', job_url, data1);
+        emailButton.disabled = true;
+        
         return false;
     });
 
     function hideModal() {
-        $('#emailModal').modal('hide');
+        setTimeout(function() {
+            $('#emailModal').modal('hide');
+            emailButton.disabled = false;
+            hideAlert();
+        }, 1000)
     };
 
     function sendXhr1(method, url, data) {
@@ -70,20 +85,37 @@
     
             xhr.onreadystatechange = function() {
                 if(xhr.readyState == 4 && xhr.status == 200) {
-                    console.log(xhr.status);
                     data = JSON.parse(xhr.responseText);
-                    console.log(data)
-                    if (data.status == 'ok') {
-                        // emailModal.innerHTML = 'success';
+                    status = data.status;
+                    if (status == 'ok') {
+                        createAlert(status);
+                        hideModal();
                     } else {
-                        // emailModal.innerHTML = 'server error';
+                        createAlert(status);
+                        hideModal();
                     }
                 }
             };
             xhr.send(JSON.stringify(data));
         };
-     
-   
+
+        function createAlert(status) {
+            if (status == 'ok') {
+                modalHeader.setAttribute("style", "padding: 0;");
+                return modalHeader.innerHTML = success;
+            } else {
+                modalHeader.setAttribute("style", "padding: 0;");
+                return modalHeader.innerHTML = danger;
+            }
+        };
+
+        function hideAlert() {
+            document.getElementById('exampleInputEmail1').value ='';
+            document.getElementById('exampleTextArea1').value = '';
+            document.querySelector('.alert').setAttribute("style", "display: none");
+            modalHeader.setAttribute("style", "padding: 1rem;");
+            modalHeader.innerHTML = 'Share To';
+        };
 
 </script>
 {% endblock %}

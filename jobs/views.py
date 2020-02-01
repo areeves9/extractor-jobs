@@ -1,5 +1,7 @@
 from django.contrib.messages.views import SuccessMessageMixin
 
+from smtplib import SMTPException
+
 from django.template.loader import render_to_string
 
 import json
@@ -42,23 +44,25 @@ class JobShare(FormMixin, DetailView):
         self.object = self.get_object()
         body = json.loads(request.body)
         email_recipient = body['email_recipient']
-        
+
         if email_recipient:
-            subject = self.object.headline
-            from_mail = request.user.email
-            job_url = request.build_absolute_uri(self.object.get_absolute_url())
-            html_message = render_to_string('jobs/job_email.html', context={'job': self.object})
-            text_content = 'Read "{}" at {}.'.format(self.object.headline, job_url)
-            msg = EmailMultiAlternatives(
-                subject, text_content, from_mail, [email_recipient]
-            )
-            msg.attach_alternative(html_message, "text/html")
-            msg.mixed_subtype = 'related'
             try:
-                pass
-            except:
-                print("There was an error emailing the message")
-            return JsonResponse({'status': 'ok'})
+                subject = self.object.headline
+                from_mail = request.user.email
+                job_url = request.build_absolute_uri(self.object.get_absolute_url())
+                html_message = render_to_string('jobs/job_email.html', context={'job': self.object})
+                text_content = 'Read "{}" at {}.'.format(self.object.headline, job_url)
+                msg = EmailMultiAlternatives(
+                    subject, text_content, from_mail, [email_recipient]
+                )
+                msg.attach_alternative(html_message, "text/html")
+                msg.mixed_subtype = 'related'
+                msg.send()
+            except SMTPException as e:
+                logging.error('SMTPException: %s' % e)
+
+        else:
+            return JsonResponse({'status': 'error'})
 
         return JsonResponse({'status': 'ok'})
 
