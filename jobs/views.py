@@ -111,8 +111,6 @@ class JobDelete(SuccessMessageMixin, DeleteView):
 @login_required
 @require_POST
 def job_like(request):
-    # slug = request.POST.get('slug')
-    # action = request.POST.get('action')
     body = json.loads(request.body)
     slug = body['slug']
     action = body['action']

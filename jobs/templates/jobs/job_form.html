@@ -9,25 +9,24 @@
 {% endblock %}
 
 {% block content %}
-<div class="col">
-     {% if request.user == job.user or request.user.is_business %}
-    <h3 class="text-center">
-        {% if request.resolver_match.url_name == 'job_update' %}
-        Update Job
-        {% else %}
-        Add Job
-        {% endif %}
-    </h3>
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <form action="" method="post">
-                {% csrf_token %}
-                {{ form|crispy }}
-                <button class="btn btn-success" type="submit">
-                    Submit
-                </button>
-            </form>
-        </div>
+
+{% if request.user == job.user or request.user.is_business %}
+<h5 class="text-left">
+    {% if request.resolver_match.url_name == 'job_update' %}
+    Update Job
+    {% else %}
+    Add Job
+    {% endif %}
+</h5>
+<div class="row">
+    <div class="col d-flex justify-content-center">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-success" type="submit">
+                Submit
+            </button>
+        </form>
     </div>
     {% else %}
     <h3 class="text-center">Access Denied</h3>
@@ -43,8 +42,3 @@
 {{ form.media }}
 
 {% endblock %}
-
-
-
-
-
