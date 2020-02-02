@@ -14,6 +14,7 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = SiteUser
         fields = ('email', 'display_name',)
+        exclude = ['password1', 'password2']
 
 
 class UserUpdateForm(forms.ModelForm):

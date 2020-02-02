@@ -1,6 +1,8 @@
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
+from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator
 
+from django.contrib.auth import authenticate, login
 from django.contrib.messages.views import SuccessMessageMixin
 
 
@@ -19,6 +21,15 @@ class RegistrationView(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('login')
     template_name = 'accounts/registration_form.html'
     success_message = 'User sucessfuly registered.'
+
+    def form_valid(self, form):
+        # bound form instance has the user data
+        # save it to add user to db
+        form.save()
+        # authenticate user then login
+        user = authenticate(username=form.cleaned_data['email'], password=form.cleaned_data['password1'],)
+        login(self.request, user)
+        return HttpResponseRedirect(reverse('jobs:job_list'))
 
 
 class UserProfileView(DetailView):
