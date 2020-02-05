@@ -21,10 +21,6 @@ from django.urls import include, re_path
 from django.conf.urls.static import static
 from django.contrib import admin
 
-
-from utils.autocomplete import CityAutocomplete
-
-
 urlpatterns = [
     re_path('admin/', admin.site.urls),
     re_path('accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),

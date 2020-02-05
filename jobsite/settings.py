@@ -143,7 +143,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static_production")
 # User substitution
 # https://docs.djangoproject.com/en/1.11/topics/auth/customizing/#auth-custom-user
 
-AUTH_USER_MODEL = 'accounts.SiteUser'
+AUTH_USER_MODEL = 'accounts.SiteUser'\
+
+LOGIN_REDIRECT_URL = '/jobs/'
 
 # Managing server uploads during development
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
