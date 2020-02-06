@@ -53,10 +53,3 @@ with open('jobs_2020.csv') as csv_file:
             row['location'] = city
             writer.writerow(row)
             create_job_instance(row)
-
-
-
-    
-
-    
-        
