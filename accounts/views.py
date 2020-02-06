@@ -1,10 +1,12 @@
+import datetime
+
 from django.urls import reverse_lazy
 from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 
 # from django.core.paginator import Paginator
-
+from django.contrib.auth import login
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.messages.views import SuccessMessageMixin
 
@@ -134,17 +136,21 @@ class UserListView(ListView):
     context_object_name = 'users'
 
 
-class ExperienceView(CreateView):
+class ExperienceView(SuccessMessageMixin, CreateView):
     """
     Create an Expereince instance.
     """
     def form_valid(self, form):
+        if form.instance.is_present_employeer:
+            form.instance.end_month = datetime.datetime.now().month
+            form.instance.end_year = datetime.datetime.now().year
         form.instance.user = self.request.user
         return super(ExperienceView, self).form_valid(form)
 
     model = Experience
     form_class = ExperienceForm
     success_url = reverse_lazy('accounts:profile')
+    success_message = 'Job experience sucessfully added.'
     template_name = 'accounts/experience_form.html'
 
 
@@ -177,10 +183,11 @@ class SkillDetailView(DetailView):
     context_object_name = 'skill'
 
 
-class SkillUpdateView(UpdateView):
+class SkillUpdateView(SuccessMessageMixin, UpdateView):
     """
     Update skill instance - add or remove tags.
     """
     model = Skill
     form_class = SkillForm
+    success_message = 'Skills successfully updated.'
     success_url = reverse_lazy('accounts:profile')
