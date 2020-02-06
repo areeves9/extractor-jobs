@@ -139,6 +139,7 @@ class SiteUser(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_business = models.BooleanField(default=False)
+    is_available = models.BooleanField(default=False)
 
     slug = models.SlugField(unique=True)
 
