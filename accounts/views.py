@@ -1,20 +1,12 @@
-from django.urls import reverse, reverse_lazy
-from django.http import HttpResponse
+from django.urls import reverse_lazy
 from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
-
-
-from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordResetForm
-
 
 # from django.core.paginator import Paginator
 
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth import authenticate, get_user_model, login, update_session_auth_hash
-from django.contrib.auth.forms import SetPasswordForm, PasswordChangeForm
-
 
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
@@ -86,19 +78,6 @@ class RegistrationView(SuccessMessageMixin, CreateView):
             form = self.form_class()
             return form
 
-    # def form_valid(self, form):
-    #     # bound form instance has the user data
-    #     # save it to add user to db
-    #     print(form.instance.display_name)
-    #     user = form.instance
-    #     user.is_active = False
-    #     user.set_unusable_password()
-    #     user.save()
-
-    
-
-    #     return super().form_valid(form)
-
 
 class UserProfileView(DetailView):
     """
@@ -132,7 +111,9 @@ class MyJobsView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return SiteUser.objects.filter(email=self.request.user).first().jobs_liked.all()
+        return SiteUser.objects.filter(
+            email=self.request.user
+        ).first().jobs_liked.all()
 
 
 class UserUpdateView(SuccessMessageMixin, UpdateView):

@@ -12,11 +12,6 @@ from accounts.models import SiteUser, Experience, Skill
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(max_length=200, help_text='Required')
 
-    # def __init__(self, *args, **kwargs):
-    #     super(UserRegisterForm, self).__init__(*args, **kwargs)
-    #     self.fields['password1'].required = False
-    #     self.fields['password2'].required = False
-
     class Meta:
         model = SiteUser
         fields = ('email', 'display_name', 'password1', 'password2')
