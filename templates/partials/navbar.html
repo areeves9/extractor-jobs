@@ -9,9 +9,12 @@
             role="button"
             data-target="#accountModal"
             data-toggle="modal"
-            >
-            <!-- id="dropdownMenuLink" data-toggle="dropdown" -->
-                {% fa5_icon 'user-circle fa-2x' 'fas' %}
+            > 
+            {% if request.user.is_authenticated %}
+            <img style="height: 2.3rem; width: 2.3rem;" class="rounded-circle" src="{{ request.user.image.url }}" />
+            {% else %}
+            {% fa5_icon 'user-circle fa-2x' 'fas' %}
+            {% endif %}
             </a>
         </li>
 
@@ -29,14 +32,15 @@
     
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="text-center nav-link" href="{% url 'jobs:job_list' %}">Listings</a>
-            </li>
             {% if request.user.is_authenticated %}
             <li class="nav-item">
                 <a class="text-center nav-link" href="{% url 'accounts:user_list' %}">For Hire</a>
             </li>
             {% endif %}
+            <li class="nav-item">
+                <a class="text-center nav-link" href="{% url 'jobs:job_list' %}">Listings</a>
+            </li>
+            
         {% if request.user.is_authenticated and request.user.is_business %}
         <li class="nav-item">
             <a class="text-center nav-link" href="{% url 'jobs:job_create' %}">Post Job</a>
