@@ -25,6 +25,9 @@ class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = SiteUser
+        labels = {
+            'is_available': 'Looking for work?',
+        }
         exclude = (
             'email',
             'password',
@@ -73,7 +76,7 @@ class SkillForm(forms.ModelForm):
             'user',
         )
         help_texts = {
-            'tags': None,
+            'tags': 'Separate tags with commas.',
         }
         labels = {'tags': ''}
 

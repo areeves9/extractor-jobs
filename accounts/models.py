@@ -139,7 +139,11 @@ class SiteUser(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_business = models.BooleanField(default=False)
-    is_available = models.BooleanField(default=False)
+    is_available = models.BooleanField(
+        default=False,
+        blank=True,
+        null=True,
+    )
 
     slug = models.SlugField(unique=True)
 
@@ -194,7 +198,7 @@ class Skill(models.Model):
         related_name='skill',
         on_delete=models.CASCADE,
     )
-    tags = TaggableManager(blank=True)
+    tags = TaggableManager(blank=True, help_text='Separate tags by commas.')
 
     def get_absolute_url(self):
         return reverse("accounts:skill_detail", kwargs={"pk": self.pk})
