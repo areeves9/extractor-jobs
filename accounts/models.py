@@ -276,7 +276,7 @@ class Experience(models.Model):
         YEAR_CHOICES = []
 
         for r in range(1980, (datetime.datetime.now().year+1)):
-            YEAR_CHOICES.append((r,r))
+            YEAR_CHOICES.append((r, r))
         return YEAR_CHOICES
 
     company = models.CharField(
@@ -308,14 +308,16 @@ class Experience(models.Model):
     end_month = models.CharField(
         choices=MONTH_CHOICES,
         max_length=20,
-        blank=False,
-        null=False,
+        blank=True,
+        null=True,
     )
     start_year = models.IntegerField(
         choices=get_year_choices(),
     )
     end_year = models.IntegerField(
         choices=get_year_choices(),
+        blank=True,
+        null=True,
     )
     user = models.ForeignKey(
         SiteUser,
@@ -331,4 +333,3 @@ class Experience(models.Model):
 
     def __str__(self):
         return self.company
-

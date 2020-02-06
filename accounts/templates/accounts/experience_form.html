@@ -20,10 +20,25 @@
 
 {% block javascript %}
 <script>
-  console.log("hello world");
-  let selection = document.getElementsByClassName("select2-selection select2-selection--single modelselect2 form-control");
-  console.log(selection[0])
+  // Show and hide ending month and year fields
+  let toggled = false;
 
+  const checkBox = document.getElementById("id_is_present_employeer");
+  const endMonth = document.getElementById("div_id_end_month");
+  const endYear = document.getElementById("div_id_end_year");
+
+  checkBox.addEventListener('click', function() {
+    if (!toggled) {
+      toggled = true;
+      endMonth.setAttribute('style', 'display: none;')
+      endYear.setAttribute('style', 'display: none;')
+    } else {
+      toggled = false;
+      endMonth.setAttribute('style', 'display: block;')
+      endYear.setAttribute('style', 'display: block;')
+    }
+  })
+  console.log(checkBox);
 </script>
 {% endblock %}
 
