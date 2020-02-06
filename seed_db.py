@@ -6,6 +6,7 @@ from jobs.models import Job # imports the model
 
 direc = os.path.dirname(os.path.abspath(__file__))
 
+
 def create_job_instance(row):
     job = Job(
         description=row['description'], 
@@ -23,6 +24,7 @@ def create_job_instance(row):
         job_title=row['job_title'],
     )
     job.save()
+
 
 with open('jobs_2020.csv') as csv_file:
     csv_reader = csv.DictReader(csv_file)

@@ -3,5 +3,6 @@ Hi {{ user.display_name }},
 
 Please click on the link below to confirm your registration:
 
-http://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}
+{{ protocol }}://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}
 {% endautoescape %}
+

@@ -2,27 +2,14 @@
 
 {% fontawesome_5_static %} 
 
-
-
 <!DOCTYPE html>
-
 <html class="h-100" lang="en">
-    {% block head %}
-
-    {% endblock %}
     {% include "partials/head.html" %}
-
 <body class="h-100">
-    {% include "partials/messages.html" %}
-    {% include "partials/navbar.html" %}
-    
     {% block header %}
     {% endblock %}
-    
-    <div class="h-100 container">
-
+    <div class="h-100 container"> 
         {% block content %}
-
         {% endblock %}
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -32,11 +19,7 @@
     {% block javascript %}
     {% endblock %}
 
-    {% include "partials/accounts-modal.html" %}
-
     {% block footer %}
-
     {% endblock %}
-    
 </body>
 </html>

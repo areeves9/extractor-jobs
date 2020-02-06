@@ -49,7 +49,14 @@ class JobShare(FormMixin, DetailView):
                 subject = self.object.headline
                 from_mail = request.user.email
                 job_url = request.build_absolute_uri(self.object.get_absolute_url())
-                html_message = render_to_string('jobs/job_email.html', context={'job': self.object})
+                html_message = render_to_string(
+                    'jobs/job_email.html',
+                    context={
+                        'job': self.object,
+                        'user': request.user,
+                        'domain': request.META['HTTP_HOST']
+                    }
+                )
                 text_content = 'Read "{}" at {}.'.format(self.object.headline, job_url)
                 msg = EmailMultiAlternatives(
                     subject, text_content, from_mail, [email_recipient]
