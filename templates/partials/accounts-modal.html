@@ -9,15 +9,6 @@
             <span aria-hidden="true">&times;</span>
           </button>
             {% if request.user.is_authenticated %}
-
-            <!-- {% if request.user.image %}
-            <img style="width: 104px; height: 104px;" class="mx-auto d-block img-thumbnail rounded-circle" src="{{ request.user.image.url }}" />
-            </a>
-            {% else %}
-            <a href="{{ request.user.get_absolute_url }}">
-              <img style="max-width: 50%;" class="mx-auto d-block img-thumbnail rounded-circle" src="https://via.placeholder.com/104" />
-            </a>
-            {% endif %} -->
             
             <ul class="list-unstyled">
               <!-- Profile -->
@@ -72,7 +63,9 @@
               
         {% endif %}
         <p class="mt-4 text-center">Forgot password? - Click <a href="{% url 'accounts:password_reset' %}">here</a> to reset.</p>
-
+        {% if request.user.is_authenticated %}
+        <p class="text-center">Interested in a business account? - Click <a href="{% url 'accounts:business_request' %}">here</a>.</p>
+        {% endif %}
         </div>
     </div>
   </div>

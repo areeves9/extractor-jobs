@@ -11,7 +11,7 @@
             data-toggle="modal"
             > 
             {% if request.user.is_authenticated %}
-            <img style="height: 2.3rem; width: 2.3rem;" class="rounded-circle" src="{{ request.user.image.url }}" />
+            <img style="height: 2.3rem; width: 2.3rem;" class="mr-n3 rounded-circle" src="{{ request.user.image.url }}" />
             {% else %}
             {% fa5_icon 'user-circle fa-2x' 'fas' %}
             {% endif %}

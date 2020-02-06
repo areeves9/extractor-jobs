@@ -2,10 +2,11 @@ from django import forms
 from dal import autocomplete
 from cities_light.models import City
 
-
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.forms import UserCreationForm
 
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 from accounts.models import SiteUser, Experience, Skill
 
 
@@ -151,3 +152,39 @@ class UserAdminChangeForm(forms.ModelForm):
         # This is done here, rather than on the field, because the
         # field does not have access to the initial value
         return self.initial["password"]
+
+
+class BusinessRequestForm(forms.Form):
+    business_name = forms.CharField(
+        label='Business name.',
+        max_length=255,
+    )
+    location = forms.CharField(
+        label='Business location.',
+        max_length=255,
+    )
+    address = forms.CharField(
+        label='Business mailing address.',
+        max_length=255,
+    )
+    license_id = forms.CharField(
+        label='Business license issued by state regulatory agency.',
+        max_length=255,
+    )
+    message = forms.CharField(
+        label='Additional information.',
+        widget=forms.Textarea,
+    )
+    
+    # def send_mail(self):
+    #     subject = 'Request for business account from {{ self.request.user }}'
+    #     message = render_to_string('registration/business_request_email.html', {
+    #         'user': self.request.user,
+    #         'business_name': self.form.cleaned_data['business_name'],
+    #         'location': self.form.cleaned_data['location'],
+    #         'address': self.form.cleaned_data['address'],
+    #         'license_id': self.form.cleaned_data['license_id'],
+
+    #     })
+    #     email = EmailMessage(subject, message, to=['areeves9@icloud.com', ])
+    #     email.send()

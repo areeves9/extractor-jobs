@@ -1,7 +1,7 @@
 import datetime
 
 from django.urls import reverse_lazy
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 
@@ -16,7 +16,7 @@ from django.utils.encoding import force_bytes, force_text
 # from django.views.generic.list import View
 from django.views import View
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.views.generic.list import ListView
 
 from accounts.tokens import account_activation_token
@@ -26,6 +26,7 @@ from accounts.forms import (
     UserUpdateForm,
     ExperienceForm,
     SkillForm,
+    BusinessRequestForm,
     )
 
 # Create your views here.
@@ -140,18 +141,18 @@ class ExperienceView(SuccessMessageMixin, CreateView):
     """
     Create an Expereince instance.
     """
+    model = Experience
+    form_class = ExperienceForm
+    success_url = reverse_lazy('accounts:profile')
+    success_message = 'Job experience sucessfully added.'
+    template_name = 'accounts/experience_form.html'
+
     def form_valid(self, form):
         if form.instance.is_present_employeer:
             form.instance.end_month = datetime.datetime.now().month
             form.instance.end_year = datetime.datetime.now().year
         form.instance.user = self.request.user
         return super(ExperienceView, self).form_valid(form)
-
-    model = Experience
-    form_class = ExperienceForm
-    success_url = reverse_lazy('accounts:profile')
-    success_message = 'Job experience sucessfully added.'
-    template_name = 'accounts/experience_form.html'
 
 
 class ExperienceDetailView(DetailView):
@@ -192,3 +193,37 @@ class SkillUpdateView(SuccessMessageMixin, UpdateView):
     form_class = SkillForm
     success_message = 'Skills successfully updated.'
     success_url = reverse_lazy('accounts:profile')
+
+
+class BusinessRequestView(SuccessMessageMixin, FormView):
+    """
+    Submit an email to site admin for business account.s
+    """
+    template_name = 'accounts/business_request_form.html'
+    form_class = BusinessRequestForm
+    success_url = '/jobs/'
+    success_message = 'Request successfully sent.'
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            subject = 'Request for business account from {}'.format(request.user)
+            from_mail = request.user.email
+            email_recipient = 'areeves9@icloud.com'
+            text_content = 'Request for business account from {}.'.format(request.user)
+            html_message = render_to_string('accounts/business_request_email.html', {
+                'user': request.user,
+                'business_name': form.cleaned_data['business_name'],
+                'location': form.cleaned_data['location'],
+                'address': form.cleaned_data['address'],
+                'license_id': form.cleaned_data['license_id'],
+
+            })
+            msg = EmailMultiAlternatives(
+                subject, text_content, from_mail, [email_recipient, ]
+            )
+            msg.attach_alternative(html_message, "text/html")
+            msg.mixed_subtype = 'related'
+            msg.send()
+
+        return super().form_valid(form)
