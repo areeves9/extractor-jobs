@@ -323,6 +323,7 @@ class Experience(models.Model):
         on_delete=models.PROTECT
     )
 
+    is_present_employeer = models.BooleanField(default=False)
     is_employeer = models.BooleanField(default=False)
 
     def get_absolute_url(self):

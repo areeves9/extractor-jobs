@@ -51,6 +51,7 @@ class ExperienceForm(forms.ModelForm):
             'company',
             'location',
             'title',
+            'is_present_employeer',
             'start_month',
             'start_year',
             'end_month',

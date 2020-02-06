@@ -2,7 +2,7 @@ import csv
 import os
 
 from cities_light.models import City
-from jobs.models import Job # imports the model
+from jobs.models import Job
 
 direc = os.path.dirname(os.path.abspath(__file__))
 
