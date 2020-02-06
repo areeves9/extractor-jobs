@@ -13,15 +13,16 @@
         <img class="mr-3" src="https://via.placeholder.com/64" />
         <div class="media-body">
           <a class="p-2 btn btn-secondary rounded-circle text-white float-right" 
-          href="{% url 'accounts:experience_update' e.pk %}">{% fa5_icon 'pen fa-1x' 'fas' %}</a>
-
+          href="{% url 'accounts:experience_update' e.pk %}">
+            {% fa5_icon 'pen fa-1x' 'fas' %}
+          </a>
           <h5 class="mt-0 mb-1">{{ e.company }}</h5>
           <h6 class="mt-0 mb-1">{{ e.title }}</h6>
           <h6>{{ e.start_month}} {{e.start_year }} to 
             {% if e.is_present_employeer %} Present {% else %} 
             {{ e.end_month }} {{ e.end_year }} {% endif %}</h6>
-          <p>{{ e.location }}</p>
-          <p class="mt-n3">{{ e.description }}</p>
+          <p class="text-muted">{{ e.location }}</p>
+          <p class="mb-5">{{ e.description }}</p>
         </div>
       </li>
       {% endfor %}

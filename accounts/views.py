@@ -164,12 +164,13 @@ class ExperienceDetailView(DetailView):
     context_object_name = 'experience'
 
 
-class ExperienceUpdateView(UpdateView):
+class ExperienceUpdateView(SuccessMessageMixin, UpdateView):
     """
     Updates Experience instance.
     """
     model = Experience
     form_class = ExperienceForm
+    success_message = 'Job experience successfully updated.'
     success_url = reverse_lazy('accounts:profile')
 
 
