@@ -1,4 +1,6 @@
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
+
 
 from smtplib import SMTPException
 
@@ -82,13 +84,16 @@ class JobList(ListView):
     paginate_by = 10
 
 
-class JobCreate(SuccessMessageMixin, CreateView):
+class JobCreate(SuccessMessageMixin, UserPassesTestMixin, CreateView):
     """
     Create a job instance.
     """
     form_class = JobForm
     template_name = 'jobs/job_form.html'
     success_message = 'Job posting sucessfuly created.'
+
+    def test_func(self):
+        return self.request.user.is_business
 
     def form_valid(self, form):
         form.instance.user = self.request.user

@@ -5,19 +5,12 @@
 {% load crispy_forms_tags %}
 
 {% block head %}
-<!-- <link rel="stylesheet" type="text/css" href="{% static 'jobs/css/job-form.css' %}" /> -->
 {% endblock %}
 
 {% block content %}
 
-
-
-
-
 <div class="h-100 row justify-content-center align-items-center">
     <div class="col-md-8">
-        {% if request.user.is_business %}
-
         <h5 class="">
             {% if request.resolver_match.url_name == 'job_update' %}
             Update Job
@@ -32,12 +25,7 @@
                 Submit
             </button>
         </form>
-        {% else %}
-        {% include "partials/not_found.html" %}
-        {% endif %}
-
     </div> <!--.col-md-8-->
-
 </div> <!--.row-->
 
 {% endblock %}
