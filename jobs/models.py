@@ -3,9 +3,6 @@ from jobsite import settings
 from django.db import models
 from django.urls import reverse
 
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
-
 from django.db.models.signals import pre_save
 
 from cities_light.models import City

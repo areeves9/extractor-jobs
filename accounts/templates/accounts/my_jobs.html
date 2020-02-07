@@ -6,15 +6,17 @@
 {% if request.user.pk == user.pk %}
 {% if my_jobs.count > 0 %}
 
-<h5>My Jobs</h5>
-<p class="text-muted">
-  Page {{ page_obj.number }} of {{ paginator.count }} jobs
-</p>
 
-  <div class="row">
-    {% for job in my_jobs %}
-    <div class="col-md-8 mb-2">
-      <div class="card">
+
+  <div class="h-100 row justify-content-center align-items-center">
+    <div class="col-md-8">
+      <h5 class="">My Jobs</h5>
+      <p class="text-muted">
+        Page {{ page_obj.number }} of {{ paginator.count }} jobs
+      </p>
+      {% for job in my_jobs %}
+
+      <div class="card mb-2">
         <div class="card-body">
           <h5 class="card-title">
             <a style="text-decoration: none; color: black;" href="{{ job.get_absolute_url }}">{{ job.headline}}</a>
@@ -24,12 +26,24 @@
           <p class="card-text">{{ job.description|truncatechars:240 }}</p>
           <p class="card-text">{{ job.get_post_date_days }}</p>
           {% include "jobs/partials/edit-delete-buttons.html" %}
-        </div>
-      </div>
+        </div> <!--.card-body-->
+      </div> <!--.card-->
+      {% endfor %}
+
+    </div>
   </div>
-{% endfor %}
-</div>
+    
+    {% else %}
+    <div class="col-md-8 mb-2">
+      <h3>No jobs saved.</h3>
+    </div>
+  </div>
+
+  
+    
 {% endif %}
+
+
 
 {% endif %}
 

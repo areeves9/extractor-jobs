@@ -5,8 +5,6 @@ from cities_light.models import City
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.forms import UserCreationForm
 
-from django.core.mail import EmailMessage
-from django.template.loader import render_to_string
 from accounts.models import SiteUser, Experience, Skill
 
 

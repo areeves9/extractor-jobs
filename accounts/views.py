@@ -1,7 +1,7 @@
 import datetime
 
 from django.urls import reverse_lazy
-from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives, EmailMessage
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 
@@ -56,25 +56,24 @@ class RegistrationView(SuccessMessageMixin, CreateView):
     template_name = 'accounts/registration_form.html'
     success_message = 'Please check your email for confirmation.'
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
+        print(form)
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False
             to_email = form.cleaned_data['email']
-
-            # user.set_unusable_password()
             form.save()
 
             subject = 'Activate your account.'
-            current_site = get_current_site(self.request)
+            current_site = get_current_site(request)
             message = render_to_string('registration/activation_email.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(form.instance.pk)),
                 'token': account_activation_token.make_token(form.instance)
             })
-            email = EmailMessage(subject, message, to=[to_email])
+            email = EmailMessage(subject, message, to=[to_email, ])
             email.send()
             return redirect(self.success_url)
         else:

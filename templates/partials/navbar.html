@@ -4,14 +4,15 @@
     <a class="navbar-brand" href="{% url 'jobs:job_list' %}">Masyaf</a>
     <ul class="nav ml-auto">
         <li class="nav-item">    
-            <a class="btn btn-light nav-link text-dark" 
+            <a class="btn btn-default nav-link text-dark" 
             href="#"
-            role="button"
             data-target="#accountModal"
             data-toggle="modal"
             > 
-            {% if request.user.is_authenticated %}
-            <img style="height: 2.3rem; width: 2.3rem;" class="mr-n3 rounded-circle" src="{{ request.user.image.url }}" />
+            {% if request.user.is_authenticated and request.user.image %}
+            <img style="height: 2.3rem; width: 2.3rem;" 
+                class="rounded-circle" 
+                src="{{ request.user.image.url }}" />
             {% else %}
             {% fa5_icon 'user-circle fa-2x' 'fas' %}
             {% endif %}
@@ -40,14 +41,12 @@
             <li class="nav-item">
                 <a class="text-center nav-link" href="{% url 'jobs:job_list' %}">Listings</a>
             </li>
-            
-        {% if request.user.is_authenticated and request.user.is_business %}
-        <li class="nav-item">
-            <a class="text-center nav-link" href="{% url 'jobs:job_create' %}">Post Job</a>
-        </li>
-        {% endif %}
-    </ul>
-
+            {% if request.user.is_authenticated and request.user.is_business %}
+            <li class="nav-item">
+                <a class="text-center nav-link" href="{% url 'jobs:job_create' %}">Post Job</a>
+            </li>
+            {% endif %}
+        </ul>
     </div>
 </nav>
 
