@@ -28,7 +28,7 @@ urlpatterns = [
     ),
     re_path(r'^register/$', RegistrationView.as_view(), name='register'),
     re_path(r'^register/complete/$', TemplateView.as_view(template_name='registration/registration_done.html'), name='register_complete'),
-    re_path(r'^business-account-request/$', BusinessRequestView.as_view(), name='business_request'),
+    re_path(r'^business-account-request/$', login_required(BusinessRequestView.as_view()), name='business_request'),
     re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', Activate.as_view(), name='activate'),
     re_path(r'^my-jobs/$', login_required(MyJobsView.as_view()), name='my_jobs'),
     re_path(r'^profile/$', login_required(UserProfileView.as_view()), name='profile'),

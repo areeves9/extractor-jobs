@@ -41,14 +41,13 @@ target="_blank"
 class="ml-2 rounded-circle btn btn-success">
     {% fa5_icon 'link fa-2x' 'fas' %}
 </a>
+{% include "jobs/partials/edit_delete_buttons.html" %}
+
 
 
 
 <div class="row">
-
     <div class="col-md-4 mt-4">
-
-        <!-- {% include "jobs/partials/edit-delete-buttons.html" %} -->
         <div class="card">
             <div class="card-body">
                 <h5 class="">{{ job.headline }}</h5>
@@ -103,10 +102,8 @@ class="ml-2 rounded-circle btn btn-success">
 
 <div class="row mt-4">
     <div class="col-md-12">
-        {% include "jobs/partials/like-button.html" %}
-
+        {% include "jobs/partials/like_button.html" %}
     </div>
-
 </div>
 {% endblock %}
 
