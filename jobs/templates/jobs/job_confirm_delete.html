@@ -2,15 +2,11 @@
 
 {% block content %}
 
-{% if request.user == job.user %}
 <form action="." method="POST">{% csrf_token %}
     <h3>Confirm delete {{ job.headline }}</h3>
     <p><input type="submit" value="Yes"/><a href="../">Cancel</a></p>
 </form>
-{% else %}
-<h3 class="text-center">Access Denied</h3>
-    <p class="text-center">Request user does not have permission for this action.</p>
-{% endif %}
+
 
 {% endblock %}
 

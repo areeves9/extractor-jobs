@@ -20,7 +20,7 @@ urlpatterns = [
         name='city-autocomplete',
     ),
     re_path(r'^$', JobList.as_view(), name='job_list'),
-    re_path(r'^like/$', views.job_like, name='job_like'),
+    re_path(r'^like/$', login_required(views.job_like), name='job_like'),
     re_path(r'^create/$', login_required(JobCreate.as_view()), name='job_create'),
     re_path(r'^(?P<slug>[-\w]+)/$', JobDetail.as_view(), name="job_detail"),
     re_path(r'^(?P<slug>[-\w]+)/delete/$', login_required(JobDelete.as_view()), name='job_delete'),

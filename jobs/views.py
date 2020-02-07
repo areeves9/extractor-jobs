@@ -91,6 +91,7 @@ class JobCreate(SuccessMessageMixin, UserPassesTestMixin, CreateView):
     form_class = JobForm
     template_name = 'jobs/job_form.html'
     success_message = 'Job posting sucessfuly created.'
+    permission_denied_message = 'DENIED!'
 
     def test_func(self):
         return self.request.user.is_business
@@ -100,7 +101,7 @@ class JobCreate(SuccessMessageMixin, UserPassesTestMixin, CreateView):
         return super().form_valid(form)
 
 
-class JobUpdate(SuccessMessageMixin, UpdateView):
+class JobUpdate(SuccessMessageMixin, UserPassesTestMixin, UpdateView):
     """
     Update a job instance.
     """
@@ -109,14 +110,20 @@ class JobUpdate(SuccessMessageMixin, UpdateView):
     template_name = 'jobs/job_form.html'
     success_message = 'Job posting sucessfuly updated.'
 
+    def test_func(self):
+        return self.request.user.job_set.filter(pk=self.get_object().pk).exists()
 
-class JobDelete(SuccessMessageMixin, DeleteView):
+
+class JobDelete(SuccessMessageMixin, UserPassesTestMixin, DeleteView):
     """
     Delete a job instance.
     """
     model = Job
     success_url = reverse_lazy('jobs:job_list')
     success_message = 'Job posting sucessfuly deleted.'
+
+    def test_func(self):
+        return self.request.user.job_set.filter(pk=self.get_object().pk).exists()
 
 
 @login_required
