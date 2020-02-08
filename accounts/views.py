@@ -9,6 +9,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth import login
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
@@ -118,7 +119,7 @@ class MyJobsView(ListView):
         ).first().jobs_liked.all()
 
 
-class UserUpdateView(SuccessMessageMixin, UpdateView):
+class UserUpdateView(SuccessMessageMixin, UserPassesTestMixin, UpdateView):
     """
     Updates Employee instance.
     """
@@ -126,6 +127,9 @@ class UserUpdateView(SuccessMessageMixin, UpdateView):
     form_class = UserUpdateForm
     success_url = reverse_lazy('accounts:profile')
     success_message = 'Account sucessfuly updated.'
+
+    def test_func(self):
+        return self.request.user.pk == self.get_object().pk
 
 
 class UserListView(ListView):
@@ -164,7 +168,7 @@ class ExperienceDetailView(DetailView):
     context_object_name = 'experience'
 
 
-class ExperienceUpdateView(SuccessMessageMixin, UpdateView):
+class ExperienceUpdateView(SuccessMessageMixin, UserPassesTestMixin, UpdateView):
     """
     Updates Experience instance.
     """
@@ -172,6 +176,9 @@ class ExperienceUpdateView(SuccessMessageMixin, UpdateView):
     form_class = ExperienceForm
     success_message = 'Job experience successfully updated.'
     success_url = reverse_lazy('accounts:profile')
+
+    def test_func(self):
+        return self.request.user.experience_set.filter(pk=self.get_object().pk).exists()
 
 
 class SkillDetailView(DetailView):
@@ -184,7 +191,7 @@ class SkillDetailView(DetailView):
     context_object_name = 'skill'
 
 
-class SkillUpdateView(SuccessMessageMixin, UpdateView):
+class SkillUpdateView(SuccessMessageMixin, UserPassesTestMixin, UpdateView):
     """
     Update skill instance - add or remove tags.
     """
@@ -192,6 +199,9 @@ class SkillUpdateView(SuccessMessageMixin, UpdateView):
     form_class = SkillForm
     success_message = 'Skills successfully updated.'
     success_url = reverse_lazy('accounts:profile')
+
+    def test_func(self):
+        return self.request.user.skill.pk == self.get_object().pk
 
 
 class BusinessRequestView(SuccessMessageMixin, FormView):

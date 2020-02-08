@@ -1,6 +1,10 @@
 {% load fontawesome_5 %}
+
 {% if request.user.pk == user.pk %}
-<a class="p-2 float-right btn btn-primary rounded-circle" href="{% url 'accounts:experience_add' %}">{% fa5_icon 'plus fa-1x' 'fas' %}</a>
+<a class="p-2 float-right btn btn-primary rounded-circle" 
+  href="{% url 'accounts:experience_add' %}">
+  {% fa5_icon 'plus fa-1x' 'fas' %}
+</a>
 {% endif %}
 <h5>Experience</h5>
 

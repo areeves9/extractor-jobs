@@ -8,19 +8,13 @@
 
 <div class="h-100 row justify-content-center align-items-center">
   <div class="col-md-8">
-    {% if request.user == siteuser %}
     <h3 class="text-center">Edit Profile</h3>
-
         <form class="form" action="" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         {{ form|crispy }}
           <button class="btn btn-success" type="submit">Update</button>
         </form>
-
-    {% else %}
-    {% include "partials/not_found.html" %}
   </div>
-  {% endif %}
 </div>  
 
 {% endblock %}
