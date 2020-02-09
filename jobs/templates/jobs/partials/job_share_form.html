@@ -10,7 +10,7 @@
 
 <div class="col">
     <h3 class="text-center">
-        Share Job #{{ job.pk }}
+        {{ job.headline }}
     </h3>
     <form id="emailForm" action="" method="">
     <div class="form-group">
@@ -23,8 +23,8 @@
         <textarea type="text" namme="message" class="form-control" id="exampleTextArea1" placeholder="Type your message here" required></textarea>
         <small id="emailHelp" class="form-text text-muted">Optional</small>
     </div>
-        <button id="emailButton" type="submit" class="btn btn-primary">Submit</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button id="emailButton" type="submit" class="btn btn-primary btn-block">Submit</button>
+        <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
     </form>
 </div>
 
