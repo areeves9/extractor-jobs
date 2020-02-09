@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<div class="row h-100 justify-content-center align-items-center">
+<div class="row h-100 mt-4 justify-content-center align-items-center">
     <div class="col-md-4">
         <h3 class="font-italic text-center mb-4">Bussiness Account Request</h3>
         <form action="{% url 'accounts:business_request' %}" method="post">{% csrf_token %}

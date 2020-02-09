@@ -8,7 +8,7 @@
 
 
 
-  <div class="h-100 row justify-content-center align-items-center">
+  <div class="h-100 row mt-4 justify-content-center align-items-center">
     <div class="col-md-8">
       <h5 class="">My Jobs</h5>
       <p class="text-muted">
@@ -25,7 +25,7 @@
           <p class="card-text">${{ job.salary }} per {{ job.salary_frequency|lower }}</p>
           <p class="card-text">{{ job.description|truncatechars:240 }}</p>
           <p class="card-text">{{ job.get_post_date_days }}</p>
-          {% include "jobs/partials/edit-delete-buttons.html" %}
+          {% include "jobs/partials/edit_delete_buttons.html" %}
         </div> <!--.card-body-->
       </div> <!--.card-->
       {% endfor %}
