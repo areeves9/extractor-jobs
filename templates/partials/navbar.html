@@ -3,36 +3,25 @@
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
     <a class="navbar-brand" href="{% url 'jobs:job_list' %}">Masyaf</a>
     <ul class="nav ml-auto">
-        <li class="nav-item">    
-            <a class="btn btn-default nav-link text-dark" 
-            href="#"
-            data-target="#accountModal"
-            data-toggle="modal"
-            > 
-            {% if request.user.is_authenticated and request.user.image %}
-            <img style="height: 2.3rem; width: 2.3rem;" 
-                class="rounded-circle" 
-                src="{{ request.user.image.url }}" />
-            {% else %}
-            <span class="text-white">
-                {% fa5_icon 'user-circle fa-2x' 'fas' %}
-            </span>
-            
-            {% endif %}
-            </a>
-        </li>
-
+        {% if request.user.is_authenticated %}
         <li class="nav-item">
             <a class="btn btn-dark nav-link text-light"
             href="{% url 'accounts:my_jobs' %}">
                 {% fa5_icon 'heart fa-2x' 'fas' %}
             </a>
         </li>
+        {% endif %}
+        
+        <button class="border-0 navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>        
+        </button>
+
+        <li class="nav-item">    
+            {% include "partials/login_icon.html" %}
+        </li>
     </ul>
     
-    <button class="border-0 navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>        
-    </button>
+    
     
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">

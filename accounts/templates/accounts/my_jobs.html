@@ -4,6 +4,7 @@
 {% block content %}
 
 {% if request.user.pk == user.pk %}
+
 {% if my_jobs.count > 0 %}
 
 
@@ -29,13 +30,9 @@
         </div> <!--.card-body-->
       </div> <!--.card-->
       {% endfor %}
-
-    </div>
-  </div>
-    
-    {% else %}
-    <div class="col-md-8 mb-2">
-      <h3>No jobs saved.</h3>
+      {% else %}
+      <h5 class="mt-4">No jobs saved.</h5>
+      <p class="">No jobs have been added yet.</p>
     </div>
   </div>
 

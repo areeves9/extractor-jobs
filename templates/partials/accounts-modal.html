@@ -10,68 +10,18 @@
   aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
-        <ul class="modal-body">
-          <button type="button" class="close float-right" data-dismiss="modal" aria-label="Close">
+        <div class="modal-header">
+          <h5 class="modal-title text-left">Login</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h5 class="text-center">
-            Welcome, {{ request.user.display_name }}
-          </h5>
-          
-            {% if request.user.is_authenticated %}
-            
-            <ul class="list-unstyled">
-              <!-- Profile -->
-              <li class="nav-item">
-                <a style="max-width: 50%;" 
-                  class="mt-2 btn btn-dark nav-link text-light mx-auto" 
-                  href="{{ request.user.get_absolute_url }}" role="button">
-                  {% fa5_icon 'address-card fa-1.5x' 'fas' %} 
-                  <span style="font-size: 1.2rem;">
-                    Profile
-                  </span>
-                </a>
-              </li>
-              <!-- Logout -->
-              <li class="nav-item">
-                <a style="max-width: 50%;" 
-                  class="mt-2 btn btn-dark nav-link text-light mx-auto" 
-                  href="{% url 'accounts:logout' %}" role="button">
-                  {% fa5_icon 'sign-out-alt fa-1.5x' 'fas' %} 
-                  <span style="font-size: 1.2rem;">
-                    Logout
-                  </span>
-                </a>
-              </li>
-            </ul>
-              {% else %}
-            <ul class="list-unstyled">
-              <!-- Register -->
-              <li class="nav-item">
-                <a style="max-width: 50%;" 
-                  class="mt-2 btn btn-dark nav-link text-light mx-auto" 
-                  href="{% url 'accounts:register' %}">
-                  {% fa5_icon 'user-plus fa-1.5x' 'fas' %}
-                  <span style="font-size: 1.2rem;">
-                    Register
-                  </span>
-                </a>
-              </li>
-              <!-- Login -->
-              <li class="nav-item">
-                <a style="max-width: 50%;"
-                  class="mt-2 btn btn-dark nav-link text-light mx-auto"
-                  href="{% url 'accounts:login' %}">
-                  {% fa5_icon 'sign-in-alt fa-1.5x' 'fas' %}
-                  <span style="font-size: 1.2rem;">
-                    Login
-                  </span>
-                </a>
-              </li>
-            </ul>
+        </div>
+        <div class="modal-body">
+        </div>
+
+       
              
               
-        {% endif %}
         <p class="mt-4 text-center">Forgot password? - Click <a href="{% url 'accounts:password_reset' %}">here</a> to reset.</p>
         {% if request.user.is_authenticated %}
         <p class="text-center">Interested in a business account? - Click <a href="{% url 'accounts:business_request' %}">here</a>.</p>
