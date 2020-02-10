@@ -4,24 +4,8 @@
 {% load fontawesome_5 %}
 
 {% block header %}
-<header>
-    <div class="row">
-        <div style="color: white;
-        height: 100%;
-        width: 100%;
-        background-size: cover; 
-        background-position: center; 
-        background-repeat: no-repeat; 
-        background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://source.unsplash.com/featured/?{{ job.location }}, nature');"
-        class="jumbotron jumbotron-fluid mr-0">
-            <div class="container-fluid">
-                <h1 class="display-4 text-center"><i>{{ job.location.name }}</i></h1>
-                <p class="mt-n2 lead text-center"><b>{{ job.job_title }}</b></p>
-            </div>
-        </div>
-    </div>
-</header>
- {% endblock %}
+{% include "jobs/partials/job_header.html" %}
+{% endblock %}
 
 {% block content %}
 
