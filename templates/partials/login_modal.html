@@ -1,0 +1,49 @@
+{% load fontawesome_5 %}
+
+
+<div 
+  class="modal fade" 
+  id="loginModal" 
+  tabindex="-999" 
+  role="dialog" 
+  aria-labelledby="exampleModalCenterTitle" 
+  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-left">Login</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'accounts:login' %}" method="POST"> {% csrf_token %}
+            <div id="div_id_username" class="form-group">
+              <label for="id_username" class="requiredField">
+                Email Address
+              </label>
+              <div class="">
+                <input type="email" name="username" class="textinput textInput form-control" required id="id_username">
+              </div>
+            </div> <!--.form-group-->
+            <div id="div_id_password" class="form-group">
+              <label for="id_password" class="requiredField">
+                Password
+              </label>
+              <div class="">
+                <input type="password" name="password" class="textinput textInput form-control" required id="id_password">
+              </div>
+            </div> <!--.form-group-->
+
+            <p class="mt-4 text-center">Forgot password? - Click <a href="{% url 'accounts:password_reset' %}">here</a> to reset.</p>
+            <button class="mt-4 btn-block btn btn-secondary" type="submit">{% fa5_icon 'sign-in-alt fa-1x' 'fas' %}  Login</button>
+            <a href="{% url 'accounts:register' %}" class="btn-block btn btn-secondary" type="submit">Sign Up</a>
+
+          </form>
+        </div> <!--.modal-body-->
+        {% if request.user.is_authenticated %}
+        <p class="text-center">Interested in a business account? - Click <a href="{% url 'accounts:business_request' %}">here</a>.</p>
+        {% endif %}
+        </div>
+    </div>
+  </div>

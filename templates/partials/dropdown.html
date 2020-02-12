@@ -3,7 +3,7 @@
     {% if request.user.is_authenticated %}
     <a class="mt-2 dropdown-item text-dark text-center" 
       href="{{ request.user.get_absolute_url }}">
-      {% fa5_icon 'address-card fa-1.5x' 'fas' %} Profile
+      {% fa5_icon 'address-card fa-1.5x' 'fas' %}
     </a>
     <a class="mt-2 dropdown-item text-dark text-center" 
         href="{% url 'accounts:logout' %}">

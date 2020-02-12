@@ -11,7 +11,7 @@
 
   <div class="h-100 row mt-4 justify-content-center align-items-center">
     <div class="col-md-8">
-      <h5 class="">My Jobs</h5>
+      <h5 class="">My Jobs ({{ user.jobs_liked.all.count }})</h5>
       <p class="text-muted">
         Page {{ page_obj.number }} of {{ paginator.count }} jobs
       </p>

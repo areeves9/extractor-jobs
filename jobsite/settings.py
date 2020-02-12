@@ -129,7 +129,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+LOGOUT_REDIRECT_URL = '/jobs/'
 # LOGIN_REDIRECT_URL = reverse("accounts:profile")
 
 

@@ -2,14 +2,8 @@
 
 {% if request.user.is_authenticated and request.user.image %}
 
-        <!-- <a class="btn btn-default nav-link text-dark" 
-            href="#"
-            data-target="#accountModal"
-            data-toggle="modal"
-            >  -->
-
 <a class="btn btn-default nav-link text-dark" 
-href="{% url 'accounts:profile' %}"
+href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" 
 > 
     <img style="height: 2.3rem; width: 2.3rem;" 
         class="rounded-circle" 
@@ -18,7 +12,7 @@ href="{% url 'accounts:profile' %}"
 
 {% elif request.user.is_authenticated and not request.user.image %}
 <a class="btn btn-default nav-link text-dark" 
-href="{% url 'accounts:profile' %}"
+href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" 
 > 
     <span class="text-white">
         {% fa5_icon 'user-circle fa-2x' 'fas' %}
@@ -26,7 +20,17 @@ href="{% url 'accounts:profile' %}"
 </a>
 {% else %}
 
-<a class="btn btn-outline-light nav-link text-dark" 
+<!-- <a class="btn btn-outline-light nav-link text-dark"
+data-toggle="modal" data-target="#loginModal" 
+href="#"
+> 
+    <span class="text-white">
+        Login {% fa5_icon 'sign-in-alt fa-1x' 'fas' %} 
+    </span>
+</a> -->
+
+
+<a class="btn btn-outline-light nav-link text-dark"
 href="{% url 'accounts:login' %}"
 > 
     <span class="text-white">
