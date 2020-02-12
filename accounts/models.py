@@ -148,6 +148,8 @@ class SiteUser(AbstractBaseUser):
 
     slug = models.SlugField(unique=True)
 
+   
+
     def save(self, *args, **kwargs):
         """
         Overirde the model save method to set slug field to username
