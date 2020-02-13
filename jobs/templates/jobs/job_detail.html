@@ -82,8 +82,13 @@ class="ml-2 rounded-circle btn btn-success">
 
     </div>
 </div>
-<p class="mt-2 text-muted">{{ job.get_post_date_days }}</p>
-
+<p class="mt-2 card-text text-secondary">
+    {% if job.get_post_date_days == 0 %} 
+    Posted today <span> by {{ job.user.display_name }}</span>. 
+    {% else %}
+    Posted {{ job.get_post_date_days }} days ago by <a href="{{ job.user.get_absolute_url }}">{{ job.user.display_name }}</a>.
+    {% endif %}
+</p>
 <div class="row mt-4">
     <div class="col-md-12">
         {% include "jobs/partials/like_button.html" %}

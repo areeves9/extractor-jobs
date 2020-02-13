@@ -126,10 +126,7 @@ class Job(models.Model):
         post_date = self.post_date
         current_date = datetime.datetime.now().date()
         delta = current_date - post_date
-        if delta.days == 1:
-            return f'Posted {delta.days} day ago.'
-        else:
-            return f'Posted {delta.days} days ago.'
+        return delta.days
 
 # if instance doesn't have slug
 # pass instance to create_slug

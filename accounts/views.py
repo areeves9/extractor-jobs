@@ -143,6 +143,7 @@ class UserListView(ListView):
     """
     queryset = SiteUser.objects.filter(is_active=True, is_business=False)
     context_object_name = 'users'
+    paginate_by = 10
 
 
 class ExperienceView(SuccessMessageMixin, CreateView):
