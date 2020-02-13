@@ -1,0 +1,20 @@
+<ul class="list-unstyled">
+    {% for user in users %}
+    <li style="margin-bottom: 1rem;" class="media">
+        {% if user.image %}
+        <a href="{{ user.get_absolute_url }}">
+            <img style="height:104px;width:104px;" src="{{ user.image.url }}" class="mr-3 rounded-circle" alt="..." />
+        </a>
+        {% else %}
+        <a href="{{ user.get_absolute_url }}"></a>
+            <img src="https://via.placeholder.com/104" class="mr-3 rounded-circle" />
+        </a>
+        {% endif %}
+        <div class="media-body">
+            <h5 class="mt-0 mb-1">{{ user.first_name }} {{ user.last_name }}</h5>
+            <h6 class="mt-0">{{ user.location }}</h6>            
+            <p class="mt-0">{{ user.headline }}</p>            
+        </div>
+    </li>
+    {% endfor %}
+</ul>

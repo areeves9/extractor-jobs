@@ -21,23 +21,40 @@
 <script>
   // Show and hide ending month and year fields
   let toggled = false;
-
+  // elements created fro django forms
   const checkBox = document.getElementById("id_is_present_employeer");
   const endMonth = document.getElementById("div_id_end_month");
   const endYear = document.getElementById("div_id_end_year");
 
-  checkBox.addEventListener('click', function() {
-    if (!toggled) {
+  checkCheck();
+
+  // determine the state of the checkbox and show or hide inputs
+  function checkCheck() {
+    if (checkBox.checked) {
       toggled = true;
-      endMonth.setAttribute('style', 'display: none;')
-      endYear.setAttribute('style', 'display: none;')
+      hide();
     } else {
       toggled = false;
-      endMonth.setAttribute('style', 'display: block;')
-      endYear.setAttribute('style', 'display: block;')
+      show();
     }
-  })
-  console.log(checkBox);
+  }
+  
+  // toggle the input
+  function show() {
+    endMonth.setAttribute('style', 'display: block;');
+    endYear.setAttribute('style', 'display: block;');
+  }
+  // hide the input
+  function hide() {
+    endMonth.setAttribute('style', 'display: none;');
+    endYear.setAttribute('style', 'display: none;');
+  } 
+
+  // add event listener to checkbox
+  checkBox.addEventListener('click', function() {
+    checkCheck();
+  });
+
 </script>
 {% endblock %}
 

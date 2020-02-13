@@ -35,13 +35,11 @@
         </li>
     </ul>
     
-    
-    
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
             {% if request.user.is_authenticated %}
             <li class="nav-item">
-                <a class="text-center nav-link" href="{% url 'accounts:user_list' %}">For Hire</a>
+                <a class="text-center nav-link" href="{% url 'accounts:user_list' %}">Rolodex</a>
             </li>
             {% endif %}
             <li class="nav-item">
