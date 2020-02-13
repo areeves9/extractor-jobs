@@ -59,7 +59,7 @@ class Activate(View):
 class RegistrationView(SuccessMessageMixin, CreateView):
     form_class = UserRegisterForm
     success_url = reverse_lazy('accounts:register_complete')
-    template_name = 'accounts/registration_form.html'
+    template_name = 'registration/registration_form.html'
     success_message = 'Please check your email for confirmation.'
 
     def post(self, request, *args, **kwargs):

@@ -6,16 +6,22 @@
 {% load crispy_forms_tags %} 
 
 {% block content %}
-    <div class="row h-100 justify-content-center align-items-center">
-        <div class="col-md-4">
-            <h3 class="font-italic text-center mb-4">Login</h3>
+<div class="row h-100 justify-content-center align-items-center">
+    <div class="col-md-4">
+        <div class="m-3 card card-body bg-light">
+            <h5 class="text-left mb-4">Login</h5>
             <form action="{% url 'accounts:login' %}" method="post">{% csrf_token %}
                 {{ form|crispy }}
-                <p class="mt-4 text-center">Forgot password? - Click <a href="{% url 'accounts:password_reset' %}">here</a> to reset.</p>
+                <p class="mt-4 text-center">
+                    Forgot password? - Click 
+                    <a href="{% url 'accounts:password_reset' %}">here</a> 
+                    to reset.
+                </p>
                 <button class="mt-4 btn-block btn btn-secondary" type="submit">{% fa5_icon 'sign-in-alt fa-1x' 'fas' %}  Login</button>
-                <a href="{% url 'accounts:register' %}" class="mt-4 btn-block btn btn-secondary" type="submit">Sign Up</a>
+                <a href="{% url 'accounts:register' %}" class="mt-4 btn-block btn btn-secondary" type="submit">Create Account</a>
             </form>
         </div>
     </div>
+</div>
 
 {% endblock %}
