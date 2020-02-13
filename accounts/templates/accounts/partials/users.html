@@ -1,6 +1,6 @@
 <ul class="list-unstyled">
     {% for user in users %}
-    <li style="margin-bottom: 1rem;" class="media">
+    <li class="media">
         {% if user.image %}
         <a href="{{ user.get_absolute_url }}">
             <img style="height:104px;width:104px;" src="{{ user.image.url }}" class="mr-3 rounded-circle" alt="..." />

@@ -9,9 +9,6 @@
 {% endblock %}
 
 <div class="col">
-    <h3 class="text-center">
-        {{ job.headline }}
-    </h3>
     <form id="emailForm" action="" method="">
     <div class="form-group">
         <label for="exampleInputEmail1">To</label>
@@ -115,6 +112,7 @@
             document.querySelector('.alert').setAttribute("style", "display: none");
             modalHeader.setAttribute("style", "padding: 1rem;");
             modalHeader.innerHTML = 'Share To';
+            return;
         };
 
 </script>
