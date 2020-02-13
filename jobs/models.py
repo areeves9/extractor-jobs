@@ -73,7 +73,7 @@ class Job(models.Model):
         verbose_name='location',
         on_delete=models.PROTECT,
     )
-    salary = models.DecimalField(
+    low_salary = models.DecimalField(
         blank=True,
         null=True,
         max_digits=15,
@@ -81,7 +81,21 @@ class Job(models.Model):
         help_text="Two decimal places. Ex. 65,200.23"
 
     )
-    salary_frequency = models.CharField(
+    low_salary_frequency = models.CharField(
+        blank=True,
+        null=True,
+        max_length=225,
+        choices=SALARY_FREQUENCY_CHOICES,
+    )
+    high_salary = models.DecimalField(
+        blank=True,
+        null=True,
+        max_digits=15,
+        decimal_places=2,
+        help_text="Two decimal places. Ex. 65,200.23"
+
+    )
+    high_salary_frequency = models.CharField(
         blank=True,
         null=True,
         max_length=225,
