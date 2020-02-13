@@ -1,3 +1,4 @@
 .dropdown-menu {
-    left: -100% !important;
+    right: 0 !important;
+    left: auto !important;
 }

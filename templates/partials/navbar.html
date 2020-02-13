@@ -7,7 +7,14 @@
         <li class="nav-item">
             <a class="btn btn-dark nav-link text-light"
             href="{% url 'accounts:my_jobs' %}">
-                {% fa5_icon 'heart fa-2x' 'fas' %} <span class="ml-n3 badge badge-success rounded-circle">{{ request.user.jobs_liked.all.count }}</span>
+                {% fa5_icon 'heart fa-2x' 'fas' %} 
+                {% if request.user.jobs_liked.all.count > 0 %}
+                <span class="ml-n3 badge badge-success rounded-circle">
+                    {{ request.user.jobs_liked.all.count }} 
+                    {% elif request.user.jobs_liked.all.count > 99 %}
+                    +99
+                </span>
+                {% endif %}
             </a>
         </li>
         {% endif %}
@@ -18,7 +25,7 @@
             <span class="navbar-toggler-icon"></span>        
         </button>
 
-        <li class="nav-item dropdown">    
+        <li class="dropdown">    
             {% include "partials/login_icon.html" %}
             {% include "partials/dropdown_menu.html" %}
         </li>

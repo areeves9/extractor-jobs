@@ -17,7 +17,12 @@ from django.utils.encoding import force_bytes, force_text
 # from django.views.generic.list import View
 from django.views import View
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView, FormView
+from django.views.generic.edit import (
+    CreateView,
+    UpdateView,
+    FormView,
+    DeleteView
+)
 from django.views.generic.list import ListView
 
 from accounts.tokens import account_activation_token
@@ -179,6 +184,15 @@ class ExperienceUpdateView(SuccessMessageMixin, UserPassesTestMixin, UpdateView)
 
     def test_func(self):
         return self.request.user.experience_set.filter(pk=self.get_object().pk).exists()
+
+
+class ExperienceDeleteView(DeleteView):
+    """
+    Delete an experience instance from user profile.
+    """
+    model = Experience
+    success_url = reverse_lazy('accounts:profile')
+
 
 
 class SkillDetailView(DetailView):

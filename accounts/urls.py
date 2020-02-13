@@ -15,9 +15,10 @@ from accounts.views import (
     SkillDetailView,
     SkillUpdateView,
     ExperienceDetailView,
+    ExperienceDeleteView,
     MyJobsView,
     BusinessRequestView,
-    Activate
+    Activate,
 )
 
 urlpatterns = [
@@ -40,6 +41,7 @@ urlpatterns = [
     re_path(r'^experience/add/$', login_required(ExperienceView.as_view()), name="experience_add"),
     re_path(r'^experience/(?P<pk>\d+)/$', login_required(ExperienceDetailView.as_view()), name="experience_detail"),
     re_path(r'^experience/(?P<pk>\d+)/update/$', login_required(ExperienceUpdateView.as_view()), name="experience_update"),
+    re_path(r'^experience/(?P<pk>\d+)/delete/$', login_required(ExperienceDeleteView.as_view()), name="experience_delete"),
     re_path(r'^login/$', auth_views.LoginView.as_view(), name="login"),
     re_path(r'^logout/$', auth_views.LogoutView.as_view(), name="logout"),
     re_path(r'^password_reset/$', auth_views.PasswordResetView.as_view(), name="password_reset"),

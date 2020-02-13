@@ -1,5 +1,5 @@
 {% load fontawesome_5 %}
-<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
     {% if request.user.is_authenticated %}
     <a class="mt-2 dropdown-item text-dark text-center" 
       href="{{ request.user.get_absolute_url }}">
