@@ -1,7 +1,7 @@
 awscli==1.17.9
 Babel==2.8.0
-botocore==1.14.9
 certifi==2019.11.28
+chardet==3.0.4
 colorama==0.4.1
 Django==2.2.9
 django-appconf==1.0.3
@@ -13,11 +13,10 @@ django-fontawesome-5==1.0.16
 django-imagekit==4.0.2
 django-phonenumber-field==4.0.0
 django-taggit==0.24.0
-docutils==0.15.2
 entrypoints==0.3
 flake8==3.7.9
+idna==2.8
 Jinja2==2.10.3
-jmespath==0.9.4
 MarkupSafe==1.1.1
 mccabe==0.6.1
 phonenumbers==8.11.1
@@ -28,12 +27,11 @@ psycopg2==2.8.4
 pyasn1==0.4.8
 pycodestyle==2.5.0
 pyflakes==2.1.1
-python-dateutil==2.8.1
 python-utils==2.3.0
 pytz==2019.3
 PyYAML==5.2
 rsa==3.4.2
-s3transfer==0.3.2
 six==1.13.0
 sqlparse==0.3.0
 Unidecode==1.1.1
+urllib3==1.25.8
