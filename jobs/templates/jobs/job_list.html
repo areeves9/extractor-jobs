@@ -23,9 +23,9 @@
         </h5>
         <h6 class="card-subtitle mb-2 text-muted">{{ job.location }}</h6>
         <p class="font-weight-bold card-text">
-          ${{ job.low_salary }} - {{ job.high_salary }} per {{ job.high_salary_frequency|lower }}
+          ${{ job.low_salary|floatformat:"0" }} - {{ job.high_salary|floatformat:"0" }} per {{ job.high_salary_frequency|lower }}
         </p>
-        <ul style="list-style: circle;">
+        <ul class="" style="list-style: circle;">
           <li class="card-text text-muted">
             {{ job.description|truncatechars:240 }}
           </li>

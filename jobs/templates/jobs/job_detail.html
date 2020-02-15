@@ -41,22 +41,20 @@ class="ml-2 rounded-circle btn btn-success">
         </div>
         <div class="card mt-4">
             <div class="card-body">
-                <h5>Details</h5>
                 <h6 class="mt-n1">Job Type</h6>
-                <p>{{ job.employment_type }}</p>
-            </div>
-        </div>
-        <div class="card mt-4">
-            <div class="card-body">
+                <p><b>{{ job.employment_type }}</b></p>
                 {% if job.job_title %}
+                <h6 class="mt-n1">Job Title</h6>
                 <p><b>{{ job.job_title }}</b></p>
                 {% endif %}
 
                 {% if job.education %}
+                <h6 class="mt-n1">Qualifications</h6>
                 <p><b>{{ job.education }} Degree</b></p>
                 {% endif %}
 
                 {% if job.location %}
+                <h6 class="mt-n1">Location</h6>
                 <p><b>{{ job.location }}</b></p>
                 {% endif %}
             </div>
@@ -65,7 +63,7 @@ class="ml-2 rounded-circle btn btn-success">
             <div class="card-body">
                 <h5>Compensation</h5>
                 <p class="font-weight-bold card-text">
-                    ${{ job.low_salary }} - {{ job.high_salary }} per {{ job.high_salary_frequency|lower }}
+                    ${{ job.low_salary|floatformat:"0" }} - {{ job.high_salary|floatformat:"0" }} per {{ job.high_salary_frequency|lower }}
                 </p>
 
                 {% if job.benefits %}
