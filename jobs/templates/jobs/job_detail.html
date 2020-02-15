@@ -64,7 +64,9 @@ class="ml-2 rounded-circle btn btn-success">
         <div class="card mt-4">
             <div class="card-body">
                 <h5>Compensation</h5>
-                <p><b>${{ job.salary|floatformat }} per {{ job.salary_frequency|lower }}</b></p>
+                <p class="font-weight-bold card-text">
+                    ${{ job.low_salary }} - {{ job.high_salary }} per {{ job.high_salary_frequency|lower }}
+                </p>
 
                 {% if job.benefits %}
                 <p><b>Benefits: {{ job.benefits }}</b></p>

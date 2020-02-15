@@ -79,7 +79,6 @@ class Job(models.Model):
         max_digits=15,
         decimal_places=2,
         help_text="Two decimal places. Ex. 65,200.23"
-
     )
     low_salary_frequency = models.CharField(
         blank=True,
@@ -93,7 +92,6 @@ class Job(models.Model):
         max_digits=15,
         decimal_places=2,
         help_text="Two decimal places. Ex. 65,200.23"
-
     )
     high_salary_frequency = models.CharField(
         blank=True,
