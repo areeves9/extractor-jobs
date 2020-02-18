@@ -12,7 +12,8 @@
         <form class="form" action="" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         {{ form|crispy }}
-          <button class="btn btn-block btn-success" type="submit">Update</button>
+          <button class="btn btn-block btn-primary" type="submit">Update</button>
+          <a href="{{ request.META.HTTP_REFERER }}" class="btn-block btn btn-secondary" type="submit">Back</a>
         </form>
   </div>
 </div>  

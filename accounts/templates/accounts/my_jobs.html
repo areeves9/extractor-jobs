@@ -23,9 +23,9 @@
             <a style="text-decoration: none; color: black;" href="{{ job.get_absolute_url }}">{{ job.headline}}</a>
           </h5>
           <h6 class="card-subtitle mb-2 text-muted">{{ job.location }}</h6>
-          <p class="card-text">${{ job.salary }} per {{ job.salary_frequency|lower }}</p>
+          <p class="card-text">${{ job.low_salary }} - {{ job.high_salary }} per {{ job.high_salary_frequency|lower }}</p>
           <p class="card-text">{{ job.description|truncatechars:240 }}</p>
-          <p class="card-text">{{ job.get_post_date_days }}</p>
+          {% include "jobs/partials/posted_by.html" %}
           {% include "jobs/partials/edit_delete_buttons.html" %}
         </div> <!--.card-body-->
       </div> <!--.card-->

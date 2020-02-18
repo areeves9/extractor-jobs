@@ -11,7 +11,11 @@
         </a>
         {% endif %}
         <div class="media-body">
-            <h5 class="mt-0 mb-1">{{ user.first_name }} {{ user.last_name }}</h5>
+            <h5 class="mt-0 mb-1">
+                <a href="{{ user.get_absolute_url }}">
+                    {{ user.first_name }} {{ user.last_name }}
+                </a>
+            </h5>
             <h6 class="mt-0">{{ user.location }}</h6>            
             <p class="mt-0">{{ user.headline }}</p>            
         </div>

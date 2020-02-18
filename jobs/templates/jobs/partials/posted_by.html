@@ -1,0 +1,7 @@
+<p class="mt-2 card-text text-secondary">
+    {% if job.get_post_date_days == 0 %} 
+    Posted today <span> by {{ job.user.display_name }}</span>
+    {% else %}
+    Posted {{ job.get_post_date_days }} days ago by <a href="{{ job.user.get_absolute_url }}">{{ job.user.display_name }}</a>
+    {% endif %}
+</p>

@@ -1,0 +1,23 @@
+{% for job in job_list %}
+    <div class="card mb-2">
+      <div class="card-body">
+        <h5 class="card-title">
+          {% if job.get_post_date_days == 0 %}
+          <span class="mb-2 badge badge-danger">New!</span> <br />
+          {% endif %}
+
+          <a style="text-decoration: none; color: black;" href="{{ job.get_absolute_url }}">{{ job.headline}}</a>
+        </h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{ job.location }}</h6>
+        <p class="font-weight-bold card-text">
+          ${{ job.low_salary|floatformat:"0" }} - {{ job.high_salary|floatformat:"0" }} per {{ job.high_salary_frequency|lower }}
+        </p>
+        <ul class="" style="list-style: circle;">
+          <li class="card-text text-muted">
+            {{ job.description|truncatechars:240 }}
+          </li>
+        </ul>
+       {% include "jobs/partials/posted_by.html" %}
+      </div> <!--.card-body-->
+    </div> <!--.card.mb-2-->
+{% endfor %}
