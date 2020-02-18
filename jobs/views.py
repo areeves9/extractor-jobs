@@ -9,10 +9,14 @@ from django.template.loader import render_to_string
 import json
 from django.http import JsonResponse
 from django.urls import reverse_lazy
+from django.shortcuts import render
+
 
 from django.core.mail import EmailMultiAlternatives
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+
+from formtools.wizard.views import SessionWizardView
 
 # from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import FormMixin
@@ -24,7 +28,41 @@ from django.views.generic.edit import (
     DeleteView,
 )
 from jobs.models import Job
-from jobs.forms import JobForm, JobShareForm
+from jobs.forms import JobShareForm, JobForm
+
+
+class JobWizard(SuccessMessageMixin, SessionWizardView):
+    success_message = 'Job posting sucessfuly created.'
+    
+    def done(self, form_list, **kwargs):
+        form_dict = self.get_all_cleaned_data()
+        print(form_dict)
+        instance = Job.objects.create(
+            **form_dict,
+            user=self.request.user,
+        )
+        print(instance)
+
+        return render(self.request, 'formtools/wizard/done.html', {
+            'form_data': [form.cleaned_data for form in form_list],
+        })
+
+
+class JobCreate(SuccessMessageMixin, UserPassesTestMixin, CreateView):
+    """
+    Create a job instance.
+    """
+    form_class = JobForm
+    template_name = 'jobs/job_form.html'
+    success_message = 'Job posting sucessfuly created.'
+    permission_denied_message = 'DENIED!'
+
+    def test_func(self):
+        return self.request.user.is_business
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class JobDetail(DetailView):
@@ -84,21 +122,7 @@ class JobList(ListView):
     paginate_by = 10
 
 
-class JobCreate(SuccessMessageMixin, UserPassesTestMixin, CreateView):
-    """
-    Create a job instance.
-    """
-    form_class = JobForm
-    template_name = 'jobs/job_form.html'
-    success_message = 'Job posting sucessfuly created.'
-    permission_denied_message = 'DENIED!'
 
-    def test_func(self):
-        return self.request.user.is_business
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
 
 
 class JobUpdate(SuccessMessageMixin, UserPassesTestMixin, UpdateView):

@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'fontawesome_5',
     'imagekit',
     'taggit',
+    'formtools',
 ]
 
 MIDDLEWARE = [

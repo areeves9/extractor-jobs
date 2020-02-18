@@ -3,7 +3,7 @@ from utils.autocomplete import CityAutocomplete
 from django.contrib.auth.decorators import login_required
 
 from jobs import views
-
+from jobs.forms import JobForm1, JobForm2, JobForm3
 
 from jobs.views import (
     JobList,
@@ -11,7 +11,8 @@ from jobs.views import (
     JobUpdate,
     JobDelete,
     JobDetail,
-    JobShare
+    JobShare,
+    JobWizard,
 )
 urlpatterns = [
     re_path(
@@ -21,7 +22,7 @@ urlpatterns = [
     ),
     re_path(r'^$', JobList.as_view(), name='job_list'),
     re_path(r'^like/$', login_required(views.job_like), name='job_like'),
-    re_path(r'^create/$', login_required(JobCreate.as_view()), name='job_create'),
+    re_path(r'^create/$', login_required(JobWizard.as_view([JobForm1, JobForm2, JobForm3])), name='job_create'),
     re_path(r'^(?P<slug>[-\w]+)/$', login_required(JobDetail.as_view()), name="job_detail"),
     re_path(r'^(?P<slug>[-\w]+)/delete/$', login_required(JobDelete.as_view()), name='job_delete'),
     re_path(r'^(?P<slug>[-\w]+)/update/$', login_required(JobUpdate.as_view()), name='job_update'),

@@ -23,3 +23,26 @@ class JobForm(forms.ModelForm):
     class Meta:
         model = Job
         exclude = ('slug', 'likes', 'user')
+
+
+class JobForm1(forms.ModelForm):
+    location = forms.ModelChoiceField(
+        queryset=City.objects.all(),
+        widget=autocomplete.ModelSelect2(url='jobs:city-autocomplete')
+    )
+
+    class Meta:
+        model = Job
+        fields = ('job_title', 'headline', 'location', 'description',)
+
+
+class JobForm2(forms.ModelForm):
+    class Meta:
+        model = Job
+        fields = ('low_salary', 'low_salary_frequency', 'high_salary', 'high_salary_frequency',)
+
+
+class JobForm3(forms.ModelForm):
+    class Meta:
+        model = Job
+        fields = ('link', 'expiration_date', 'employment_type', 'education', 'benefits',)
