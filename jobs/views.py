@@ -31,8 +31,11 @@ from jobs.models import Job
 from jobs.forms import JobShareForm, JobForm
 
 
-class JobWizard(SuccessMessageMixin, SessionWizardView):
+class JobWizard(SuccessMessageMixin, UserPassesTestMixin, SessionWizardView):
     success_message = 'Job posting sucessfuly created.'
+
+    def test_func(self):
+        return self.request.user.is_business
     
     def done(self, form_list, **kwargs):
         form_dict = self.get_all_cleaned_data()

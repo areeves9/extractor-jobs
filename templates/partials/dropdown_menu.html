@@ -5,7 +5,12 @@
     <a class="dropdown-item" href="{{ request.user.get_absolute_url }}">
         {% fa5_icon 'user fa-1x' 'fas' %} {{ request.user.display_name }}
     </a>
-
+    {% if not request.user.is_business %}
+    <a class="dropdown-item" href="{% url 'accounts:business_request' %}">
+        {% fa5_icon 'building fa-1x' 'fas' %} Request Business Account
+    </a>
+    {% endif %}
+    <hr style="width: 80%;"/>
     <a class="dropdown-item" href="{% url 'accounts:logout' %}">
         {% fa5_icon 'sign-out-alt fa-1x' 'fas' %} Logout
     </a>

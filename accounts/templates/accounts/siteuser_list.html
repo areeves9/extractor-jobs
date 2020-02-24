@@ -9,7 +9,7 @@
         <h5 class="">Rolodex</h5>
         <p>Page {{ page_obj.number }} of {{ paginator.count }} candidate{% if paginator.count > 1 %}s{% endif%}</p>
         
-        <div class="card card-body bg-light">
+        <div class="mb-2 card card-body bg-light">
             {% include "accounts/partials/users.html" %}
         </div>
         {% include "partials/pagination.html" %}

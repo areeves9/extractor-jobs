@@ -9,9 +9,12 @@
         <h3 class="font-italic text-center mb-4">Bussiness Account Request</h3>
         <form action="{% url 'accounts:business_request' %}" method="post">{% csrf_token %}
             {{ form|crispy }}
-            <button class="d-block mx-auto btn btn-secondary" type="submit">
+            <button class="btn btn-block btn-primary" type="submit">
                 Submit
             </button>
+            <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-block btn-secondary" type="submit">
+                Back
+            </a>
         </form>
     </div>
 </div>
