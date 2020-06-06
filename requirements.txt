@@ -3,7 +3,7 @@ Babel==2.8.0
 certifi==2019.11.28
 chardet==3.0.4
 colorama==0.4.1
-Django==2.2.9
+Django==2.2.13
 django-appconf==1.0.3
 django-autocomplete-light==3.5.0
 django-autoslug-iplweb==1.9.4.dev0
